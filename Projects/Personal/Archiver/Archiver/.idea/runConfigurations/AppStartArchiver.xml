@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="AppStartArchiver" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="com.personal.archiver.AppStartArchiver" />
+    <module name="Archiver" />
+    <option name="VM_PARAMETERS" value="-Xmx8g -Dsun.io.serialization.extendedDebugInfo=true" />
+    <option name="WORKING_DIRECTORY" value="D:/p/0g/0a3/911/0g0a3_0u0_911" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.personal.archiver.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

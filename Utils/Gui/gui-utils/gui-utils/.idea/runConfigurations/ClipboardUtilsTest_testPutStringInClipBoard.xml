@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" factoryName="JUnit" name="ClipboardUtilsTest.testPutStringInClipBoard" nameIsGenerated="true" type="JUnit">
+        <module name="gui-utils"/>
+        <extension name="coverage">
+            <pattern>
+                <option name="PATTERN" value="com.utils.gui_utils.clipboard.*"/>
+                <option name="ENABLED" value="true"/>
+            </pattern>
+        </extension>
+        <option name="PACKAGE_NAME" value="com.utils.gui_utils.clipboard"/>
+        <option name="MAIN_CLASS_NAME" value="com.utils.gui_utils.clipboard.ClipboardUtilsTest"/>
+        <option name="METHOD_NAME" value="testPutStringInClipBoard"/>
+        <option name="TEST_OBJECT" value="method"/>
+        <option name="PARAMETERS" value=""/>
+        <method v="2">
+            <option enabled="true" name="Make"/>
+        </method>
+    </configuration>
+</component>

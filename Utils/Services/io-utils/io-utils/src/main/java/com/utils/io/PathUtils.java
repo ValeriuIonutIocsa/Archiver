@@ -1,0 +1,158 @@
+package com.utils.io;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
+
+import com.utils.annotations.ApiMethod;
+import com.utils.log.Logger;
+
+public final class PathUtils {
+
+	public static final String ROOT_PATH = createRootPath();
+
+	private static String createRootPath() {
+
+		final String rootPath;
+		if (SystemUtils.IS_OS_WINDOWS) {
+			rootPath = "D:\\";
+		} else {
+			rootPath = "/mnt/d";
+		}
+		return rootPath;
+	}
+
+	private PathUtils() {
+	}
+
+	@ApiMethod
+	public static Path tryParseExistingFilePath(
+			final String pathName,
+			final String pathString) {
+
+		Path path = tryParsePath(pathName, pathString);
+		final boolean fileExists = IoUtils.fileExists(path);
+		if (!fileExists) {
+			Logger.printError(pathName + " does not exist:" +
+					System.lineSeparator() + path);
+			path = null;
+		}
+		return path;
+	}
+
+	@ApiMethod
+	public static Path tryParseExistingFolderPath(
+			final String pathName,
+			final String pathString) {
+
+		Path path = tryParsePath(pathName, pathString);
+		final boolean directoryExists = IoUtils.directoryExists(path);
+		if (!directoryExists) {
+			Logger.printError(pathName + " does not exist:" +
+					System.lineSeparator() + path);
+			path = null;
+		}
+		return path;
+	}
+
+	@ApiMethod
+	public static Path tryParsePath(
+			final String pathName,
+			final String pathString) {
+
+		Path path = null;
+		try {
+			path = Paths.get(pathString).toAbsolutePath();
+
+		} catch (final Exception exc) {
+			if (StringUtils.isNotBlank(pathName)) {
+				Logger.printError("failed to parse the " + pathName + " path:" +
+						System.lineSeparator() + pathString);
+				Logger.printException(exc);
+			}
+		}
+		return path;
+	}
+
+	@ApiMethod
+	public static String computeFileName(
+			final Path path) {
+
+		final String pathString = String.valueOf(path);
+		return computeFileName(pathString);
+	}
+
+	@ApiMethod
+	public static String computeFileName(
+			final String pathString) {
+		return FilenameUtils.getName(pathString);
+	}
+
+	@ApiMethod
+	public static String computeExtension(
+			final Path path) {
+
+		final String pathString = path.toString();
+		return computeExtension(pathString);
+	}
+
+	@ApiMethod
+	public static String computeExtension(
+			final String pathString) {
+		return FilenameUtils.getExtension(pathString);
+	}
+
+	@ApiMethod
+	public static String computePathWoExt(
+			final Path path) {
+
+		String pathWoExt = null;
+		if (path != null) {
+			final String pathString = path.toString();
+			pathWoExt = computePathWoExt(pathString);
+		}
+		return pathWoExt;
+	}
+
+	@ApiMethod
+	public static String computePathWoExt(
+			final String pathString) {
+		return FilenameUtils.removeExtension(pathString);
+	}
+
+	@ApiMethod
+	public static String computeFileNameWoExt(
+			final Path path) {
+
+		String fileNameWoExt = null;
+		if (path != null) {
+			final String pathString = path.toString();
+			fileNameWoExt = computeFileNameWoExt(pathString);
+		}
+		return fileNameWoExt;
+	}
+
+	@ApiMethod
+	public static String computeFileNameWoExt(
+			final String pathString) {
+		return FilenameUtils.getBaseName(pathString);
+	}
+
+	@ApiMethod
+	public static String computeAbsolutePathString(
+			final String pathName,
+			final String pathString) {
+
+		String absolutePathString = null;
+		final Path path = tryParsePath(pathName, pathString);
+		if (path != null) {
+
+			final Path absolutePath = path.toAbsolutePath();
+			absolutePathString = absolutePath.toString();
+		}
+		return absolutePathString;
+	}
+}

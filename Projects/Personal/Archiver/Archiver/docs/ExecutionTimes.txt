@@ -1,0 +1,30 @@
+
+Tests using hm6m1:
+
+7zip fastest Deflate local: 22.5s, 928MB
+7zip fastest Deflate64 local: 23s, 920MB
+Archiver local: 24.506s, 909MB
+7zip fastest LZMA local: 45s, 847MB
+Total Commander fastest local: 1m 15s, 990MB
+7zip local: 1m 20s, 898MB
+Total Commander normal local: 1m 59s, 903MB
+
+Archiver over network: 1m 55.490s, 909MB
+7z fastest Deflate over network: 2m 31s, 928MB
+Total Commander fastest over network: 3m 10s, 990MB
+7z normal over network: 4m 50s, 898MB
+Total Commander normal local: 5m 15s, 903MB
+
+Java copy over network: 1m 33s
+
+
+Tests using bmg12:
+
+Archiver local: 1m 0s, 2631MB
+7zip fastest Deflate local: 1m 10s, 2691MB
+Total Commander fastest local: 3m 1s, 2868MB
+7zip local: 6m 34s, 2605MB
+
+Archiver over network: 5m 23.051s, 2631MB
+7z fastest Deflate over network: 8m 40s, 2691MB
+Total Commander normal over network: 8m 42s, 2868MB

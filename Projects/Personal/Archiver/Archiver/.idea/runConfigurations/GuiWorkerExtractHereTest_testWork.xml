@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="GuiWorkerExtractHereTest.testWork" type="JUnit" factoryName="JUnit" singleton="false" nameIsGenerated="true">
+    <module name="Archiver" />
+    <useClassPathOnly />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.personal.archiver.gui.workers.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="com.personal.archiver.gui.workers" />
+    <option name="MAIN_CLASS_NAME" value="com.personal.archiver.gui.workers.GuiWorkerExtractHereTest" />
+    <option name="METHOD_NAME" value="testWork" />
+    <option name="TEST_OBJECT" value="method" />
+    <option name="VM_PARAMETERS" value="-ea -Dsun.io.serialization.extendedDebugInfo=true" />
+    <option name="PARAMETERS" value="" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

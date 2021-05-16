@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6ecdc497-53a6-452c-ae24-f6ededa9087b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.eclipse-pmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/TestJavaFx.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/eclipseCodeFormatter.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/modules/TestJavaFx.TestJavaFx.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/modules/TestJavaFx.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/runConfigurations/AppStartTestJavaFx.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/runConfigurations/TestJavaFx__clean_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/runConfigurations/TestJavaFx__dependencyUpdates_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/runConfigurations/TestJavaFx__fatJar_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/saveactions_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/CreateExecutables.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/src/main/java/com/personal/javafx/AppStartTestJavaFx.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx/src/main/java/com/personal/javafx/JavaFxHelloWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestJavaFx/TestJavaFx_EXE/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/runConfigurations/SeriesSubtitleNameMatcherTest_testWork.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/src/main/java/com/prog/test/AnalyzerEclipseLaunchFiles.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/src/main/java/com/prog/test/SeriesSubtitleNameMatcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/src/test/java/com/prog/test/AnalyzerEclipseLaunchFilesTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/src/test/java/com/prog/test/SeriesSubtitleNameMatcherTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/AbstractCustomAlert.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/AbstractCustomDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/web_view/AppStartWebViewTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/preloader/AbstractCustomPreloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/icons/icon_file.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/icons/icon_folder.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui/AbstractCustomApplicationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui/AbstractCustomApplicationTestVitesco.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/AppStartJavaFxHelloWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/run/ReflectionToStringTest.testWork.launch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../Utils/Services/xml-utils/xml-utils/src/test/java/com/utils/xml/dom/XmlDomUtilsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/personal/archiver/AppStartArchiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/personal/archiver/AppStartArchiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CopyPicturesFromCamera/CopyPicturesFromCamera/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../CopyPicturesFromCamera/CopyPicturesFromCamera/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../CopyPicturesFromCamera/CopyPicturesFromCamera/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../CopyPicturesFromCamera/CopyPicturesFromCamera/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../FileSyncronizerAll/FileSynchronizerAll/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../FileSyncronizerAll/FileSynchronizerAll/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../FileSyncronizerAll/FileSynchronizerAll/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../FileSyncronizerAll/FileSynchronizerAll/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Scripts/Scripts/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Scripts/Scripts/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/TestProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/TestProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/dictionaries/Vevu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/dictionaries/Vevu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/libraries/td4launcher.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/runConfigurations/ArrayListResize.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/runConfigurations/PocoImporterCreateJarScript.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/runConfigurations/PocoMoveToCessar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/lib/td4launcher.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/src/main/java/com/prog/test/ArrayListResize.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/src/main/java/com/prog/test/PocoImporterCreateJarScript.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/src/main/java/com/prog/test/PocoMoveToCessar.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Test/TestProject/TestProject/src/main/resources/importers.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/controls-fx-utils/controls-fx-utils/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/controls-fx-utils/controls-fx-utils/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertAbstr.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertConfirm.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertConfirm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertError.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertWarning.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomAlertWarning.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomTextInputDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/CustomTextInputDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/alerts/DialogAbstr.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/charts/sunburst/ChartData.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/charts/sunburst/ChartData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/charts/sunburst/SunburstChart.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/charts/sunburst/SunburstChart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/factories/BasicControlsFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/factories/BasicControlsFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/icons/ImagesGuiUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/icons/ImagesGuiUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/LevelGauge.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/LevelGauge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/ProgressIndicatorBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/ProgressIndicatorBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/search_and_filter/HBoxPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/search_and_filter/HBoxPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/search_and_filter/HBoxRegexType.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/search_and_filter/HBoxRegexType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/tables/TableColumnUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/tables/TableColumnUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/tables/table_view/CustomTableView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/tables/table_view/CustomTableView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/tables/tree_table/CustomTreeTableView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/tables/tree_table/CustomTreeTableView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/tables/tree_table/UnfilteredTreeItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/tables/tree_table/UnfilteredTreeItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/web_view/HBoxWebViewSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/web_view/HBoxWebViewSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/web_view/WebViewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/objects/web_view/WebViewTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/preloader/CustomPreloaderAbstr.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/version/VersionDependentMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/java/com/utils/gui_utils/version/VersionDependentMethods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/objects/style_level_gauge_template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/objects/style_level_gauge_template.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/styles/vitesco/style_theme_dark.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/styles/vitesco/style_theme_dark.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/styles/vitesco/style_theme_standard.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/styles/vitesco/style_theme_standard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/styles/vitesco/style_theme_vitesco.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/main/resources/com/utils/gui_utils/styles/vitesco/style_theme_vitesco.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui/CustomApplicationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui/CustomApplicationTestVitesco.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertConfirmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertConfirmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertErrorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertErrorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertExceptionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertExceptionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertInfoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertInfoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertWarningTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomAlertWarningTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomTextInputDialogTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/alerts/CustomTextInputDialogTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/charts/division/VBoxPercentageDivisionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/charts/division/VBoxPercentageDivisionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/charts/sunburst/SunburstChartTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/charts/sunburst/SunburstChartTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/help/patterns/VBoxHelpHtmlPatternGlobTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/help/patterns/VBoxHelpHtmlPatternGlobTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/help/patterns/VBoxHelpHtmlPatternSimpleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/help/patterns/VBoxHelpHtmlPatternSimpleTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/help/patterns/VBoxHelpHtmlPatternUnixRegexTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/help/patterns/VBoxHelpHtmlPatternUnixRegexTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/objects/list_select/CustomListSelectionViewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/objects/list_select/CustomListSelectionViewTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/objects/messages/SplitPaneMessagesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/objects/messages/SplitPaneMessagesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/objects/scroll_pane_zoom/ScrollPaneZoomTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils/src/test/java/com/utils/gui_utils/objects/scroll_pane_zoom/ScrollPaneZoomTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/html-utils/html-utils/src/main/java/com/utils/html/sections/HtmlSectionNoBreakSpace.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/html-utils/html-utils/src/main/java/com/utils/html/sections/HtmlSectionNoBreakSpace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils/src/main/java/com/utils/io/ZipUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils/src/main/java/com/utils/io/ZipUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils/src/main/java/com/utils/io/folder_deleters/FolderDeleterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils/src/main/java/com/utils/io/folder_deleters/FolderDeleterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils/src/main/java/com/utils/io/ro_flag_clearers/ReadOnlyFlagClearerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils/src/main/java/com/utils/io/ro_flag_clearers/ReadOnlyFlagClearerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/main/java/com/utils/string/ReflectionToString.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/main/java/com/utils/string/ReflectionToString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/main/java/com/utils/string/StrUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/main/java/com/utils/string/StrUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/main/java/com/utils/string/junit/JUnitUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/main/java/com/utils/string/junit/JUnitUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/test/java/com/utils/string/ReflectionToStringTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/test/java/com/utils/string/ReflectionToStringTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/test/java/com/utils/string/StrUtilsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/logger/logger/src/test/java/com/utils/string/StrUtilsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/xml-utils/xml-utils/src/main/java/com/utils/xml/dom/XmlDomUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/xml-utils/xml-utils/src/main/java/com/utils/xml/dom/XmlDomUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/xml-utils/xml-utils/src/main/java/com/utils/xml/stax/AbstractXmlStAXWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/xml-utils/xml-utils/src/main/java/com/utils/xml/stax/AbstractXmlStAXWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Utils/Services/xml-utils/xml-utils/src/test/java/com/utils/xml/stax/XmlStAXWriterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Utils/Services/xml-utils/xml-utils/src/test/java/com/utils/xml/stax/XmlStAXWriterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../common_build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../common_build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.eclipse-pmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/TestJavaFx.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/checkstyle-idea.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/dbnavigator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/eclipseCodeFormatter.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/modules/TestJavaFx.TestJavaFx.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/modules/TestJavaFx.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/runConfigurations/AppStartTestJavaFx.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/runConfigurations/TestJavaFx__clean_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/runConfigurations/TestJavaFx__dependencyUpdates_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/runConfigurations/TestJavaFx__fatJar_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/saveactions_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/CreateExecutables.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/src/main/java/com/personal/javafx/AppStartTestJavaFx.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx/src/main/java/com/personal/javafx/JavaFxHelloWorld.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestJavaFx/TestJavaFx_EXE/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.eclipse-pmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/TestProject.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/checkstyle-idea.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/dbnavigator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/dictionaries/Vevu.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/eclipseCodeFormatter.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/runConfigurations/AnalyzerEclipseLaunchFilesTest_testAnalyzeEclipseLaunchFiles.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/runConfigurations/SeriesSubtitleNameMatcherTest_testWork.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/runConfigurations/TestProject__fatJar_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/saveactions_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/CreateExecutables.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/src/main/java/com/prog/test/AnalyzerEclipseLaunchFiles.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/src/main/java/com/prog/test/SeriesSubtitleNameMatcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/src/test/java/com/prog/test/AnalyzerEclipseLaunchFilesTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject/src/test/java/com/prog/test/SeriesSubtitleNameMatcherTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/Projects/Test/TestProject/TestProject_EXE/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/common_build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../GradleJava11Test/common_settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../Others/VaadinTutorial/src/test/java/com/vaadin/tutorial/crm/ui/views/list/ListViewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../Others/VaadinTutorial/src/test/java/com/vaadin/tutorial/crm/ui/views/list/ListViewTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="PARALLEL_COMPILATION" value="true" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="16" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Archiver" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="HierarchyBrowserManager">
+    <option name="SORT_ALPHABETICALLY" value="true" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/personal/archiver/AppStartArchiver.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="2" />
+  </component>
+  <component name="ProjectId" id="1QT0wTHmUQ2UqWL58VRTiurYkWd" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="org.infernus.idea.checkstyle.CheckStyleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.personal.archiver" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.personal.archiver.gui.workers.writers_file_system" />
+      <recent name="com.personal.archiver.gui.workers.zip_writers" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\IVI\Prog\Main\GradleJava\Projects\Personal\Archiver\Archiver\docs" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\IVI\Prog\Main\GradleJava\Projects\Personal\Archiver\Archiver\src\main\resources\com\personal\archiver\gui\res" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.Archiver [fatJar sourcesJar]">
+    <list>
+      <item itemvalue="Application.AppStartArchiver" />
+      <item itemvalue="Gradle.Archiver [clean]" />
+      <item itemvalue="Gradle.Archiver [fatJar sourcesJar]" />
+      <item itemvalue="JUnit.AppStartArchiverTest.testMain" />
+      <item itemvalue="JUnit.GuiWorkerExtractHereTest.testWork" />
+      <item itemvalue="JUnit.ZipUtilsTest.testExtractZip" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6ecdc497-53a6-452c-ae24-f6ededa9087b" name="Default Changelist" comment="" />
+      <created>1567779516869</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1567779516869</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
