@@ -20,92 +20,92 @@ import javafx.stage.Stage;
 
 public class ApplicationArchiver extends Application {
 
-    @Override
-    public void start(
-            final Stage primaryStage) {
+	@Override
+	public void start(
+			final Stage primaryStage) {
 
-        final AppInfo appInfo = FactoryAppInfo.computeInstance("Archiver", "2.0.0");
-        final String appTitleAndVersion = appInfo.getAppTitleAndVersion();
-        final String title;
-        if (Logger.isDebugMode()) {
-            title = appTitleAndVersion + " (debug mode)";
-        } else {
-            title = appTitleAndVersion;
-        }
-        primaryStage.setTitle(title);
-        primaryStage.setWidth(700);
-        primaryStage.setHeight(500);
-        primaryStage.setMinWidth(500);
-        primaryStage.setMinHeight(300);
-        StageUtils.centerOnScreen(primaryStage);
-        GuiUtils.setAppIcon(primaryStage, ImagesArchiver.createImageApp());
+		final AppInfo appInfo = FactoryAppInfo.computeInstance("Archiver", "2.0.0");
+		final String appTitleAndVersion = appInfo.getAppTitleAndVersion();
+		final String title;
+		if (Logger.isDebugMode()) {
+			title = appTitleAndVersion + " (debug mode)";
+		} else {
+			title = appTitleAndVersion;
+		}
+		primaryStage.setTitle(title);
+		primaryStage.setWidth(700);
+		primaryStage.setHeight(500);
+		primaryStage.setMinWidth(500);
+		primaryStage.setMinHeight(300);
+		StageUtils.centerOnScreen(primaryStage);
+		GuiUtils.setAppIcon(primaryStage, ImagesArchiver.createImageApp());
 
-        final VBoxArchiver vBoxArchiver = new VBoxArchiver();
-        final Scene scene = new Scene(vBoxArchiver.getRoot());
-        VitescoStyleUtils.configureVitescoStyle(
-                scene, "com/personal/archiver/gui/style_archiver.css");
-        primaryStage.setScene(scene);
+		final VBoxArchiver vBoxArchiver = new VBoxArchiver();
+		final Scene scene = new Scene(vBoxArchiver.getRoot());
+		VitescoStyleUtils.configureVitescoStyle(
+				scene, "com/personal/archiver/gui/style_archiver.css");
+		primaryStage.setScene(scene);
 
-        primaryStage.setOnShown(event -> shown(scene, vBoxArchiver));
-        primaryStage.setOnCloseRequest(event -> close(vBoxArchiver));
+		primaryStage.setOnShown(event -> shown(scene, vBoxArchiver));
+		primaryStage.setOnCloseRequest(event -> close(vBoxArchiver));
 
-        primaryStage.show();
-    }
+		primaryStage.show();
+	}
 
-    private void shown(
-            final Scene scene,
-            final VBoxArchiver vBoxArchiver) {
+	private void shown(
+			final Scene scene,
+			final VBoxArchiver vBoxArchiver) {
 
-        scene.getRoot().requestFocus();
+		scene.getRoot().requestFocus();
 
-        final Parameters parameters = getParameters();
-        final List<String> parameterList = parameters.getRaw();
-        String folderPathString;
-        if (parameterList.size() >= 1) {
+		final Parameters parameters = getParameters();
+		final List<String> parameterList = parameters.getRaw();
+		String folderPathString;
+		if (parameterList.size() >= 1) {
 
-            folderPathString = parameterList.get(0);
-            folderPathString = PathUtils.computeNormalizedPath("folder path", folderPathString);
-            vBoxArchiver.configureFolderPathString(folderPathString);
+			folderPathString = parameterList.get(0);
+			folderPathString = PathUtils.computeNormalizedPath("folder path", folderPathString);
+			vBoxArchiver.configureFolderPathString(folderPathString);
 
-        } else {
-            folderPathString = null;
-        }
+		} else {
+			folderPathString = null;
+		}
 
-        if (parameterList.size() >= 2) {
+		if (parameterList.size() >= 2) {
 
-            if (folderPathString != null) {
+			if (folderPathString != null) {
 
-                String outputPathString = parameterList.get(1);
-                outputPathString = PathUtils.computeNormalizedPath("output path", outputPathString);
-                if (outputPathString != null) {
+				String outputPathString = parameterList.get(1);
+				outputPathString = PathUtils.computeNormalizedPath("output path", outputPathString);
+				if (outputPathString != null) {
 
-                    vBoxArchiver.createArchive(folderPathString, outputPathString);
-                }
-            }
-        }
-    }
+					vBoxArchiver.createArchive(folderPathString, outputPathString);
+				}
+			}
+		}
+	}
 
-    private static void close(
-            final VBoxArchiver vBoxArchiver) {
+	private static void close(
+			final VBoxArchiver vBoxArchiver) {
 
-        final Scene scene = vBoxArchiver.getRoot().getScene();
-        final Cursor cursor = scene.getCursor();
-        if (cursor == Cursor.WAIT) {
+		final Scene scene = vBoxArchiver.getRoot().getScene();
+		final Cursor cursor = scene.getCursor();
+		if (cursor == Cursor.WAIT) {
 
-            final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm(
-                    "Are you sure you wish to exit?",
-                    "There is a task running. Are you sure you wish to stop it and exit?",
-                    ButtonType.NO, ButtonType.YES);
-            customAlertConfirm.showAndWait();
+			final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm(
+					"Are you sure you wish to exit?",
+					"There is a task running. Are you sure you wish to stop it and exit?",
+					ButtonType.NO, ButtonType.YES);
+			customAlertConfirm.showAndWait();
 
-            final ButtonType resultButtonType = customAlertConfirm.getResult();
-            if (resultButtonType == ButtonType.YES) {
-                vBoxArchiver.close();
-                System.exit(0);
-            }
+			final ButtonType resultButtonType = customAlertConfirm.getResult();
+			if (resultButtonType == ButtonType.YES) {
+				vBoxArchiver.close();
+				System.exit(0);
+			}
 
-        } else {
-            System.exit(0);
-        }
-    }
+		} else {
+			System.exit(0);
+		}
+	}
 }

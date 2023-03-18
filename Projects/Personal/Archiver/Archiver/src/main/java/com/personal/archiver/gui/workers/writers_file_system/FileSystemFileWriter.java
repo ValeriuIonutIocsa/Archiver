@@ -5,7 +5,7 @@ import java.nio.file.Path;
 public interface FileSystemFileWriter {
 
 	void createDirectory(
-            String pathString);
+			String pathString);
 
 	void copyFile(
 			Path zipPath,

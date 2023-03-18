@@ -8,7 +8,7 @@ final class ProgressIndicatorImpl extends AbstractProgressIndicator {
 	private final ProgressIndicatorBar progressIndicatorBar;
 
 	ProgressIndicatorImpl(
-            final ProgressIndicatorBar progressIndicatorBar) {
+			final ProgressIndicatorBar progressIndicatorBar) {
 
 		this.progressIndicatorBar = progressIndicatorBar;
 	}
