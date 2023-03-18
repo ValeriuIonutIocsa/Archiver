@@ -2,7 +2,7 @@ package com.utils.app_info;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLClassLoader;
+import java.util.Enumeration;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -18,8 +18,18 @@ public final class FactoryAppInfo {
 	private FactoryAppInfo() {
 	}
 
+	public static AppInfo computeInstance(
+			final String appTitleDefault,
+			final String appVersionDefault) {
+
+		if (instance == null) {
+			instance = newInstance(appTitleDefault, appVersionDefault);
+		}
+		return instance;
+	}
+
 	@ApiMethod
-	public static void initialize(
+	private static AppInfo newInstance(
 			final String appTitleDefault,
 			final String appVersionDefault) {
 
@@ -49,29 +59,38 @@ public final class FactoryAppInfo {
 		}
 
 		String buildTime = null;
-		final boolean defaultBuildTime;
+		boolean defaultBuildTime = false;
 		try {
-			final URLClassLoader urlClassLoader =
-					(URLClassLoader) Thread.currentThread().getContextClassLoader();
-			final URL manifestUrl = urlClassLoader.findResource("META-INF/MANIFEST.MF");
-			try (InputStream inputStream = manifestUrl.openStream()) {
+			final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+			final Enumeration<URL> resourceEnumeration =
+					classLoader.getResources("META-INF/MANIFEST.MF");
+			while (resourceEnumeration.hasMoreElements()) {
 
-				final Manifest manifest = new Manifest(inputStream);
-				final Attributes mainAttributes = manifest.getMainAttributes();
-				buildTime = mainAttributes.getValue("Build-Time");
+				try (InputStream inputStream = resourceEnumeration.nextElement().openStream()) {
+
+					final Manifest manifest = new Manifest(inputStream);
+					final Attributes mainAttributes = manifest.getMainAttributes();
+					final String implementationTitleAttribute =
+							mainAttributes.getValue("Implementation-Title");
+					if (appTitleDefault.equals(implementationTitleAttribute)) {
+
+						buildTime = mainAttributes.getValue("Build-Time");
+						if (StringUtils.isNotBlank(buildTime)) {
+
+							defaultBuildTime = true;
+							break;
+						}
+					}
+				}
 			}
 
 		} catch (final Exception ignored) {
 		}
-		if (StringUtils.isNotBlank(buildTime)) {
-			defaultBuildTime = true;
-
-		} else {
+		if (!defaultBuildTime) {
 			buildTime = StrUtils.createDisplayDateTimeString();
-			defaultBuildTime = false;
 		}
 
-		instance = new AppInfo(
+		return new AppInfo(
 				appTitle, defaultTitle, appVersion, defaultVersion, buildTime, defaultBuildTime);
 	}
 
@@ -92,10 +111,5 @@ public final class FactoryAppInfo {
 			lastCh = ch;
 		}
 		return stringBuilder.toString();
-	}
-
-	@ApiMethod
-	public static AppInfo getInstance() {
-		return instance;
 	}
 }

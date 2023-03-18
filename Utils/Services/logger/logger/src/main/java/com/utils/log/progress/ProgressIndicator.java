@@ -1,18 +1,11 @@
 package com.utils.log.progress;
 
-public final class ProgressIndicator {
+public interface ProgressIndicator {
 
-	private static ProgressIndicatorAbstr instance = ProgressIndicatorNoOp.INSTANCE;
+	void update(
+			int count,
+			int total);
 
-	private ProgressIndicator() {
-	}
-
-	public static void setInstance(
-			final ProgressIndicatorAbstr instance) {
-		ProgressIndicator.instance = instance;
-	}
-
-	public static ProgressIndicatorAbstr getInstance() {
-		return instance;
-	}
+	void update(
+			double value);
 }

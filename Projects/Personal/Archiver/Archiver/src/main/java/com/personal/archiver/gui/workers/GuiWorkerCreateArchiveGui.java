@@ -1,10 +1,8 @@
 package com.personal.archiver.gui.workers;
 
-import java.nio.file.Path;
-
 import com.personal.archiver.gui.data.FileToArchive;
-import com.utils.gui_utils.objects.tables.tree_table.CustomTreeTableView;
-import com.utils.gui_utils.workers.ComponentDisabler;
+import com.utils.gui.objects.tables.tree_table.CustomTreeTableView;
+import com.utils.gui.workers.ControlDisabler;
 
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -17,13 +15,13 @@ public class GuiWorkerCreateArchiveGui extends AbstractGuiWorkerCreateArchive {
 
 	public GuiWorkerCreateArchiveGui(
 			final Scene scene,
-			final ComponentDisabler componentDisabler,
-			final Path workingDirPath,
-			final Path outputPath,
+			final ControlDisabler controlDisabler,
+			final String workingDirPathString,
+			final String outputPathString,
 			final CustomTreeTableView<FileToArchive> customTreeTableView,
 			final CheckBox checkBoxCloseOnCompletion) {
 
-		super(scene, componentDisabler, workingDirPath, outputPath);
+		super(scene, controlDisabler, workingDirPathString, outputPathString);
 
 		this.customTreeTableView = customTreeTableView;
 		this.checkBoxCloseOnCompletion = checkBoxCloseOnCompletion;

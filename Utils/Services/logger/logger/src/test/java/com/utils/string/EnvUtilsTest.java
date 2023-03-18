@@ -1,7 +1,6 @@
 package com.utils.string;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.utils.string.env.EnvProviderTest;
@@ -33,6 +32,6 @@ class EnvUtilsTest {
 		}
 
 		final String outStr = EnvUtils.replaceEnvironmentVariables(str);
-		assertEquals(expectedOutStr, outStr);
+		Assertions.assertEquals(expectedOutStr, outStr);
 	}
 }

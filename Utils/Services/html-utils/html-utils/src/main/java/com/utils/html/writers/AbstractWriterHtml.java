@@ -1,15 +1,13 @@
 package com.utils.html.writers;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.utils.html.sections.HtmlSection;
+import com.utils.io.StreamUtils;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
 import com.utils.log.Logger;
@@ -23,16 +21,17 @@ public abstract class AbstractWriterHtml implements WriterHtml {
 
 	@Override
 	public void writeToFile(
-			final Path outputPath) {
+			final String outputPathString) {
 
-		FactoryFolderCreator.getInstance().createParentDirectories(outputPath, true);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPath, true);
+		FactoryFolderCreator.getInstance().createParentDirectories(outputPathString, true);
+		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, true);
 
-		try (OutputStream outputStream = new BufferedOutputStream(Files.newOutputStream(outputPath))) {
+		try (OutputStream outputStream = StreamUtils.openBufferedOutputStream(outputPathString)) {
 			write(outputStream);
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to write HTML to file:" + System.lineSeparator() + outputPath);
+			Logger.printError("failed to write HTML to file:" +
+					System.lineSeparator() + outputPathString);
 			Logger.printException(exc);
 		}
 	}
@@ -44,10 +43,10 @@ public abstract class AbstractWriterHtml implements WriterHtml {
 		try {
 			final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 			write(byteArrayOutputStream);
-			str = byteArrayOutputStream.toString(StandardCharsets.UTF_8.name());
+			str = byteArrayOutputStream.toString(StandardCharsets.UTF_8);
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to write HTML to string!");
+			Logger.printError("failed to write HTML to string");
 			Logger.printException(exc);
 			str = "";
 		}
@@ -60,19 +59,48 @@ public abstract class AbstractWriterHtml implements WriterHtml {
 		new AbstractXmlStAXWriterHtml(outputStream) {
 
 			@Override
-			protected String createCssString() {
+			public String createCssString() {
+
 				return AbstractWriterHtml.this.createCssString();
+			}
+
+			@Override
+			public String createTitle() {
+
+				return AbstractWriterHtml.this.createTitle();
+			}
+
+			@Override
+			public void writeBodyAttributes(
+					final XmlStAXWriter xmlStAXWriter) {
+
+				AbstractWriterHtml.this.writeBodyAttributes(xmlStAXWriter);
 			}
 
 			@Override
 			protected void writeBody(
 					final XmlStAXWriter xmlStAXWriter) {
+
 				AbstractWriterHtml.this.writeBody(xmlStAXWriter);
 			}
+
 		}.writeXml();
 	}
 
-	protected abstract String createCssString();
+	@Override
+	public String createCssString() {
+		return null;
+	}
+
+	@Override
+	public String createTitle() {
+		return null;
+	}
+
+	@Override
+	public void writeBodyAttributes(
+			final XmlStAXWriter xmlStAXWriter) {
+	}
 
 	private void writeBody(
 			final XmlStAXWriter xmlStAXWriter) {

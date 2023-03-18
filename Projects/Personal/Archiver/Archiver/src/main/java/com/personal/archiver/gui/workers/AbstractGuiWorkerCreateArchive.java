@@ -1,6 +1,5 @@
 package com.personal.archiver.gui.workers;
 
-import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -10,43 +9,44 @@ import java.util.concurrent.atomic.AtomicInteger;
 import com.personal.archiver.gui.data.FileToArchive;
 import com.personal.archiver.gui.workers.writers_zip.FactoryZipFileWriter;
 import com.personal.archiver.gui.workers.writers_zip.ZipFileWriter;
-import com.utils.gui_utils.alerts.CustomAlertError;
-import com.utils.gui_utils.alerts.CustomAlertException;
-import com.utils.gui_utils.workers.ComponentDisabler;
-import com.utils.gui_utils.workers.GuiWorker;
+import com.utils.gui.alerts.CustomAlertError;
+import com.utils.gui.alerts.CustomAlertException;
+import com.utils.gui.workers.AbstractGuiWorker;
+import com.utils.gui.workers.ControlDisabler;
 import com.utils.log.Logger;
-import com.utils.log.progress.ProgressIndicator;
+import com.utils.log.progress.ProgressIndicators;
 
 import javafx.scene.Scene;
 
-public abstract class AbstractGuiWorkerCreateArchive extends GuiWorker implements CloseableGuiWorker {
+public abstract class AbstractGuiWorkerCreateArchive
+		extends AbstractGuiWorker implements CloseableGuiWorker {
 
-	private final Path workingDirPath;
-	private final Path outputPath;
+	private final String workingDirPathString;
+	private final String outputPathString;
 
 	private ZipFileWriter zipFileWriter;
 	private int totalItemsToCopyCount;
 
 	AbstractGuiWorkerCreateArchive(
 			final Scene scene,
-			final ComponentDisabler componentDisabler,
-			final Path workingDirPath,
-			final Path outputPath) {
+			final ControlDisabler controlDisabler,
+			final String workingDirPathString,
+			final String outputPathString) {
 
-		super(scene, componentDisabler);
+		super(scene, controlDisabler);
 
-		this.workingDirPath = workingDirPath;
-		this.outputPath = outputPath;
+		this.workingDirPathString = workingDirPathString;
+		this.outputPathString = outputPathString;
 	}
 
 	@Override
 	protected void work() {
 
-		ProgressIndicator.getInstance().update(0);
+		ProgressIndicators.getInstance().update(0);
 		Logger.printProgress("creating archive...");
 
 		try {
-			zipFileWriter = FactoryZipFileWriter.newInstance(workingDirPath, outputPath);
+			zipFileWriter = FactoryZipFileWriter.newInstance(workingDirPathString, outputPathString);
 			if (zipFileWriter != null) {
 
 				final AtomicInteger itemsToCopyCount = new AtomicInteger();
@@ -179,7 +179,7 @@ public abstract class AbstractGuiWorkerCreateArchive extends GuiWorker implement
 
 		final int itemsToCopyCountValue = itemsToCopyCount.getAndDecrement();
 		final int copiedItemsCount = totalItemsToCopyCount - itemsToCopyCountValue;
-		ProgressIndicator.getInstance().update(copiedItemsCount, totalItemsToCopyCount);
+		ProgressIndicators.getInstance().update(copiedItemsCount, totalItemsToCopyCount);
 	}
 
 	@Override
@@ -189,7 +189,7 @@ public abstract class AbstractGuiWorkerCreateArchive extends GuiWorker implement
 
 	@Override
 	protected void finish() {
-		ProgressIndicator.getInstance().update(0);
+		ProgressIndicators.getInstance().update(0);
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package com.utils.html.sections;
 import com.utils.html.HtmlUtils;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public class HtmlSectionImage extends HtmlSectionAbstr {
+public class HtmlSectionImage extends AbstractHtmlSection {
 
 	private final byte[] imageFileBytes;
 

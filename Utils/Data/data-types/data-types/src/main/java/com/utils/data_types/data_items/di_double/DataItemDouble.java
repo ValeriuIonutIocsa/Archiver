@@ -3,6 +3,8 @@ package com.utils.data_types.data_items.di_double;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.utils.data_types.data_items.AbstractDataItem;
 import com.utils.string.StrUtils;
 
@@ -10,25 +12,34 @@ public class DataItemDouble extends AbstractDataItem<Double> implements Comparab
 
 	private final double value;
 	private final int digits;
+	private final String defaultString;
 
 	DataItemDouble(
 			final double value,
-			final int digits) {
+			final int digits,
+			final String defaultString) {
 
 		this.value = value;
 		this.digits = digits;
+		this.defaultString = defaultString;
 	}
 
 	@Override
 	public void serializeToDataBase(
 			final int index,
 			final PreparedStatement preparedStatement) throws SQLException {
+
 		preparedStatement.setDouble(index, value);
 	}
 
 	@Override
 	public String createCopyString() {
-		return StrUtils.doubleToString(value, 0, digits, false);
+
+		String str = StrUtils.doubleToString(value, 0, digits, false);
+		if (defaultString != null && StringUtils.isBlank(str)) {
+			str = defaultString;
+		}
+		return str;
 	}
 
 	@Override
@@ -72,7 +83,12 @@ public class DataItemDouble extends AbstractDataItem<Double> implements Comparab
 
 	@Override
 	public String toString() {
-		return StrUtils.doubleToString(value, 0, digits, true);
+
+		String str = StrUtils.doubleToString(value, 0, digits, true);
+		if (defaultString != null && StringUtils.isBlank(str)) {
+			str = defaultString;
+		}
+		return str;
 	}
 
 	@Override

@@ -1,9 +1,13 @@
 ext {
     mainClass = 'com.personal.archiver.AppStartArchiver'
     projectVersion = '2.0.0'
-    jarFolderPath = 'C:\\IVI\\Apps\\Archiver'
+    jarFolderPath = 'C:\\IVI\\Apps\\Scripts\\General\\Archiver'
 
-    subProjectNames = [':gui-utils', ':app-info']
+    subProjectNames = [
+            ':javafx-swing-utils',
+            ':jfx-utils',
+            ':app-info'
+    ]
     compileClassPaths = []
     compileJarFilePaths = []
     testCompileClassPaths = []

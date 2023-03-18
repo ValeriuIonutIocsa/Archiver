@@ -2,9 +2,7 @@ ext {
     subProjectNames = [
             ':concurrency-utils'
     ]
-    compileClassPaths = [
-            'commons-io:commons-io:2.8.0'
-    ]
+    compileClassPaths = []
     compileJarFilePaths = []
     testCompileClassPaths = []
     testCompileJarFilePaths = []

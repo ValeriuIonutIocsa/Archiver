@@ -19,6 +19,15 @@ public final class FactoryDataItemDouble {
 	public static DataItemDouble newInstance(
 			final double value,
 			final int digits) {
-		return new DataItemDouble(value, digits);
+
+		return new DataItemDouble(value, digits, null);
 	}
+
+    public static DataItemDouble newInstance(
+            final double value,
+            final int digits,
+            final String defaultValue) {
+
+        return new DataItemDouble(value, digits, defaultValue);
+    }
 }

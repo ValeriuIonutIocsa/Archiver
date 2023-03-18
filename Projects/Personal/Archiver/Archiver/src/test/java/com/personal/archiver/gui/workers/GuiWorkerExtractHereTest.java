@@ -1,12 +1,9 @@
 package com.personal.archiver.gui.workers;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.junit.jupiter.api.Test;
 
 import com.personal.archiver.gui.data.FileToArchive;
-import com.utils.gui_utils.GuiUtils;
+import com.utils.gui.GuiUtils;
 
 class GuiWorkerExtractHereTest {
 
@@ -25,8 +22,7 @@ class GuiWorkerExtractHereTest {
 			throw new RuntimeException();
 		}
 
-		final Path zipFilePath = Paths.get(zipFilePathString);
-		final FileToArchive fileToArchive = new FileToArchive(null, zipFilePath, false);
+		final FileToArchive fileToArchive = new FileToArchive(null, zipFilePathString, false);
 
 		GuiUtils.startPlatform();
 		final GuiWorkerExtractHere guiWorkerExtractHere =

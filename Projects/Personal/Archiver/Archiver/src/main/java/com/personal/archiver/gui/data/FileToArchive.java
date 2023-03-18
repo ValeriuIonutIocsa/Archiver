@@ -1,7 +1,6 @@
 package com.personal.archiver.gui.data;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +22,14 @@ public class FileToArchive implements TableRowData, Comparable<FileToArchive> {
 	};
 
 	@Override
-	public DataItem<?>[] getTableViewData() {
+	public DataItem<?>[] getTableViewDataItemArray() {
 		return new DataItem[] {
 				FactoryDataItemObjectComparable.newInstance(fileName)
 		};
 	}
 
 	private final String fileName;
-	private final Path filePath;
+	private final String filePathString;
 	private final boolean folder;
 
 	private boolean selected;
@@ -39,11 +38,11 @@ public class FileToArchive implements TableRowData, Comparable<FileToArchive> {
 
 	public FileToArchive(
 			final String fileName,
-			final Path filePath,
+			final String filePathString,
 			final boolean folder) {
 
 		this.fileName = fileName;
-		this.filePath = filePath;
+		this.filePathString = filePathString;
 		this.folder = folder;
 	}
 
@@ -51,7 +50,7 @@ public class FileToArchive implements TableRowData, Comparable<FileToArchive> {
 
 		childrenList = new ArrayList<>();
 		try {
-			final File file = filePath.toFile();
+			final File file = new File(filePathString);
 			final File[] files = file.listFiles();
 			if (files != null) {
 
@@ -60,7 +59,7 @@ public class FileToArchive implements TableRowData, Comparable<FileToArchive> {
 					final boolean directory = fileChild.isDirectory();
 					final String fileChildName = fileChild.getName();
 					final FileToArchive fileToArchive =
-							new FileToArchive(fileChildName, fileChild.toPath(), directory);
+							new FileToArchive(fileChildName, fileChild.getPath(), directory);
 					fileToArchive.setSelected(selected);
 					childrenList.add(fileToArchive);
 				}
@@ -110,8 +109,8 @@ public class FileToArchive implements TableRowData, Comparable<FileToArchive> {
 		return fileName;
 	}
 
-	public Path getFilePath() {
-		return filePath;
+	public String getFilePathString() {
+		return filePathString;
 	}
 
 	public boolean isFolder() {
@@ -137,7 +136,7 @@ public class FileToArchive implements TableRowData, Comparable<FileToArchive> {
 	}
 
 	public void setChildrenList(
-            final List<FileToArchive> childrenList) {
+			final List<FileToArchive> childrenList) {
 		this.childrenList = childrenList;
 	}
 

@@ -32,6 +32,7 @@ public class CustomPatterns {
 		for (final List<CustomPattern> andPatternList : andPatternListList) {
 
 			if (checkMatchesAndPatterns(string, andPatternList)) {
+
 				matchesPatterns = true;
 				break;
 			}
@@ -44,9 +45,11 @@ public class CustomPatterns {
 			final List<CustomPattern> andPatternList) {
 
 		boolean matchesAndPatterns = true;
-		for (final CustomPattern pattern : andPatternList) {
+		for (final CustomPattern andPattern : andPatternList) {
 
-			if (!pattern.checkMatches(string)) {
+			final boolean matchesAndPattern = andPattern.checkMatches(string);
+			if (!matchesAndPattern) {
+
 				matchesAndPatterns = false;
 				break;
 			}

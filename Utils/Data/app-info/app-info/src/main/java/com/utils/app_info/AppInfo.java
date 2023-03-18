@@ -28,6 +28,10 @@ public class AppInfo {
 		this.defaultBuildTime = defaultBuildTime;
 	}
 
+	public String createAppStartMessage() {
+		return "starting " + appTitle + " v" + appVersion + " (" + buildTime + ")";
+	}
+
 	public String getAppTitleAndVersion() {
 		return appTitle + " v" + appVersion;
 	}

@@ -1,9 +1,8 @@
 package com.utils.data_types;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.nio.ByteBuffer;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.utils.string.StrUtils;
@@ -17,7 +16,7 @@ class DataTypesTest {
 		final int valueE = 0b00000000000000000000000101010111;
 
 		final int signExtendedValue = DataTypes.signExtendTo32(valueO, 10);
-		assertEquals(valueE, signExtendedValue);
+		Assertions.assertEquals(valueE, signExtendedValue);
 	}
 
 	@Test
@@ -27,7 +26,7 @@ class DataTypesTest {
 		final int valueE = 0b11111111111111111111111101010111;
 
 		final int signExtendedValue = DataTypes.signExtendTo32(valueO, 10);
-		assertEquals(valueE, signExtendedValue);
+		Assertions.assertEquals(valueE, signExtendedValue);
 	}
 
 	@Test
@@ -55,6 +54,6 @@ class DataTypesTest {
 
 		final ByteBuffer byteBuffer = ByteBuffer.wrap(byteArray);
 		final long value = DataTypes.parseUnsignedLittleEndianBase128(byteBuffer);
-		assertEquals(expectedResult, value);
+		Assertions.assertEquals(expectedResult, value);
 	}
 }

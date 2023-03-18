@@ -1,9 +1,8 @@
 package com.utils.string.compression;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-
 import java.nio.charset.StandardCharsets;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class GzipCompressionUtilsTest {
@@ -16,6 +15,6 @@ class GzipCompressionUtilsTest {
 
 		final byte[] compressedBytes = GzipCompressionUtils.compress(bytes);
 		final byte[] decompressedBytes = GzipCompressionUtils.decompress(compressedBytes);
-		assertArrayEquals(bytes, decompressedBytes);
+		Assertions.assertArrayEquals(bytes, decompressedBytes);
 	}
 }

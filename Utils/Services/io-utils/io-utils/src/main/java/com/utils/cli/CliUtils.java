@@ -2,8 +2,6 @@ package com.utils.cli;
 
 import java.util.Map;
 
-import com.utils.string.StrUtils;
-
 public final class CliUtils {
 
 	private CliUtils() {
@@ -31,7 +29,7 @@ public final class CliUtils {
 			final Map<String, String> cliArgsByNameMap,
 			final String argName) {
 
-		final String valueString = cliArgsByNameMap.getOrDefault(argName, null);
-		return StrUtils.tryParseBoolean(valueString);
+		final String valueString = cliArgsByNameMap.get(argName);
+		return Boolean.parseBoolean(valueString);
 	}
 }

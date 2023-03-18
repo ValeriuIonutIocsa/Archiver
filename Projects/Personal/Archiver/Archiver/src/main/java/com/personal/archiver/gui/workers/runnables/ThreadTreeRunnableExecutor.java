@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.utils.log.Logger;
-import com.utils.log.progress.ProgressIndicator;
+import com.utils.log.progress.ProgressIndicators;
 import com.utils.string.StrUtils;
 
 class ThreadTreeRunnableExecutor extends Thread {
@@ -74,7 +74,7 @@ class ThreadTreeRunnableExecutor extends Thread {
 		final int runnableCountValue = runnableCount.getAndDecrement();
 		final int finishedRunnableCount = totalRunnableCount - runnableCountValue;
 		if (finishedRunnableCount % updateProgressRate == 0) {
-			ProgressIndicator.getInstance().update(finishedRunnableCount, totalRunnableCount);
+			ProgressIndicators.getInstance().update(finishedRunnableCount, totalRunnableCount);
 		}
 	}
 

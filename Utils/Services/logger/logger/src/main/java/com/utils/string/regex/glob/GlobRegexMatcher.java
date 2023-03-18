@@ -2,16 +2,13 @@ package com.utils.string.regex.glob;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.utils.string.regex.RegexUtils;
 import com.utils.string.regex.custom_patterns.patterns.CustomPatternGlobRegex;
 
 public final class GlobRegexMatcher {
-
-	private static final Pattern NEW_LINE_PATTERN = Pattern.compile("\\R");
-	private static final Pattern WHITE_SPACE_PATTERN = Pattern.compile("\\s+");
 
 	private GlobRegexMatcher() {
 	}
@@ -23,11 +20,11 @@ public final class GlobRegexMatcher {
 		if (StringUtils.isNotBlank(filterPatternsText)) {
 
 			patterns = new ArrayList<>();
-			final String[] linesSplit = NEW_LINE_PATTERN.split(filterPatternsText, -1);
+			final String[] linesSplit = RegexUtils.NEW_LINE_PATTERN.split(filterPatternsText, -1);
 			for (final String patternLine : linesSplit) {
 
 				if (!isEmptyPattern(patternLine)) {
-					patterns.add(WHITE_SPACE_PATTERN.split(patternLine, -1));
+					patterns.add(RegexUtils.WHITE_SPACE_PATTERN.split(patternLine, -1));
 				}
 			}
 		}

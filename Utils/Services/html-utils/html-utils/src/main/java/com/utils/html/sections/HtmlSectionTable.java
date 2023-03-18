@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.utils.xml.stax.XmlStAXWriter;
 
-public class HtmlSectionTable extends HtmlSectionAbstr {
+public class HtmlSectionTable extends AbstractHtmlSection {
 
 	private String attributeClass;
 	private String attributeId;
@@ -22,22 +22,25 @@ public class HtmlSectionTable extends HtmlSectionAbstr {
 	public void write(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("table");
+		final String tableTagName = "table";
+		xmlStAXWriter.writeStartElement(tableTagName);
 		writeAttributes(xmlStAXWriter);
 
-		xmlStAXWriter.writeStartElement("thead");
+		final String theadTagName = "thead";
+		xmlStAXWriter.writeStartElement(theadTagName);
 		for (final HtmlSection htmlSectionHead : htmlSectionHeadList) {
 			htmlSectionHead.write(xmlStAXWriter);
 		}
-		xmlStAXWriter.writeEndElement("thead");
+		xmlStAXWriter.writeEndElement(theadTagName);
 
-		xmlStAXWriter.writeStartElement("tbody");
+		final String tbodyTagName = "tbody";
+		xmlStAXWriter.writeStartElement(tbodyTagName);
 		for (final HtmlSection htmlSectionBody : htmlSectionBodyList) {
 			htmlSectionBody.write(xmlStAXWriter);
 		}
-		xmlStAXWriter.writeEndElement("tbody");
+		xmlStAXWriter.writeEndElement(tbodyTagName);
 
-		xmlStAXWriter.writeEndElement("table");
+		xmlStAXWriter.writeEndElement(tableTagName);
 	}
 
 	private void writeAttributes(

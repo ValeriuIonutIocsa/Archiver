@@ -4,11 +4,13 @@ public class DataItemUIntHex extends DataItemUInt {
 
 	DataItemUIntHex(
 			final int value) {
+
 		super(value);
 	}
 
 	@Override
 	public String createCopyString() {
+
 		return toString();
 	}
 

@@ -1,7 +1,6 @@
 package com.utils.string.regex;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class RegexUtilsTest {
@@ -13,7 +12,7 @@ class RegexUtilsTest {
 		final String patternString;
 		final boolean caseSensitive;
 		final boolean expectedMatches;
-		final int input = Integer.parseInt("1");
+		final int input = Integer.parseInt("11");
 		if (input == 1) {
 
 			string = "SOMEthing";
@@ -35,11 +34,25 @@ class RegexUtilsTest {
 			caseSensitive = true;
 			expectedMatches = false;
 
-		} else {
+		} else if (input == 11) {
+
+            string = "Os_task_task";
+            patternString = "^(?!Os_).*";
+            caseSensitive = true;
+            expectedMatches = false;
+
+        } else if (input == 12) {
+
+            string = "abc_bcd";
+            patternString = "^(?!Os_).*";
+            caseSensitive = true;
+            expectedMatches = true;
+
+        } else {
 			throw new RuntimeException();
 		}
 
 		final boolean matches = RegexUtils.matchesPattern(string, patternString, caseSensitive);
-		assertEquals(expectedMatches, matches);
+		Assertions.assertEquals(expectedMatches, matches);
 	}
 }

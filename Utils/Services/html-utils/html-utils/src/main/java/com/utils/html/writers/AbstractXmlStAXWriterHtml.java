@@ -2,14 +2,18 @@ package com.utils.html.writers;
 
 import java.io.OutputStream;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.utils.html.sections.HtmlSectionPlainText;
 import com.utils.xml.stax.AbstractXmlStAXWriter;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class AbstractXmlStAXWriterHtml extends AbstractXmlStAXWriter {
+public abstract class AbstractXmlStAXWriterHtml
+		extends AbstractXmlStAXWriter implements XmlStAXWriterHtml {
 
 	protected AbstractXmlStAXWriterHtml(
 			final OutputStream outputStream) {
+
 		super(outputStream, "");
 	}
 
@@ -17,41 +21,67 @@ public abstract class AbstractXmlStAXWriterHtml extends AbstractXmlStAXWriter {
 	protected void write() {
 
 		writePlainText("<!-- saved from url=(0014)about:internet -->");
-		writeStartElement("html");
+		final String htmlTagName = "html";
+		writeStartElement(htmlTagName);
 
-		writeStartElement("head");
+		final String headTagName = "head";
+		writeStartElement(headTagName);
 		writeHead(this);
-		writeEndElement("head");
+		writeEndElement(headTagName);
 
-		writeStartElement("body");
+		final String bodyTagName = "body";
+		writeStartElement(bodyTagName);
 		writeBodyAttributes(this);
 		writeBody(this);
-		writeEndElement("body");
+		writeEndElement(bodyTagName);
 
-		writeEndElement("html");
+		writeEndElement(htmlTagName);
 	}
 
 	private void writeHead(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("meta");
+		final String metaTagName = "meta";
+		xmlStAXWriter.writeStartElement(metaTagName);
 		xmlStAXWriter.writeAttribute("http-equiv", "X-UA-Compatible");
 		xmlStAXWriter.writeAttribute("content", "IE=10; IE=9; IE=8; IE=7; IE=EDGE");
-		xmlStAXWriter.writeEndElement("meta");
-
-		xmlStAXWriter.writeStartElement("style");
-		xmlStAXWriter.writeAttribute("type", "text/css");
-		xmlStAXWriter.writeAttribute("xml:space", "preserve");
+		xmlStAXWriter.writeEndElement(metaTagName);
 
 		final String cssString = createCssString();
-		new HtmlSectionPlainText(cssString).write(xmlStAXWriter);
+		if (StringUtils.isNotBlank(cssString)) {
 
-		xmlStAXWriter.writeEndElement("style");
+			final String styleTagName = "style";
+			xmlStAXWriter.writeStartElement(styleTagName);
+			xmlStAXWriter.writeAttribute("type", "text/css");
+			xmlStAXWriter.writeAttribute("xml:space", "preserve");
+			new HtmlSectionPlainText(cssString).write(xmlStAXWriter);
+
+			xmlStAXWriter.writeEndElement(styleTagName);
+		}
+
+		final String title = createTitle();
+		if (StringUtils.isNotBlank(title)) {
+
+			final String titleTagName = "title";
+			writeStartElement(titleTagName);
+			new HtmlSectionPlainText(title).write(xmlStAXWriter);
+
+			writeEndElement(titleTagName);
+		}
 	}
 
-	protected abstract String createCssString();
+	@Override
+	public String createCssString() {
+		return null;
+	}
 
-	protected void writeBodyAttributes(
+	@Override
+	public String createTitle() {
+		return null;
+	}
+
+	@Override
+	public void writeBodyAttributes(
 			final XmlStAXWriter xmlStAXWriter) {
 	}
 

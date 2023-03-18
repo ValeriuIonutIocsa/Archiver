@@ -1,17 +1,14 @@
 package com.utils.hash;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.utils.log.Logger;
 
-public class HashUtilsTest {
+class HashUtilsTest {
 
 	@Test
 	public void testCreateHashAlgorithmList() {
@@ -44,10 +41,9 @@ public class HashUtilsTest {
 
 		Logger.printLine("library file path:");
 		Logger.printLine(filePathString);
-		final Path filePath = Paths.get(filePathString);
 
-		final String hash = HashUtils.computeFileHash(filePath, algorithm);
-		assertTrue(StringUtils.equalsIgnoreCase(hash, expectedHash));
+		final String hash = HashUtils.computeFileHash(filePathString, algorithm);
+		Assertions.assertTrue(StringUtils.equalsIgnoreCase(hash, expectedHash));
 
 		Logger.printLine("hash: " + hash);
 	}

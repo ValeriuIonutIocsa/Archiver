@@ -14,7 +14,7 @@ public final class ThreadUtils {
 	 */
 	@ApiMethod
 	public static boolean trySleep(
-			final int millis) {
+			final long millis) {
 
 		boolean interrupted = false;
 		try {

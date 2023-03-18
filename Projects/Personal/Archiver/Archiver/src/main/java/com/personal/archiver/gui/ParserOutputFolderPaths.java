@@ -1,14 +1,16 @@
 package com.personal.archiver.gui;
 
 import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.PrintStream;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import org.apache.commons.lang3.SystemUtils;
+
 import com.utils.io.IoUtils;
+import com.utils.io.PathUtils;
+import com.utils.io.ReaderUtils;
+import com.utils.io.StreamUtils;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
 import com.utils.log.Logger;
@@ -16,8 +18,8 @@ import com.utils.string.StrUtils;
 
 public class ParserOutputFolderPaths {
 
-	private static final Path CACHED_DATA_FOLDER_PATH =
-			Paths.get(System.getProperty("user.home"), "Archiver", "cached_data.txt");
+	private static final String CACHED_DATA_FOLDER_PATH_STRING =
+			PathUtils.computePath(SystemUtils.USER_HOME, "Archiver", "cached_data.txt");
 
 	private final Deque<String> outputFolderPathStrings;
 
@@ -28,12 +30,13 @@ public class ParserOutputFolderPaths {
 
 	void parse() {
 
-		if (IoUtils.fileExists(CACHED_DATA_FOLDER_PATH)) {
+		if (IoUtils.fileExists(CACHED_DATA_FOLDER_PATH_STRING)) {
 
 			Logger.printProgress("parsing output folder paths from:");
-			Logger.printLine(CACHED_DATA_FOLDER_PATH);
+			Logger.printLine(CACHED_DATA_FOLDER_PATH_STRING);
 
-			try (BufferedReader bufferedReader = Files.newBufferedReader(CACHED_DATA_FOLDER_PATH)) {
+			try (BufferedReader bufferedReader =
+					ReaderUtils.openBufferedReader(CACHED_DATA_FOLDER_PATH_STRING)) {
 
 				String line;
 				while ((line = bufferedReader.readLine()) != null) {
@@ -50,7 +53,7 @@ public class ParserOutputFolderPaths {
 			final String outputFolderPathStringToAdd) {
 
 		Logger.printProgress("saving output folder paths to:");
-		Logger.printLine(CACHED_DATA_FOLDER_PATH);
+		Logger.printLine(CACHED_DATA_FOLDER_PATH_STRING);
 
 		if (!outputFolderPathStrings.contains(outputFolderPathStringToAdd)) {
 
@@ -60,13 +63,14 @@ public class ParserOutputFolderPaths {
 			}
 		}
 
-		FactoryFolderCreator.getInstance().createParentDirectories(CACHED_DATA_FOLDER_PATH, false);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(CACHED_DATA_FOLDER_PATH, false);
-		try (PrintWriter printWriter = new PrintWriter(
-				Files.newBufferedWriter(CACHED_DATA_FOLDER_PATH))) {
+		FactoryFolderCreator.getInstance().createParentDirectories(CACHED_DATA_FOLDER_PATH_STRING, false);
+		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(CACHED_DATA_FOLDER_PATH_STRING, false);
+		try (PrintStream printStream = StreamUtils.openPrintStream(CACHED_DATA_FOLDER_PATH_STRING)) {
 
 			for (final String outputFolderPathString : outputFolderPathStrings) {
-				printWriter.println(outputFolderPathString);
+
+				printStream.print(outputFolderPathString);
+				printStream.println();
 			}
 
 		} catch (final Exception exc) {

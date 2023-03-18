@@ -3,7 +3,7 @@ package com.utils.concurrency.progress.data;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.utils.concurrency.no_progress.data.AbstractCustomCallable;
-import com.utils.log.progress.ProgressIndicator;
+import com.utils.log.progress.ProgressIndicators;
 
 public abstract class AbstractCustomCallableShowProgress extends AbstractCustomCallable {
 
@@ -31,7 +31,7 @@ public abstract class AbstractCustomCallableShowProgress extends AbstractCustomC
 
 		final int runnableIndex = completedRunnablesCount.incrementAndGet();
 		if (runnableIndex % showProgressInterval == 0) {
-			ProgressIndicator.getInstance().update(runnableIndex, runnableCount);
+			ProgressIndicators.getInstance().update(runnableIndex, runnableCount);
 		}
 
 		return result;

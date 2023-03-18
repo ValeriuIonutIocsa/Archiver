@@ -1,6 +1,6 @@
 package com.personal.archiver.gui.res;
 
-import com.utils.gui_utils.GuiUtils;
+import com.utils.gui.GuiUtils;
 
 import javafx.scene.image.Image;
 

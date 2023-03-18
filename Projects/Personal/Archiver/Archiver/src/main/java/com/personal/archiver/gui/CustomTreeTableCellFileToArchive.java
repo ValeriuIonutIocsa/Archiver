@@ -1,14 +1,13 @@
 package com.personal.archiver.gui;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import com.personal.archiver.gui.data.FileToArchive;
-import com.utils.gui_utils.GuiUtils;
-import com.utils.gui_utils.factories.BasicControlsFactory;
-import com.utils.gui_utils.factories.LayoutControlsFactory;
-import com.utils.gui_utils.icons.FileSystemIconRetriever;
-import com.utils.gui_utils.objects.tables.tree_table.CustomTreeTableCell;
+import com.utils.gui.GuiUtils;
+import com.utils.gui.factories.BasicControlsFactories;
+import com.utils.gui.factories.LayoutControlsFactories;
+import com.utils.gui.icons.FileSystemIconRetriever;
+import com.utils.gui.objects.tables.tree_table.CustomTreeTableCell;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -41,9 +40,9 @@ class CustomTreeTableCellFileToArchive extends CustomTreeTableCell<FileToArchive
 		final FileToArchive fileToArchive = getRowData();
 		if (fileToArchive != null) {
 
-			final HBox hBox = LayoutControlsFactory.createHBox();
+			final HBox hBox = LayoutControlsFactories.getInstance().createHBox();
 
-			final CheckBox checkBox = BasicControlsFactory.createCheckBox("");
+			final CheckBox checkBox = BasicControlsFactories.getInstance().createCheckBox("");
 			final boolean selected = fileToArchive.isSelected();
 			checkBox.setSelected(selected);
 
@@ -100,8 +99,8 @@ class CustomTreeTableCellFileToArchive extends CustomTreeTableCell<FileToArchive
 		final FileToArchive fileToArchive = getRowData();
 		if (fileToArchive != null) {
 
-			final Path filePath = fileToArchive.getFilePath();
-			final Image image = new FileSystemIconRetriever(filePath).work();
+			final String filePathString = fileToArchive.getFilePathString();
+			final Image image = new FileSystemIconRetriever(filePathString).work();
 			labelGraphic = new ImageView(image);
 		}
 		return labelGraphic;

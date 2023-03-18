@@ -15,11 +15,11 @@ import com.utils.xml.dom.documents.ValidatedDocument;
 
 abstract class AbstractDocumentOpener {
 
-	public ValidatedDocument openAndValidateDocument() throws Exception {
+	public ValidatedDocument openAndValidateDocument(
+			final DocumentBuilderFactory documentBuilderFactory) throws Exception {
 
 		final Document document;
 
-		final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		documentBuilderFactory.setValidating(true);
 		documentBuilderFactory.setNamespaceAware(true);
 		documentBuilderFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage",
@@ -43,10 +43,10 @@ abstract class AbstractDocumentOpener {
 		return new ValidatedDocument(document, validationSuccessful);
 	}
 
-	public Document openDocument() throws Exception {
+	public Document openDocument(
+			final DocumentBuilderFactory documentBuilderFactory) throws Exception {
 
-		final DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		final DocumentBuilder documentBuilder = docFactory.newDocumentBuilder();
+		final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		return parse(documentBuilder);
 	}
 
@@ -58,9 +58,14 @@ abstract class AbstractDocumentOpener {
 			final SAXParseException exception) {
 
 		final Element documentElement = document.getDocumentElement();
-		final String schemaLocation = documentElement.getAttribute("xsi:noNamespaceSchemaLocation");
+		final String schemaLocation;
+		if (documentElement != null) {
+			schemaLocation = documentElement.getAttribute("xsi:noNamespaceSchemaLocation");
+		} else {
+			schemaLocation = null;
+		}
 		if (StringUtils.isBlank(schemaLocation)) {
-			Logger.printError("schema file location is not defined in the XML file!");
+			Logger.printError("schema file location is not defined in the XML file");
 
 		} else {
 			final String exceptionMessage = "LINE " + exception.getLineNumber() +

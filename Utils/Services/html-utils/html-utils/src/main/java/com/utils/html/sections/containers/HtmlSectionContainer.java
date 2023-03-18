@@ -4,12 +4,12 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.utils.html.sections.AbstractHtmlSection;
 import com.utils.html.sections.HtmlSection;
-import com.utils.html.sections.HtmlSectionAbstr;
-import com.utils.xml.stax.XmlStAXWriter;
 import com.utils.xml.stax.AbstractXmlStAXWriter;
+import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class HtmlSectionContainer extends HtmlSectionAbstr {
+public abstract class HtmlSectionContainer extends AbstractHtmlSection {
 
 	protected HtmlSectionContainer() {
 	}

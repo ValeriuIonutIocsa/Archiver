@@ -1,10 +1,10 @@
 package com.utils.html.sections.scripts;
 
-import com.utils.html.sections.HtmlSectionAbstr;
+import com.utils.html.sections.AbstractHtmlSection;
 import com.utils.html.sections.HtmlSectionPlainText;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class HtmlSectionScript extends HtmlSectionAbstr {
+public abstract class HtmlSectionScript extends AbstractHtmlSection {
 
 	HtmlSectionScript() {
 	}
@@ -13,13 +13,14 @@ public abstract class HtmlSectionScript extends HtmlSectionAbstr {
 	public void write(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("script");
+		final String scriptTagName = "script";
+		xmlStAXWriter.writeStartElement(scriptTagName);
 		xmlStAXWriter.writeAttribute("type", "text/javascript");
 
 		final String jsScriptContent = createJsScriptContent();
 		new HtmlSectionPlainText(jsScriptContent).write(xmlStAXWriter);
 
-		xmlStAXWriter.writeEndElement("script");
+		xmlStAXWriter.writeEndElement(scriptTagName);
 	}
 
 	protected abstract String createJsScriptContent();

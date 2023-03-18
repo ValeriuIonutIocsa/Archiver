@@ -1,12 +1,9 @@
 package com.utils.string.converters;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public final class ConverterByteArray {
-
-	private static final Charset ENCODING = StandardCharsets.UTF_8;
 
 	private ConverterByteArray() {
 	}
@@ -15,13 +12,13 @@ public final class ConverterByteArray {
 			final byte[] bytes) {
 
 		final byte[] encodedBytes = Base64.getEncoder().encode(bytes);
-		return new String(encodedBytes, ENCODING);
+		return new String(encodedBytes, StandardCharsets.UTF_8);
 	}
 
 	public static byte[] parseByteArray(
 			final String str) {
 
-		final byte[] encodedBytes = str.getBytes(ENCODING);
+		final byte[] encodedBytes = str.getBytes(StandardCharsets.UTF_8);
 		return Base64.getDecoder().decode(encodedBytes);
 	}
 }

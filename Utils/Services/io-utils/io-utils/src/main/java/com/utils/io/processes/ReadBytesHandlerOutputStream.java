@@ -28,7 +28,7 @@ public class ReadBytesHandlerOutputStream implements ReadBytesHandler {
 			outputStream.close();
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to close output stream!");
+			Logger.printError("failed to close output stream");
 			Logger.printException(exc);
 		}
 	}

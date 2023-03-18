@@ -3,8 +3,8 @@ package com.personal.archiver.gui;
 import java.util.List;
 
 import com.personal.archiver.gui.data.FileToArchive;
-import com.utils.gui_utils.GuiUtils;
-import com.utils.gui_utils.objects.tables.tree_table.CustomTreeTableView;
+import com.utils.gui.GuiUtils;
+import com.utils.gui.objects.tables.tree_table.CustomTreeTableView;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableRow;

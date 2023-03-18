@@ -1,10 +1,10 @@
 package com.utils.html.sections.links;
 
-import com.utils.html.sections.HtmlSectionAbstr;
-import com.utils.io.IoUtils;
+import com.utils.html.sections.AbstractHtmlSection;
+import com.utils.io.ResourceFileUtils;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public class HtmlSectionLinkedCssResource extends HtmlSectionAbstr {
+public class HtmlSectionLinkedCssResource extends AbstractHtmlSection {
 
 	private final String cssResourceFilePath;
 
@@ -18,11 +18,13 @@ public class HtmlSectionLinkedCssResource extends HtmlSectionAbstr {
 	public void write(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("link");
+		final String linkTagName = "link";
+		xmlStAXWriter.writeStartElement(linkTagName);
 		xmlStAXWriter.writeAttribute("type", "text/css");
 		xmlStAXWriter.writeAttribute("rel", "stylesheet");
-		xmlStAXWriter.writeAttribute("href", IoUtils.resourceToUrl(cssResourceFilePath).toExternalForm());
+		xmlStAXWriter.writeAttribute("href",
+				ResourceFileUtils.resourceFileToUrl(cssResourceFilePath).toExternalForm());
 
-		xmlStAXWriter.writeEndElement("link");
+		xmlStAXWriter.writeEndElement(linkTagName);
 	}
 }

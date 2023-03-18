@@ -1,21 +1,26 @@
 package com.personal.archiver.gui.workers.writers_file_system;
 
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.utils.gui_utils.alerts.CustomAlertError;
-import com.utils.io.file_copiers.FactoryFileCopier;
+import com.utils.gui.alerts.CustomAlertError;
 import com.utils.io.file_deleters.FactoryFileDeleter;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.folder_deleters.FactoryFolderDeleter;
+import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
+import com.utils.log.Logger;
 
 public class FileSystemFileWriterImpl implements FileSystemFileWriter {
 
-	private final List<Path> failedToCreateDirectoryPathList;
-	private final List<Path> failedToCopyFilePathList;
-	private final List<Path> failedToDeleteDirectoryPathList;
-	private final List<Path> failedToDeleteFilePathList;
+	private final List<String> failedToCreateDirectoryPathList;
+	private final List<String> failedToCopyFilePathList;
+	private final List<String> failedToDeleteDirectoryPathList;
+	private final List<String> failedToDeleteFilePathList;
 
 	public FileSystemFileWriterImpl() {
 
@@ -27,47 +32,76 @@ public class FileSystemFileWriterImpl implements FileSystemFileWriter {
 
 	@Override
 	public void createDirectory(
-			final Path path) {
+			final String pathString) {
 
 		final boolean success = FactoryFolderCreator.getInstance()
-				.createDirectoryNoChecks(path, false);
+				.createDirectoryNoChecks(pathString, false);
 		if (!success) {
-			failedToCreateDirectoryPathList.add(path);
+			failedToCreateDirectoryPathList.add(pathString);
 		}
 	}
 
 	@Override
 	public void copyFile(
 			final Path zipPath,
-			final Path fileSystemPath,
-			final boolean destFileExists) {
+			final String fileSystemPathString,
+			final boolean dstFileExists) {
 
-		final boolean success = FactoryFileCopier.getInstance()
-				.copyFileNoChecks(zipPath, fileSystemPath, destFileExists, true, false);
+		boolean success = false;
+		try {
+			Logger.printProgress("copying file:");
+			Logger.printLine(zipPath);
+			Logger.printLine("to:");
+			Logger.printLine(fileSystemPathString);
+
+			final boolean keepGoing;
+			if (dstFileExists) {
+				keepGoing = FactoryReadOnlyFlagClearer.getInstance()
+						.clearReadOnlyFlagFileNoChecks(fileSystemPathString, true);
+			} else {
+				keepGoing = FactoryFolderCreator.getInstance()
+						.createParentDirectories(fileSystemPathString, true);
+			}
+			if (keepGoing) {
+
+				final List<CopyOption> copyOptionList = new ArrayList<>();
+				copyOptionList.add(StandardCopyOption.REPLACE_EXISTING);
+				copyOptionList.add(StandardCopyOption.COPY_ATTRIBUTES);
+				final CopyOption[] copyOptionArray = copyOptionList.toArray(new CopyOption[] {});
+
+				final Path dstFilePath = Paths.get(fileSystemPathString);
+				Files.copy(zipPath, dstFilePath, copyOptionArray);
+				success = true;
+			}
+
+		} catch (final Exception exc) {
+			Logger.printException(exc);
+		}
+
 		if (!success) {
-			failedToCopyFilePathList.add(fileSystemPath);
+			failedToCopyFilePathList.add(fileSystemPathString);
 		}
 	}
 
 	@Override
 	public void deleteFolder(
-			final Path path) {
+			final String pathString) {
 
 		final boolean success = FactoryFolderDeleter.getInstance()
-				.deleteFolderNoChecks(path, false);
+				.deleteFolderNoChecks(pathString, false);
 		if (!success) {
-			failedToDeleteDirectoryPathList.add(path);
+			failedToDeleteDirectoryPathList.add(pathString);
 		}
 	}
 
 	@Override
 	public void deleteFile(
-			final Path path) {
+			final String pathString) {
 
 		final boolean success = FactoryFileDeleter.getInstance()
-				.deleteFileNoChecks(path, false);
+				.deleteFileNoChecks(pathString, false);
 		if (!success) {
-			failedToDeleteFilePathList.add(path);
+			failedToDeleteFilePathList.add(pathString);
 		}
 	}
 

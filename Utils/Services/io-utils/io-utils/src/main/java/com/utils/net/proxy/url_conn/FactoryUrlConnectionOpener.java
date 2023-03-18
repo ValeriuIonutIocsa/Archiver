@@ -1,6 +1,7 @@
 package com.utils.net.proxy.url_conn;
 
-import com.utils.users.CurrentUser;
+import com.utils.net.proxy.settings.FactoryProxySettings;
+import com.utils.net.proxy.settings.ProxySettings;
 
 public final class FactoryUrlConnectionOpener {
 
@@ -10,9 +11,9 @@ public final class FactoryUrlConnectionOpener {
 	public static UrlConnectionOpener newInstance() {
 
 		final UrlConnectionOpener urlConnectionOpener;
-		final String userName = CurrentUser.USER_NAME;
-		if ("uid39522".equals(userName)) {
-			urlConnectionOpener = new UrlConnectionOpenerVitesco();
+		final ProxySettings proxySettings = FactoryProxySettings.newInstance();
+		if (proxySettings != null) {
+			urlConnectionOpener = new UrlConnectionOpenerProxy(proxySettings);
 		} else {
 			urlConnectionOpener = new UrlConnectionOpenerRegular();
 		}

@@ -1,7 +1,6 @@
 package com.utils.string.replacements;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class StringReplacementsRegularTest {
@@ -17,6 +16,6 @@ class StringReplacementsRegularTest {
 		stringReplacements.addReplacement("@orig2@", "2");
 
 		final String outStr = stringReplacements.performReplacements(str);
-		assertEquals(expectedStr, outStr);
+		Assertions.assertEquals(expectedStr, outStr);
 	}
 }

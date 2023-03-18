@@ -33,6 +33,32 @@ public final class StrUtils {
 		return intString;
 	}
 
+	@ApiMethod
+	public static String booleanToYesNoString(
+			final boolean b) {
+
+		final String yesNoString;
+		if (b) {
+			yesNoString = "yes";
+		} else {
+			yesNoString = "no";
+		}
+		return yesNoString;
+	}
+
+	@ApiMethod
+	public static String positiveByteToString(
+			final byte b) {
+
+		final String str;
+		if (b >= 0) {
+			str = String.valueOf(b);
+		} else {
+			str = "";
+		}
+		return str;
+	}
+
 	/**
 	 * @param n
 	 *            int value
@@ -43,13 +69,15 @@ public final class StrUtils {
 			final int n,
 			final boolean useGrouping) {
 
-		String str = "";
+		final String str;
 		if (n >= 0) {
 			if (useGrouping) {
 				str = NumberFormat.getNumberInstance(Locale.US).format(n);
 			} else {
 				str = String.valueOf(n);
 			}
+		} else {
+			str = "";
 		}
 		return str;
 	}
@@ -64,24 +92,36 @@ public final class StrUtils {
 			final long n,
 			final boolean useGrouping) {
 
-		String str = "";
+		final String str;
 		if (n >= 0) {
 			if (useGrouping) {
 				str = NumberFormat.getNumberInstance(Locale.US).format(n);
 			} else {
 				str = String.valueOf(n);
 			}
+		} else {
+			str = "";
 		}
 		return str;
+	}
+
+	@ApiMethod
+	public static String unsignedIntToHexString(
+			final int n) {
+
+		final long longN = Integer.toUnsignedLong(n);
+		return createHexString(longN);
 	}
 
 	@ApiMethod
 	public static String positiveIntToHexString(
 			final int n) {
 
-		String str = "";
+		final String str;
 		if (n >= 0) {
 			str = createHexString(n);
+		} else {
+			str = "";
 		}
 		return str;
 	}
@@ -90,9 +130,11 @@ public final class StrUtils {
 	public static String positiveLongToHexString(
 			final long n) {
 
-		String str = "";
+		final String str;
 		if (n >= 0) {
 			str = createHexString(n);
+		} else {
+			str = "";
 		}
 		return str;
 	}
@@ -130,8 +172,11 @@ public final class StrUtils {
 			final byte[] byteArray) {
 
 		final StringBuilder sb = new StringBuilder();
-		for (final byte b : byteArray) {
-			sb.append(unsignedIntToPaddedBinaryString(Byte.toUnsignedInt(b), 8));
+		if (byteArray != null) {
+
+			for (final byte b : byteArray) {
+				sb.append(unsignedIntToPaddedBinaryString(Byte.toUnsignedInt(b), 8));
+			}
 		}
 		return sb.toString();
 	}
@@ -142,12 +187,15 @@ public final class StrUtils {
 			final String separator) {
 
 		final StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < byteArray.length; i++) {
+		if (byteArray != null) {
 
-			final byte b = byteArray[i];
-			sb.append(unsignedIntToPaddedBinaryString(Byte.toUnsignedInt(b), 8));
-			if (i < byteArray.length - 1) {
-				sb.append(separator);
+			for (int i = 0; i < byteArray.length; i++) {
+
+				final byte b = byteArray[i];
+				sb.append(unsignedIntToPaddedBinaryString(Byte.toUnsignedInt(b), 8));
+				if (i < byteArray.length - 1) {
+					sb.append(separator);
+				}
 			}
 		}
 		return sb.toString();
@@ -158,8 +206,11 @@ public final class StrUtils {
 			final byte[] byteArray) {
 
 		final StringBuilder sb = new StringBuilder();
-		for (final byte b : byteArray) {
-			sb.append(unsignedIntToPaddedHexString(Byte.toUnsignedInt(b), 2));
+		if (byteArray != null) {
+
+			for (final byte b : byteArray) {
+				sb.append(unsignedIntToPaddedHexString(Byte.toUnsignedInt(b), 2));
+			}
 		}
 		return sb.toString();
 	}
@@ -170,12 +221,15 @@ public final class StrUtils {
 			final String separator) {
 
 		final StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < byteArray.length; i++) {
+		if (byteArray != null) {
 
-			final byte b = byteArray[i];
-			sb.append(unsignedIntToPaddedHexString(Byte.toUnsignedInt(b), 2));
-			if (i < byteArray.length - 1) {
-				sb.append(separator);
+			for (int i = 0; i < byteArray.length; i++) {
+
+				final byte b = byteArray[i];
+				sb.append(unsignedIntToPaddedHexString(Byte.toUnsignedInt(b), 2));
+				if (i < byteArray.length - 1) {
+					sb.append(separator);
+				}
 			}
 		}
 		return sb.toString();
@@ -209,7 +263,13 @@ public final class StrUtils {
 
 		final int paddingLength = length - str.length();
 		if (paddingLength > 0) {
-			stringBuilder.append(" ".repeat(paddingLength));
+
+			int i = 0;
+			while (i < paddingLength) {
+
+				stringBuilder.append(' ');
+				i++;
+			}
 		}
 		stringBuilder.append(str);
 	}
@@ -223,7 +283,13 @@ public final class StrUtils {
 		stringBuilder.append(str);
 		final int paddingLength = length - str.length();
 		if (paddingLength > 0) {
-			stringBuilder.append(" ".repeat(paddingLength));
+
+			int i = 0;
+			while (i < paddingLength) {
+
+				stringBuilder.append(' ');
+				i++;
+			}
 		}
 	}
 
@@ -347,6 +413,17 @@ public final class StrUtils {
 	public static String timeSToString(
 			final double time) {
 		return doubleToString(time, 0, 2, true) + "s";
+	}
+
+	@ApiMethod
+	public static void printRepeatedString(
+			final String string,
+			final int count,
+			final PrintStream printStream) {
+
+		for (int i = 0; i < count; i++) {
+			printStream.print(string);
+		}
 	}
 
 	@ApiMethod
@@ -495,7 +572,13 @@ public final class StrUtils {
 			str = "";
 
 		} else {
-			final String format = "0." + "0".repeat(mandatoryDigitCount) + "#".repeat(optionalDigitCount);
+			final String format;
+			if (mandatoryDigitCount > 0 || optionalDigitCount > 0) {
+				format = "0." + StringUtils.repeat('0', mandatoryDigitCount) +
+						StringUtils.repeat('#', optionalDigitCount);
+			} else {
+				format = "0";
+			}
 			final DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols(Locale.US);
 			final DecimalFormat decimalFormat = new DecimalFormat(format, decimalFormatSymbols);
 			if (useGrouping) {
@@ -648,12 +731,59 @@ public final class StrUtils {
 	}
 
 	@ApiMethod
+	public static String createPathDateTimeString() {
+		return new SimpleDateFormat("dd_MMM_yyyy__hh_mm_ss_SSS__zzz", Locale.US).format(new Date());
+	}
+
+	@ApiMethod
 	public static String createDisplayDateTimeString() {
 		return new SimpleDateFormat("dd MMM yyyy, hh:mm:ss zzz", Locale.US).format(new Date());
 	}
 
 	@ApiMethod
-	public static byte tryParseUByte(
+	public static boolean parseBooleanFromIntString(
+			final String booleanString) {
+		return "1".equals(booleanString);
+	}
+
+	@ApiMethod
+	public static Byte tryParseByte(
+			final String byteString) {
+
+		Byte value = null;
+		try {
+			value = (byte) Integer.parseInt(byteString);
+		} catch (final Exception ignored) {
+		}
+		return value;
+	}
+
+	@ApiMethod
+	public static Byte tryParseByteFromHexString(
+			final String byteString) {
+
+		Byte value = null;
+		try {
+			value = (byte) Integer.parseInt(byteString, 16);
+		} catch (final Exception ignored) {
+		}
+		return value;
+	}
+
+	@ApiMethod
+	public static Byte tryParseByteFromBinaryString(
+			final String byteString) {
+
+		Byte value = null;
+		try {
+			value = (byte) Integer.parseInt(byteString, 2);
+		} catch (final Exception ignored) {
+		}
+		return value;
+	}
+
+	@ApiMethod
+	public static byte tryParsePositiveByte(
 			final String byteString) {
 
 		byte value = -1;
@@ -665,21 +795,15 @@ public final class StrUtils {
 	}
 
 	@ApiMethod
-	public static boolean tryParseBoolean(
-			final String booleanString) {
+	public static Short tryParseShort(
+			final String shortString) {
 
-		boolean b = false;
+		Short value = null;
 		try {
-			b = Boolean.parseBoolean(booleanString);
+			value = Short.parseShort(shortString);
 		} catch (final Exception ignored) {
 		}
-		return b;
-	}
-
-	@ApiMethod
-	public static boolean parseBooleanFromIntString(
-			final String booleanString) {
-		return "1".equals(booleanString);
+		return value;
 	}
 
 	@ApiMethod
@@ -722,13 +846,13 @@ public final class StrUtils {
 
 	@ApiMethod
 	public static int tryParsePositiveIntHexOrDec(
-			final String param) {
+			final String string) {
 
 		final int value;
-		if (param.startsWith("0x")) {
-			value = StrUtils.tryParsePositiveIntFromHexString(param);
+		if (StringUtils.startsWith(string, "0x")) {
+			value = StrUtils.tryParsePositiveIntFromHexString(string);
 		} else {
-			value = StrUtils.tryParsePositiveInt(param);
+			value = StrUtils.tryParsePositiveInt(string);
 		}
 		return value;
 	}
@@ -772,6 +896,31 @@ public final class StrUtils {
 	}
 
 	@ApiMethod
+	public static long tryParsePositiveLongFromHexStringWoPrefix(
+			final String hexString) {
+
+		long value = -1;
+		try {
+			value = Long.parseLong(hexString, 16);
+		} catch (final Exception ignored) {
+		}
+		return value;
+	}
+
+	@ApiMethod
+	public static long tryParsePositiveLongHexOrDec(
+			final String string) {
+
+		final long value;
+		if (StringUtils.startsWith(string, "0x")) {
+			value = StrUtils.tryParsePositiveLongFromHexString(string);
+		} else {
+			value = StrUtils.tryParsePositiveLong(string);
+		}
+		return value;
+	}
+
+	@ApiMethod
 	public static double tryParseDouble(
 			final String doubleString,
 			final double defaultValue) {
@@ -790,12 +939,7 @@ public final class StrUtils {
 			final double defaultValue,
 			final double limit) {
 
-		double d;
-		try {
-			d = Double.parseDouble(doubleString);
-		} catch (final Exception ignored) {
-			d = defaultValue;
-		}
+		double d = tryParseDouble(doubleString, defaultValue);
 		if (Double.isNaN(d) || Math.abs(d) > Math.abs(limit)) {
 			d = defaultValue;
 		}
@@ -822,5 +966,43 @@ public final class StrUtils {
 			byteArray = new byte[] {};
 		}
 		return byteArray;
+	}
+
+	@ApiMethod
+	public static byte[] tryParseByteArrayFromBinaryString(
+			final String str) {
+
+		byte[] byteArray;
+		try {
+			final String strNoSpaces = StringUtils.remove(str, ' ');
+			final int length = strNoSpaces.length();
+			final byte[] data = new byte[length / 8];
+			for (int i = 0; i < length; i += 8) {
+
+				final String byteString = strNoSpaces.substring(i, i + 8);
+				data[i / 8] = StrUtils.tryParseByteFromBinaryString(byteString);
+			}
+			byteArray = data;
+
+		} catch (final Exception ignored) {
+			byteArray = new byte[] {};
+		}
+		return byteArray;
+	}
+
+	@ApiMethod
+	public static String stackTraceToString(
+			final StackTraceElement[] stackTraceElementArray) {
+
+		final StringBuilder sbStackTrace = new StringBuilder();
+		for (int i = 0; i < stackTraceElementArray.length; i++) {
+
+			final StackTraceElement stackTraceElement = stackTraceElementArray[i];
+			sbStackTrace.append(stackTraceElement);
+			if (i < stackTraceElementArray.length - 1) {
+				sbStackTrace.append(System.lineSeparator());
+			}
+		}
+		return sbStackTrace.toString();
 	}
 }

@@ -3,11 +3,7 @@ ext {
     compileClassPaths = [
             'org.openjfx:javafx-base:11.0.2:win',
             'org.openjfx:javafx-graphics:11.0.2:win',
-            'org.openjfx:javafx-controls:11.0.2:win',
-            'org.openjfx:javafx-web:11.0.2:win',
-            'org.openjfx:javafx-swing:11.0.2:win',
-            'org.openjfx:javafx-media:11.0.2:win',
-            'io.github.palexdev:materialfx:11.10.1'
+            'org.openjfx:javafx-controls:11.0.2:win'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = [

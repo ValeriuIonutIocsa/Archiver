@@ -9,6 +9,12 @@ import com.utils.log.Logger;
 
 public final class RegexUtils {
 
+	public static final Pattern NEW_LINE_PATTERN = Pattern.compile("\\R");
+	public static final Pattern WHITE_SPACE_PATTERN = Pattern.compile("\\s+");
+	public static final Pattern NOT_WHITE_SPACE_PATTERN = Pattern.compile("\\S+");
+	public static final Pattern WORD_PATTERN = Pattern.compile("\\w+");
+	public static final Pattern NOT_WORD_PATTERN = Pattern.compile("\\W+");
+
 	private RegexUtils() {
 	}
 
@@ -40,7 +46,7 @@ public final class RegexUtils {
 
 		} catch (final Exception ignored) {
 			if (StringUtils.isNotBlank(patternString)) {
-				Logger.printWarning("failed to compile REGEX pattern \"" + patternString + "\"!");
+				Logger.printWarning("failed to compile REGEX pattern \"" + patternString + "\"");
 			}
 		}
 		return pattern;

@@ -2,7 +2,8 @@ final String projectPath = file('.').getAbsolutePath()
 final String rootDirPath = file('../../../../').getAbsolutePath()
 gradle.ext.rootDirPath = rootDirPath
 final String[] subProjectsRelativePaths = [
-        '/Utils/Gui/gui-utils/gui-utils',
+        '/Utils/Gui/javafx-swing-utils/javafx-swing-utils',
+        '/Utils/Gui/jfx-utils/jfx-utils',
         '/Utils/Data/app-info/app-info'
 ]
 

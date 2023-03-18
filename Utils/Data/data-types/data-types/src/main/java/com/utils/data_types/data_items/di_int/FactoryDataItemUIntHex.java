@@ -17,6 +17,7 @@ public final class FactoryDataItemUIntHex {
 
 	public static DataItemUIntHex newInstance(
 			final int value) {
+
 		return new DataItemUIntHex(value);
 	}
 }

@@ -5,18 +5,18 @@ import java.nio.file.Path;
 public interface FileSystemFileWriter {
 
 	void createDirectory(
-			Path path);
+            String pathString);
 
 	void copyFile(
 			Path zipPath,
-			Path fileSystemPath,
-			boolean destFileExists);
+			String fileSystemPathString,
+			boolean dstFileExists);
 
 	void deleteFolder(
-			Path path);
+			String pathString);
 
 	void deleteFile(
-			Path path);
+			String pathString);
 
 	void printErrors();
 }

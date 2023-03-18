@@ -1,27 +1,26 @@
 package com.personal.archiver.gui;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import com.personal.archiver.gui.data.FileToArchive;
-import com.utils.gui_utils.alerts.CustomAlertException;
-import com.utils.gui_utils.objects.tables.tree_table.UnfilteredTreeItem;
+import com.utils.gui.alerts.CustomAlertException;
+import com.utils.gui.objects.tables.tree_table.UnfilteredTreeItem;
 import com.utils.io.PathUtils;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
 class ParserFilesToArchive {
 
-	private final Path workingDirPath;
+	private final String workingDirPathString;
 	private final UnfilteredTreeItem<FileToArchive> unfilteredTreeItemRoot;
 
 	private FileToArchive fileToArchiveWorkingDir;
 
 	ParserFilesToArchive(
-			final Path workingDirPath,
+			final String workingDirPathString,
 			final UnfilteredTreeItem<FileToArchive> unfilteredTreeItemRoot) {
 
-		this.workingDirPath = workingDirPath;
+		this.workingDirPathString = workingDirPathString;
 		this.unfilteredTreeItemRoot = unfilteredTreeItemRoot;
 	}
 
@@ -30,8 +29,8 @@ class ParserFilesToArchive {
 		try {
 			unfilteredTreeItemRoot.getChildrenList().clear();
 
-			final String workingDirName = PathUtils.computeFileName(workingDirPath);
-			fileToArchiveWorkingDir = new FileToArchive(workingDirName, workingDirPath, true);
+			final String workingDirName = PathUtils.computeFileName(workingDirPathString);
+			fileToArchiveWorkingDir = new FileToArchive(workingDirName, workingDirPathString, true);
 			fileToArchiveWorkingDir.fillChildrenList();
 
 			final List<FileToArchive> childrenList = fileToArchiveWorkingDir.getChildrenList();

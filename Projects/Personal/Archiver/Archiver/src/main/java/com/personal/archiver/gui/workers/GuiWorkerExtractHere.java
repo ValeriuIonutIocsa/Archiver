@@ -3,11 +3,12 @@ package com.personal.archiver.gui.workers;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,21 +17,23 @@ import com.personal.archiver.gui.workers.runnables.TreeRunnable;
 import com.personal.archiver.gui.workers.runnables.TreeRunnableExecutor;
 import com.personal.archiver.gui.workers.writers_file_system.FileSystemFileWriter;
 import com.personal.archiver.gui.workers.writers_file_system.FileSystemFileWriterImpl;
-import com.utils.gui_utils.alerts.CustomAlertException;
-import com.utils.gui_utils.workers.ComponentDisabler;
-import com.utils.gui_utils.workers.GuiWorker;
+import com.utils.gui.alerts.CustomAlertException;
+import com.utils.gui.workers.AbstractGuiWorker;
+import com.utils.gui.workers.ControlDisabler;
 import com.utils.io.IoUtils;
-import com.utils.io.ZipUtils;
+import com.utils.io.ListFileUtils;
+import com.utils.io.PathUtils;
+import com.utils.io.zip.ZipUtils;
 import com.utils.log.Logger;
-import com.utils.log.progress.ProgressIndicator;
+import com.utils.log.progress.ProgressIndicators;
 
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 
-public class GuiWorkerExtractHere extends GuiWorker implements CloseableGuiWorker {
+public class GuiWorkerExtractHere
+		extends AbstractGuiWorker implements CloseableGuiWorker {
 
 	private final FileToArchive fileToArchive;
-	private Path fileSystemRootPath;
 	private String fileSystemRootPathString;
 	private final AtomicInteger runnableCount;
 	private final FileSystemFileWriter fileSystemFileWriter;
@@ -39,11 +42,11 @@ public class GuiWorkerExtractHere extends GuiWorker implements CloseableGuiWorke
 
 	public GuiWorkerExtractHere(
 			final Scene scene,
-			final ComponentDisabler componentDisabler,
+			final ControlDisabler controlDisabler,
 			final FileToArchive fileToArchive,
 			final CheckBox checkBoxCloseOnCompletion) {
 
-		super(scene, componentDisabler);
+		super(scene, controlDisabler);
 
 		this.fileToArchive = fileToArchive;
 
@@ -56,20 +59,20 @@ public class GuiWorkerExtractHere extends GuiWorker implements CloseableGuiWorke
 	@Override
 	protected void work() {
 
-		ProgressIndicator.getInstance().update(0);
+		ProgressIndicators.getInstance().update(0);
 		Logger.printProgress("extracting archive...");
 
-		final Path archiveFilePath = fileToArchive.getFilePath();
-		if (IoUtils.fileExists(archiveFilePath)) {
+		final String archiveFilePathString = fileToArchive.getFilePathString();
+		if (IoUtils.fileExists(archiveFilePathString)) {
 
-			try (FileSystem fileSystem = ZipUtils.openZipFileSystem(archiveFilePath, true)) {
+			try (FileSystem fileSystem =
+					ZipUtils.openZipFileSystem(archiveFilePathString, true)) {
 
 				final TreeRunnable treeRunnableRoot = new TreeRunnable(null);
 
-				final Path zipRootPath = fileSystem.getPath("/");
-				fileSystemRootPath = archiveFilePath.getParent();
-				fileSystemRootPathString = fileSystemRootPath.toString();
-				fillRunnableListRec(true, zipRootPath, fileSystemRootPath, treeRunnableRoot);
+				final Path zipFileRootPath = fileSystem.getPath("/");
+				fileSystemRootPathString = PathUtils.computeParentPath(archiveFilePathString);
+				fillRunnableListRec(true, zipFileRootPath, fileSystemRootPathString, treeRunnableRoot);
 
 				new TreeRunnableExecutor(treeRunnableRoot, runnableCount).work();
 
@@ -87,68 +90,88 @@ public class GuiWorkerExtractHere extends GuiWorker implements CloseableGuiWorke
 	private void fillRunnableListRec(
 			final boolean firstLevel,
 			final Path zipParentFolderPath,
-			final Path fileSystemParentFolderPath,
+			final String fileSystemParentFolderPathString,
 			final TreeRunnable treeRunnable) {
 
-		final Map<String, Path> fileSystemFolderMap = new HashMap<>();
-		final Map<String, Path> fileSystemFileMap = new HashMap<>();
-		if (fileSystemParentFolderPath != null) {
+		final Map<String, String> fileSystemFolderMap = new HashMap<>();
+		final Map<String, String> fileSystemFileMap = new HashMap<>();
+		if (fileSystemParentFolderPathString != null) {
 
-			final List<Path> fileSystemPathList = IoUtils.listFiles(fileSystemParentFolderPath);
-			for (final Path fileSystemPath : fileSystemPathList) {
+			final List<String> fileSystemPathStringList =
+					ListFileUtils.listFiles(fileSystemParentFolderPathString);
+			for (final String fileSystemPathString : fileSystemPathStringList) {
 
-				final Path fileSystemRelativePath = fileSystemRootPath.relativize(fileSystemPath);
-				final String relativePathString = fileSystemRelativePath.toString();
-				if (Files.isDirectory(fileSystemPath)) {
-					fileSystemFolderMap.put(relativePathString, fileSystemPath);
+				final String fileSystemRelativePathString =
+						PathUtils.computeRelativePath(fileSystemRootPathString, fileSystemPathString);
+				if (IoUtils.directoryExists(fileSystemPathString)) {
+					fileSystemFolderMap.put(fileSystemRelativePathString, fileSystemPathString);
 				} else {
-					fileSystemFileMap.put(relativePathString, fileSystemPath);
+					fileSystemFileMap.put(fileSystemRelativePathString, fileSystemPathString);
 				}
 			}
 		}
 
-		final List<Path> zipPathList = IoUtils.listFiles(zipParentFolderPath);
+		final List<Path> zipPathList = new ArrayList<>();
+		try {
+			try (Stream<Path> fileListStream = Files.list(zipParentFolderPath)) {
+				fileListStream.forEach(zipPathList::add);
+			}
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to list files inside folder:" +
+					System.lineSeparator() + zipParentFolderPath);
+			Logger.printException(exc);
+		}
+
 		for (final Path zipPath : zipPathList) {
 
 			if (Files.isDirectory(zipPath)) {
 
 				final String relativePathString = computeZipFolderRelativePathString(zipPath);
-				final Path fileSystemFolderPath = fileSystemFolderMap.getOrDefault(relativePathString, null);
+				final String fileSystemFolderPathString = fileSystemFolderMap.get(relativePathString);
 				final TreeRunnable treeRunnableRec;
-				if (fileSystemFolderPath == null) {
-					final Path newFileSystemFolderPath =
-							Paths.get(fileSystemRootPathString, relativePathString);
+				if (fileSystemFolderPathString == null) {
+
+					final String newFileSystemFolderPathString =
+							PathUtils.computePath(fileSystemRootPathString, relativePathString);
 					treeRunnableRec = addTreeRunnable(treeRunnable,
-							() -> fileSystemFileWriter.createDirectory(newFileSystemFolderPath));
+							() -> fileSystemFileWriter.createDirectory(newFileSystemFolderPathString));
+
 				} else {
 					treeRunnableRec = treeRunnable;
 				}
-				fillRunnableListRec(false, zipPath, fileSystemFolderPath, treeRunnableRec);
+				fillRunnableListRec(false, zipPath, fileSystemFolderPathString, treeRunnableRec);
 				fileSystemFolderMap.remove(relativePathString);
 
 			} else {
 				final String relativePathString = computeZipFileRelativePathString(zipPath);
-				Path fileSystemPath = fileSystemFileMap.getOrDefault(relativePathString, null);
-				final boolean destFileExists;
-				if (fileSystemPath == null) {
-					fileSystemPath = Paths.get(fileSystemRootPathString, relativePathString);
-					destFileExists = false;
+				String fileSystemPathString = fileSystemFileMap.get(relativePathString);
+				final boolean dstFileExists;
+				if (fileSystemPathString == null) {
+
+					fileSystemPathString =
+							PathUtils.computePath(fileSystemRootPathString, relativePathString);
+					dstFileExists = false;
+
 				} else {
-					destFileExists = true;
+					dstFileExists = true;
 				}
-				final Path finalFileSystemPath = fileSystemPath;
+				final String finalFileSystemPathString = fileSystemPathString;
 				addTreeRunnable(treeRunnable, () -> fileSystemFileWriter.copyFile(
-						zipPath, finalFileSystemPath, destFileExists));
+						zipPath, finalFileSystemPathString, dstFileExists));
 				fileSystemFileMap.remove(relativePathString);
 			}
 		}
 
 		if (!firstLevel) {
-			for (final Path fileSystemFolderPath : fileSystemFolderMap.values()) {
-				addTreeRunnable(treeRunnable, () -> fileSystemFileWriter.deleteFolder(fileSystemFolderPath));
+
+			for (final String fileSystemFolderPathString : fileSystemFolderMap.values()) {
+				addTreeRunnable(treeRunnable,
+						() -> fileSystemFileWriter.deleteFolder(fileSystemFolderPathString));
 			}
-			for (final Path fileSystemFilePath : fileSystemFileMap.values()) {
-				addTreeRunnable(treeRunnable, () -> fileSystemFileWriter.deleteFile(fileSystemFilePath));
+			for (final String fileSystemFilePathString : fileSystemFileMap.values()) {
+				addTreeRunnable(treeRunnable,
+						() -> fileSystemFileWriter.deleteFile(fileSystemFilePathString));
 			}
 		}
 	}
@@ -186,7 +209,7 @@ public class GuiWorkerExtractHere extends GuiWorker implements CloseableGuiWorke
 	@Override
 	protected void finish() {
 
-		ProgressIndicator.getInstance().update(0);
+		ProgressIndicators.getInstance().update(0);
 
 		if (checkBoxCloseOnCompletion != null) {
 			final boolean closeOnCompletion = checkBoxCloseOnCompletion.isSelected();

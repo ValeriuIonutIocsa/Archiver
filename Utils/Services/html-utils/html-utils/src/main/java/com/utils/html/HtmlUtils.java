@@ -32,10 +32,12 @@ public final class HtmlUtils {
 			final XmlStAXWriter xmlStAXWriter,
 			final byte[] imageFileBytes) {
 
-		xmlStAXWriter.writeStartElement("img");
+		final String imgTagName = "img";
+		xmlStAXWriter.writeStartElement(imgTagName);
 		final String src = createImgSrc(imageFileBytes);
 		xmlStAXWriter.writeAttribute("src", src);
-		xmlStAXWriter.writeEndElement("img");
+
+		xmlStAXWriter.writeEndElement(imgTagName);
 	}
 
 	@ApiMethod

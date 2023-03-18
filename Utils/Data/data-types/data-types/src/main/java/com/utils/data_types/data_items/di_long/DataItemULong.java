@@ -20,17 +20,20 @@ public class DataItemULong extends AbstractDataItem<Long> implements Comparable<
 	public void serializeToDataBase(
 			final int index,
 			final PreparedStatement preparedStatement) throws SQLException {
+
 		preparedStatement.setLong(index, value);
 	}
 
 	@Override
 	public String createCopyString() {
+
 		return StrUtils.positiveLongToString(value, false);
 	}
 
 	@Override
 	public int compareTo(
 			final DataItemULong other) {
+
 		return Long.compare(value, other.value);
 	}
 

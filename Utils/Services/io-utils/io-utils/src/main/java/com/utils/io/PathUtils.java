@@ -12,9 +12,11 @@ import com.utils.log.Logger;
 
 public final class PathUtils {
 
-	public static final String ROOT_PATH = createRootPath();
+	private PathUtils() {
+	}
 
-	private static String createRootPath() {
+	@ApiMethod
+	public static String createRootPath() {
 
 		final String rootPath;
 		if (SystemUtils.IS_OS_WINDOWS) {
@@ -25,56 +27,95 @@ public final class PathUtils {
 		return rootPath;
 	}
 
-	private PathUtils() {
+	@ApiMethod
+	public static String computePath(
+			final String firstPathString,
+			final String... otherPathStringArray) {
+
+		return computePath(null, false, null, false, true,
+				firstPathString, otherPathStringArray);
 	}
 
 	@ApiMethod
-	public static Path tryParseExistingFilePath(
+	public static String computeNamedPath(
 			final String pathName,
-			final String pathString) {
+			final String firstPathString,
+			final String... otherPathStringArray) {
 
-		Path path = tryParsePath(pathName, pathString);
-		final boolean fileExists = IoUtils.fileExists(path);
-		if (!fileExists) {
-			Logger.printError(pathName + " does not exist:" +
-					System.lineSeparator() + path);
-			path = null;
-		}
-		return path;
+		return computePath(pathName, false, null, false, true,
+				firstPathString, otherPathStringArray);
 	}
 
 	@ApiMethod
-	public static Path tryParseExistingFolderPath(
+	public static String computeNormalizedPath(
 			final String pathName,
-			final String pathString) {
+			final String firstPathString,
+			final String... otherPathStringArray) {
 
-		Path path = tryParsePath(pathName, pathString);
-		final boolean directoryExists = IoUtils.directoryExists(path);
-		if (!directoryExists) {
-			Logger.printError(pathName + " does not exist:" +
-					System.lineSeparator() + path);
-			path = null;
-		}
-		return path;
+		return computePath(pathName, true, null, true, true,
+				firstPathString, otherPathStringArray);
 	}
 
 	@ApiMethod
-	public static Path tryParsePath(
+	public static String computeAbsolutePath(
 			final String pathName,
-			final String pathString) {
+			final String rootFolderPathString,
+			final String firstPathString,
+			final String... otherPathStringArray) {
 
-		Path path = null;
+		return computePath(pathName, true, rootFolderPathString, true, true,
+				firstPathString, otherPathStringArray);
+	}
+
+	@ApiMethod
+	public static String computePath(
+			final String pathName,
+			final boolean absolute,
+			final String rootFolderPathString,
+			final boolean normalize,
+			final boolean verbose,
+			final String firstPathString,
+			final String... otherPathStringArray) {
+
+		String pathString = null;
 		try {
-			path = Paths.get(pathString).toAbsolutePath();
+			Path path = Paths.get(firstPathString, otherPathStringArray);
+
+			if (absolute) {
+
+				if (rootFolderPathString == null) {
+					path = path.toAbsolutePath();
+				} else {
+					if (!path.isAbsolute()) {
+						path = Paths.get(rootFolderPathString, path.toString());
+					}
+				}
+			}
+
+			pathString = path.toString();
+
+			if (normalize) {
+				pathString = FilenameUtils.normalize(pathString);
+			}
 
 		} catch (final Exception exc) {
-			if (StringUtils.isNotBlank(pathName)) {
-				Logger.printError("failed to parse the " + pathName + " path:" +
-						System.lineSeparator() + pathString);
+
+			if (verbose) {
+
+				final StringBuilder sbErrorMessage = new StringBuilder("failed to compute ");
+				if (pathName != null) {
+					sbErrorMessage.append(pathName).append(' ');
+				}
+				sbErrorMessage.append("path:")
+						.append(System.lineSeparator()).append(firstPathString);
+				for (final String otherPathString : otherPathStringArray) {
+					sbErrorMessage.append(System.lineSeparator()).append(otherPathString);
+				}
+				Logger.printError(sbErrorMessage);
 				Logger.printException(exc);
 			}
 		}
-		return path;
+		return pathString;
 	}
 
 	@ApiMethod
@@ -88,7 +129,44 @@ public final class PathUtils {
 	@ApiMethod
 	public static String computeFileName(
 			final String pathString) {
-		return FilenameUtils.getName(pathString);
+
+		final Path path = Paths.get(pathString);
+		final Path fileName = path.getFileName();
+		return fileName.toString();
+	}
+
+	@ApiMethod
+	public static String computeParentPath(
+			final String pathString) {
+
+		return computeParentPath(pathString, 1);
+	}
+
+	@ApiMethod
+	public static String computeParentPath(
+			final String pathString,
+			final int levelsToGoUp) {
+
+		String folderPathString = null;
+		try {
+			Path parentPath = Paths.get(pathString);
+			for (int i = 0; i < levelsToGoUp; i++) {
+
+				if (parentPath != null) {
+					parentPath = parentPath.getParent();
+				} else {
+					break;
+				}
+			}
+			if (parentPath != null) {
+				folderPathString = parentPath.toString();
+			}
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to compute parent path string");
+			Logger.printException(exc);
+		}
+		return folderPathString;
 	}
 
 	@ApiMethod
@@ -102,6 +180,7 @@ public final class PathUtils {
 	@ApiMethod
 	public static String computeExtension(
 			final String pathString) {
+
 		return FilenameUtils.getExtension(pathString);
 	}
 
@@ -111,6 +190,7 @@ public final class PathUtils {
 
 		String pathWoExt = null;
 		if (path != null) {
+
 			final String pathString = path.toString();
 			pathWoExt = computePathWoExt(pathString);
 		}
@@ -120,6 +200,7 @@ public final class PathUtils {
 	@ApiMethod
 	public static String computePathWoExt(
 			final String pathString) {
+
 		return FilenameUtils.removeExtension(pathString);
 	}
 
@@ -129,6 +210,7 @@ public final class PathUtils {
 
 		String fileNameWoExt = null;
 		if (path != null) {
+
 			final String pathString = path.toString();
 			fileNameWoExt = computeFileNameWoExt(pathString);
 		}
@@ -138,21 +220,43 @@ public final class PathUtils {
 	@ApiMethod
 	public static String computeFileNameWoExt(
 			final String pathString) {
-		return FilenameUtils.getBaseName(pathString);
+
+		final String fileName = computeFileName(pathString);
+		return FilenameUtils.getBaseName(fileName);
 	}
 
 	@ApiMethod
-	public static String computeAbsolutePathString(
-			final String pathName,
-			final String pathString) {
+	public static String appendFileNameSuffix(
+			final String pathString,
+			final String suffix) {
 
-		String absolutePathString = null;
-		final Path path = tryParsePath(pathName, pathString);
-		if (path != null) {
-
-			final Path absolutePath = path.toAbsolutePath();
-			absolutePathString = absolutePath.toString();
+		final String resultPathString;
+		final String pathStringWoExt = PathUtils.computePathWoExt(pathString);
+		final String extension = PathUtils.computeExtension(pathString);
+		if (StringUtils.isNotEmpty(extension)) {
+			resultPathString = pathStringWoExt + suffix + "." + extension;
+		} else {
+			resultPathString = pathStringWoExt + suffix;
 		}
-		return absolutePathString;
+		return resultPathString;
+	}
+
+	@ApiMethod
+	public static String computeRelativePath(
+			final String fromPathString,
+			final String toPathString) {
+
+		String relativePathString = null;
+		try {
+			final Path fromPath = Paths.get(fromPathString);
+			final Path toPath = Paths.get(toPathString);
+			final Path relativePath = fromPath.relativize(toPath);
+			relativePathString = relativePath.toString();
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to compute relative path string");
+			Logger.printException(exc);
+		}
+		return relativePathString;
 	}
 }

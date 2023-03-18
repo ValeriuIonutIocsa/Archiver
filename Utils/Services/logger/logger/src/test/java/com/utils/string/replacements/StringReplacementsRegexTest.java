@@ -1,7 +1,6 @@
 package com.utils.string.replacements;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class StringReplacementsRegexTest {
@@ -17,6 +16,6 @@ class StringReplacementsRegexTest {
 		stringReplacements.addReplacement("@orig[a-z]@", "_CHAR_");
 
 		final String outStr = stringReplacements.performReplacements(str);
-		assertEquals(expectedStr, outStr);
+		Assertions.assertEquals(expectedStr, outStr);
 	}
 }

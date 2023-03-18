@@ -15,11 +15,14 @@ if (project.hasProperty('projectVersion')) {
 }
 
 apply plugin: 'java-library'
-sourceCompatibility = 11.0
+apply plugin: 'java-test-fixtures'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -27,7 +30,7 @@ dependencies {
 
         if (subProjectName != null) {
             api project(subProjectName)
-            testImplementation project(path: subProjectName, configuration: 'testArtifacts')
+            testFixturesApi testFixtures(project(subProjectName))
         }
     }
 
@@ -44,9 +47,27 @@ dependencies {
         }
     }
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0-M1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0-M1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.8.0-M1'
+    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testFixturesRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    testFixturesRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.9.2'
+
+    for (String testCompileClassPath : testCompileClassPaths) {
+
+        if (testCompileClassPath != null) {
+            testFixturesImplementation testCompileClassPath
+        }
+    }
+    for (String testCompileJarFilePath : testCompileJarFilePaths) {
+
+        if (testCompileJarFilePath != null) {
+            testFixturesApi files(testCompileJarFilePath)
+        }
+    }
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.9.2'
+
     for (String testCompileClassPath : testCompileClassPaths) {
 
         if (testCompileClassPath != null) {
@@ -56,7 +77,7 @@ dependencies {
     for (String testCompileJarFilePath : testCompileJarFilePaths) {
 
         if (testCompileJarFilePath != null) {
-            api files(testCompileJarFilePath)
+            testApi files(testCompileJarFilePath)
         }
     }
 }
@@ -97,7 +118,7 @@ task fatJar(type: Jar, dependsOn: compileJava) {
     } catch (Exception ignored) {
     }
 
-    classifier = 'all'
+    archiveClassifier.set('all')
     from {
         final projects = createProjectAndDependenciesList(project)
         projects.collect {
@@ -113,13 +134,16 @@ task fatJar(type: Jar, dependsOn: compileJava) {
         new File((String) "${destDir}/.gitignore").text = '/*.jar\n/*.exe\n/*.res'
         File otherDestDir = createOtherDestDir()
         if (otherDestDir != destDir) {
-            copyFile(destDir.toString(), otherDestDir.toString(), archiveName.toString())
+            copyFile(destDir.toString(), otherDestDir.toString(), archiveFileName.get().toString())
         }
         if (project.hasProperty('covertToExe') && covertToExe) {
-            final File wrapperScriptFile = new File((String) "${destDir}/wrapper/wrapper.py")
+            final File wrapperScriptFile = new File((String) "${destDir}/wrapper/Wrapper.java")
             if (wrapperScriptFile.exists()) {
                 exec {
-                    commandLine 'python', "${wrapperScriptFile}", "${project.name}"
+                    String javaHomeFolderPathString = System.getProperty("java.home")
+                    Path javaExePath = Paths.get(javaHomeFolderPathString, "bin", "java.exe")
+                    String javaExeFilePathString = javaExePath.toAbsolutePath().toString()
+                    commandLine javaExeFilePathString, "${wrapperScriptFile}", "${wrapperScriptFile}", "${project.name}"
                     workingDir "${destDir}"
                 }
                 if (otherDestDir != destDir) {
@@ -161,7 +185,7 @@ task sourcesJar(type: Jar) {
     } catch (Exception ignored) {
     }
 
-    classifier = 'sources'
+    archiveClassifier.set('sources')
     from {
         final projects = createProjectAndDependenciesList(project)
         projects.collect { it.sourceSets.main.allSource }
@@ -171,7 +195,7 @@ task sourcesJar(type: Jar) {
         new File((String) "${destDir}/.gitignore").text = '/*.jar\n/*.exe\n/*.res'
         File otherDestDir = createOtherDestDir()
         if (otherDestDir != destDir) {
-            copyFile(destDir.toString(), otherDestDir.toString(), archiveName.toString())
+            copyFile(destDir.toString(), otherDestDir.toString(), archiveFileName.get().toString())
         }
 
         def destinationUriString = otherDestDir.toPath().toUri().toString()
@@ -195,9 +219,11 @@ File createOtherDestDir() {
         if (jarFolder.isDirectory()) {
             otherDestDir = jarFolder
         } else {
-            boolean jarFolderCreated = jarFolder.mkdir()
+            boolean jarFolderCreated = jarFolder.mkdirs()
             if (jarFolderCreated) {
                 otherDestDir = jarFolder
+            } else {
+                println 'failed to create JAR folder'
             }
         }
     }
@@ -236,21 +262,10 @@ def createProjectAndDependenciesList(Project project) {
     return projectAndDependencies
 }
 
-configurations {
-    testArtifacts.extendsFrom testRuntime
-}
-
-task testJar(type: Jar) {
-
-    classifier 'test'
-    from sourceSets.test.output
-}
-
 artifacts {
 
     archives fatJar
     archives sourcesJar
-    testArtifacts testJar
 }
 
 task subProjectDependencyTree {
@@ -319,9 +334,9 @@ def subProjectRunConfigurationsRec(
 
 apply plugin: 'idea'
 idea {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
     module {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
         downloadJavadoc = true
         downloadSources = true
     }
@@ -329,11 +344,41 @@ idea {
 
 apply plugin: 'eclipse'
 eclipse {
-    classpath.containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
     classpath {
         downloadJavadoc = true
         downloadSources = true
         containsTestFixtures = true
+        containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
+    }
+}
+
+eclipse.classpath.file {
+    whenMerged { classpath ->
+        def testDependencies = classpath.entries.findAll { entry -> entry instanceof org.gradle.plugins.ide.eclipse.model.ProjectDependency && entry.entryAttributes.test }
+        classpath.entries.removeAll testDependencies
+    }
+}
+
+def eclipseResourceEncoding = tasks.register('eclipseResourceEncoding')
+// encoding will be defined when eclipse task runs
+tasks.named('eclipse') { dependsOn(eclipseResourceEncoding) }
+// run the task on "Refresh Gradle Project"
+eclipse.synchronizationTasks(eclipseResourceEncoding)
+
+eclipseResourceEncoding.configure {
+    ext.outputFile = file('.settings/org.eclipse.core.resources.prefs')
+    def compileTask = tasks.findByName('compileJava')
+    ext.encoding = provider({ compileTask?.options?.encoding }).orElse(providers.systemProperty('file.encoding'))
+
+    inputs.property("file.encoding", encoding)
+    outputs.file(outputFile).withPropertyName('outputFile')
+    doLast {
+        Properties eclipseEncodingProperties = new Properties(Collections.singletonMap('eclipse.preferences.version', '1'))
+        eclipseEncodingProperties.put('encoding/<project>', encoding.get())
+        outputFile.withOutputStream { eclipseEncodingProperties.store(it, 'generated by ' + name) }
+        eclipseEncodingProperties.list(System.out)
     }
 }
 
@@ -343,9 +388,16 @@ afterEvaluate {
     }
 }
 
+test.onlyIf { ! Boolean.getBoolean('skip.tests') }
+
 test {
     useJUnitPlatform()
+    maxHeapSize = '8g'
+    outputs.upToDateWhen { false }
     testLogging {
-        events 'started', 'passed'
+        events "passed", "skipped", "failed", "standardOut", "standardError"
     }
+    systemProperty 'args', System.getProperty('args')
 }
+
+apply plugin: 'test-report-aggregation'

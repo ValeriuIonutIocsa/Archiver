@@ -3,7 +3,7 @@ package com.utils.concurrency.no_progress.data;
 public class CustomCallableRegular extends AbstractCustomCallable {
 
 	public CustomCallableRegular(
-            final Runnable runnable) {
+			final Runnable runnable) {
 		super(runnable);
 	}
 

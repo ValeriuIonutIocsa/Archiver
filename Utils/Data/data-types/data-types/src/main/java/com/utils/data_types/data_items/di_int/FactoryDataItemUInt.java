@@ -17,6 +17,7 @@ public final class FactoryDataItemUInt {
 
 	public static DataItemUInt newInstance(
 			final int value) {
+
 		return new DataItemUInt(value);
 	}
 }

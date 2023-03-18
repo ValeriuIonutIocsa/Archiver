@@ -2,7 +2,7 @@ package com.utils.html.sections;
 
 import com.utils.xml.stax.XmlStAXWriter;
 
-public class HtmlSectionPlainText extends HtmlSectionAbstr {
+public class HtmlSectionPlainText extends AbstractHtmlSection {
 
 	private final String text;
 

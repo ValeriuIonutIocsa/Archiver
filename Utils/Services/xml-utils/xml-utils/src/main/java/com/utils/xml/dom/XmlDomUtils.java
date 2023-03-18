@@ -1,10 +1,12 @@
 package com.utils.xml.dom;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,7 @@ import org.w3c.dom.ls.LSSerializer;
 import com.utils.annotations.ApiMethod;
 import com.utils.io.folder_creators.FactoryFolderCreator;
 import com.utils.io.ro_flag_clearers.FactoryReadOnlyFlagClearer;
+import com.utils.string.StrUtils;
 import com.utils.xml.dom.documents.ValidatedDocument;
 import com.utils.xml.dom.openers.DocumentOpenerFile;
 import com.utils.xml.dom.openers.DocumentOpenerInputStream;
@@ -40,81 +43,101 @@ public final class XmlDomUtils {
 	@ApiMethod
 	public static Document createNewDocument() throws Exception {
 
-		final DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		final DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		return docBuilder.newDocument();
+		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
+		final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		return documentBuilder.newDocument();
 	}
 
 	@ApiMethod
 	public static Document openDocument(
 			final InputStream inputStream) throws Exception {
-		return new DocumentOpenerInputStream(inputStream, null).openDocument();
+
+		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
+		return new DocumentOpenerInputStream(inputStream, null).openDocument(documentBuilderFactory);
 	}
 
 	@ApiMethod
 	public static ValidatedDocument openAndValidateDocument(
 			final InputStream inputStream,
 			final String schemaFolderPathString) throws Exception {
-		return new DocumentOpenerInputStream(inputStream, schemaFolderPathString).openAndValidateDocument();
+
+		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
+		return new DocumentOpenerInputStream(inputStream, schemaFolderPathString)
+				.openAndValidateDocument(documentBuilderFactory);
 	}
 
 	@ApiMethod
 	public static Document openDocument(
-			final Path path) throws Exception {
-		return new DocumentOpenerFile(path.toFile()).openDocument();
+			final String filePathString) throws Exception {
+
+		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
+		final File file = new File(filePathString);
+		return new DocumentOpenerFile(file).openDocument(documentBuilderFactory);
 	}
 
 	@ApiMethod
 	public static ValidatedDocument openAndValidateDocument(
-			final Path path) throws Exception {
-		return new DocumentOpenerFile(path.toFile()).openAndValidateDocument();
+			final String filePathString) throws Exception {
+
+		final DocumentBuilderFactory documentBuilderFactory = createDocumentBuilderFactory();
+		final File file = new File(filePathString);
+		return new DocumentOpenerFile(file).openAndValidateDocument(documentBuilderFactory);
+	}
+
+	private static DocumentBuilderFactory createDocumentBuilderFactory() {
+
+		DocumentBuilderFactory documentBuilderFactory;
+		try {
+			documentBuilderFactory = DocumentBuilderFactory.newInstance(
+					"com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl",
+					Thread.currentThread().getContextClassLoader());
+
+		} catch (final Throwable ignored) {
+			documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		}
+		return documentBuilderFactory;
 	}
 
 	@ApiMethod
 	public static void saveXmlFile(
 			final Document document,
+			final boolean omitXmlDeclaration,
 			final int indentAmount,
 			final String outputPathString) throws Exception {
 
-		final Path outputPath = Paths.get(outputPathString);
-		saveXmlFile(document, indentAmount, outputPath);
-	}
+		FactoryFolderCreator.getInstance().createParentDirectories(outputPathString, true);
+		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, true);
 
-	@ApiMethod
-	public static void saveXmlFile(
-			final Document document,
-			final int indentAmount,
-			final Path outputPath) throws Exception {
-
-		FactoryFolderCreator.getInstance().createParentDirectories(outputPath, true);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPath, true);
-
-		final StreamResult streamResult = new StreamResult(outputPath.toString());
-		saveXml(document, indentAmount, streamResult);
+		final StreamResult streamResult = new StreamResult(outputPathString);
+		saveXml(document, omitXmlDeclaration, indentAmount, streamResult);
 	}
 
 	@ApiMethod
 	public static String saveXmlFile(
 			final Document document,
+			final boolean omitXmlDeclaration,
 			final int indentAmount) throws Exception {
 
 		final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		saveXmlFile(document, indentAmount, byteArrayOutputStream);
-		return byteArrayOutputStream.toString();
+		saveXmlFile(document, omitXmlDeclaration, indentAmount, byteArrayOutputStream);
+		return byteArrayOutputStream.toString(StandardCharsets.UTF_8);
 	}
 
 	@ApiMethod
 	public static void saveXmlFile(
 			final Document document,
+			final boolean omitXmlDeclaration,
 			final int indentAmount,
 			final OutputStream outputStream) throws Exception {
 
-		final StreamResult streamResult = new StreamResult(outputStream);
-		saveXml(document, indentAmount, streamResult);
+		final Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
+		final StreamResult streamResult = new StreamResult(writer);
+		saveXml(document, omitXmlDeclaration, indentAmount, streamResult);
 	}
 
 	private static void saveXml(
 			final Document document,
+			final boolean omitXmlDeclaration,
 			final int indentAmount,
 			final StreamResult streamResult) throws Exception {
 
@@ -123,7 +146,13 @@ public final class XmlDomUtils {
 
 		final DOMSource domSource = new DOMSource(document);
 
-		final Transformer transformer = TransformerFactory.newInstance().newTransformer();
+		final TransformerFactory transformerFactory = TransformerFactory.newInstance(
+				"com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl",
+				Thread.currentThread().getContextClassLoader());
+		final Transformer transformer = transformerFactory.newTransformer();
+		transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
+		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+				StrUtils.booleanToYesNoString(omitXmlDeclaration));
 		transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "yes");
 		if (indentAmount >= 0) {
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -143,7 +172,7 @@ public final class XmlDomUtils {
 		for (int i = nodeList.getLength() - 1; i >= 0; i--) {
 
 			final Node childNode = nodeList.item(i);
-			final short nodeType = childNode.getNodeType();
+			final int nodeType = childNode.getNodeType();
 			if (nodeType == Node.ELEMENT_NODE) {
 				processTextNodesRec(childNode);
 
@@ -283,7 +312,9 @@ public final class XmlDomUtils {
 
 			final List<Element> elementList = getElementsByTagName(parentElement, tagName);
 			for (final Element element : elementList) {
-				parentElement.removeChild(element);
+
+				final Node parentNode = element.getParentNode();
+				parentNode.removeChild(element);
 			}
 		}
 	}

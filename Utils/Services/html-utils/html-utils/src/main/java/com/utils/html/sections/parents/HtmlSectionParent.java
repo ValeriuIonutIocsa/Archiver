@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.utils.html.sections.AbstractHtmlSection;
 import com.utils.html.sections.HtmlSection;
-import com.utils.html.sections.HtmlSectionAbstr;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public abstract class HtmlSectionParent extends HtmlSectionAbstr {
+public abstract class HtmlSectionParent extends AbstractHtmlSection {
 
 	private final String tagName;
 	private final Map<String, String> attributeMap;

@@ -1,9 +1,9 @@
 package com.utils.html.sections.scripts;
 
-import com.utils.html.sections.HtmlSectionAbstr;
+import com.utils.html.sections.AbstractHtmlSection;
 import com.utils.xml.stax.XmlStAXWriter;
 
-public class HtmlSectionLinkedScript extends HtmlSectionAbstr {
+public class HtmlSectionLinkedScript extends AbstractHtmlSection {
 
 	private final String jsScriptLink;
 
@@ -17,10 +17,11 @@ public class HtmlSectionLinkedScript extends HtmlSectionAbstr {
 	public void write(
 			final XmlStAXWriter xmlStAXWriter) {
 
-		xmlStAXWriter.writeStartElement("script");
+		final String scriptTagName = "script";
+		xmlStAXWriter.writeStartElement(scriptTagName);
 		xmlStAXWriter.writeAttribute("type", "text/javascript");
 		xmlStAXWriter.writeAttribute("src", jsScriptLink);
 
-		xmlStAXWriter.writeEndElement("script");
+		xmlStAXWriter.writeEndElement(scriptTagName);
 	}
 }

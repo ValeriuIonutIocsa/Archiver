@@ -2,27 +2,27 @@ package com.personal.archiver.gui.workers.writers_zip;
 
 import java.nio.channels.FileChannel;
 import java.nio.file.FileSystem;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import com.utils.gui_utils.alerts.CustomAlertException;
+import com.utils.gui.alerts.CustomAlertException;
 import com.utils.io.file_deleters.FactoryFileDeleter;
 import com.utils.log.Logger;
-import com.utils.log.progress.ProgressIndicator;
+import com.utils.log.progress.ProgressIndicators;
 
 class ZipFileWriterNetwork extends ZipFileWriterLocal {
 
-	private final Path outputPath;
+	private final String outputPathString;
 
 	ZipFileWriterNetwork(
-			final Path workingDirPath,
+			final String workingDirPathString,
 			final FileSystem zipFileSystem,
-			final Path zipFilePath,
-			final Path outputPath) {
+			final String zipFilePathString,
+			final String outputPathString) {
 
-		super(workingDirPath, zipFileSystem, zipFilePath);
+		super(workingDirPathString, zipFileSystem, zipFilePathString);
 
-		this.outputPath = outputPath;
+		this.outputPathString = outputPathString;
 	}
 
 	@Override
@@ -30,18 +30,18 @@ class ZipFileWriterNetwork extends ZipFileWriterLocal {
 
 		super.closeZipFileSystem();
 
-		final Path zipFilePath = getZipFilePath();
-		copyFileUsingChannel(zipFilePath, outputPath);
-		FactoryFileDeleter.getInstance().deleteFile(zipFilePath, false);
+		final String zipFilePathString = getZipFilePathString();
+		copyFileUsingChannel(zipFilePathString, outputPathString);
+		FactoryFileDeleter.getInstance().deleteFile(zipFilePathString, false);
 	}
 
 	private static void copyFileUsingChannel(
-			final Path srcPath,
-			final Path destPath) {
+			final String srcPathString,
+			final String dstPathString) {
 
-		try (FileChannel sourceChannel = FileChannel.open(srcPath, StandardOpenOption.READ);
-				FileChannel destChannel = FileChannel.open(
-						destPath, StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+		try (FileChannel sourceChannel = FileChannel.open(Paths.get(srcPathString), StandardOpenOption.READ);
+				FileChannel dstChannel = FileChannel.open(
+						Paths.get(dstPathString), StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
 
 			final long size = sourceChannel.size();
 			final long blockSize = 64 * 1024 * 1024 - 32 * 1024;
@@ -52,18 +52,19 @@ class ZipFileWriterNetwork extends ZipFileWriterLocal {
 			totalBlockCount++;
 			for (int i = 0; i < blockCount; i++) {
 
-				destChannel.transferFrom(sourceChannel, i * blockSize, blockSize);
-				ProgressIndicator.getInstance().update(i + 1, totalBlockCount);
+				dstChannel.transferFrom(sourceChannel, i * blockSize, blockSize);
+				ProgressIndicators.getInstance().update(i + 1, totalBlockCount);
 			}
 
 			if (lastBlock) {
-				destChannel.transferFrom(sourceChannel, lastBlockEndPosition, size - lastBlockEndPosition);
-				ProgressIndicator.getInstance().update(1);
+
+				dstChannel.transferFrom(sourceChannel, lastBlockEndPosition, size - lastBlockEndPosition);
+				ProgressIndicators.getInstance().update(1);
 			}
 
 		} catch (final Exception exc) {
 			new CustomAlertException("error!", "failed to copy file:" + System.lineSeparator() +
-					srcPath + System.lineSeparator() + "to:" + System.lineSeparator() + destPath,
+					srcPathString + System.lineSeparator() + "to:" + System.lineSeparator() + dstPathString,
 					exc).showAndWait();
 			Logger.printException(exc);
 		}
@@ -74,6 +75,6 @@ class ZipFileWriterNetwork extends ZipFileWriterLocal {
 
 		super.deleteFiles();
 
-		FactoryFileDeleter.getInstance().deleteFile(outputPath, false);
+		FactoryFileDeleter.getInstance().deleteFile(outputPathString, false);
 	}
 }

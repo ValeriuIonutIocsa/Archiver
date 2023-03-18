@@ -1,11 +1,18 @@
 package com.utils.html.writers;
 
-import java.nio.file.Path;
+import com.utils.xml.stax.XmlStAXWriter;
 
 public interface WriterHtml {
 
 	void writeToFile(
-			Path outputPath);
+			String outputPathString);
 
 	String writeToString();
+
+	String createCssString();
+
+	String createTitle();
+
+	void writeBodyAttributes(
+			XmlStAXWriter xmlStAXWriter);
 }

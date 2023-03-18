@@ -1,11 +1,12 @@
 package com.utils.html.sections.scripts;
 
-import com.utils.io.IoUtils;
+import com.utils.io.ResourceFileUtils;
 
 public class HtmlSectionLinkedScriptResource extends HtmlSectionLinkedScript {
 
 	public HtmlSectionLinkedScriptResource(
 			final String scriptResourceFilePath) {
-		super(IoUtils.resourceToUrl(scriptResourceFilePath).toExternalForm());
+
+		super(ResourceFileUtils.resourceFileToUrl(scriptResourceFilePath).toExternalForm());
 	}
 }

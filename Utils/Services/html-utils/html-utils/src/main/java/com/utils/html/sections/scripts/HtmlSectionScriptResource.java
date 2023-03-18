@@ -1,6 +1,6 @@
 package com.utils.html.sections.scripts;
 
-import com.utils.io.IoUtils;
+import com.utils.io.ResourceFileUtils;
 
 public class HtmlSectionScriptResource extends HtmlSectionScript {
 
@@ -14,6 +14,6 @@ public class HtmlSectionScriptResource extends HtmlSectionScript {
 
 	@Override
 	protected String createJsScriptContent() {
-		return IoUtils.resourceFileToString(resourceFilePathString);
+		return ResourceFileUtils.resourceFileToString(resourceFilePathString);
 	}
 }

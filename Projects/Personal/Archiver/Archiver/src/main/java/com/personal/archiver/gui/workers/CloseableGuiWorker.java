@@ -1,6 +1,8 @@
 package com.personal.archiver.gui.workers;
 
-public interface CloseableGuiWorker {
+import com.utils.gui.workers.GuiWorker;
+
+public interface CloseableGuiWorker extends GuiWorker {
 
 	int THREAD_COUNT = 16;
 

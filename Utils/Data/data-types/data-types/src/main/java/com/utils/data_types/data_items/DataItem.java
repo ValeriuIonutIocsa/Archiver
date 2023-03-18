@@ -1,5 +1,6 @@
 package com.utils.data_types.data_items;
 
+import java.io.PrintStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -17,6 +18,9 @@ public interface DataItem<
 	String createCsvString();
 
 	String createCopyString();
+
+	void writeToJson(
+			PrintStream printStream);
 
 	void writeToXml(
 			XmlStAXWriter xmlStAXWriter,

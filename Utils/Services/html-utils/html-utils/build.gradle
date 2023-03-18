@@ -1,6 +1,7 @@
 ext {
     subProjectNames = [
-            ':xml-utils'
+            ':xml-utils',
+            ':xml-stax-utils'
     ]
     compileClassPaths = []
     compileJarFilePaths = []

@@ -1,5 +1,6 @@
 package com.utils.crypt;
 
+import java.nio.charset.StandardCharsets;
 import java.security.spec.KeySpec;
 
 import javax.crypto.Cipher;
@@ -31,7 +32,7 @@ public final class EncryptionUtils {
 			}
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to encrypt!");
+			Logger.printError("failed to encrypt");
 			Logger.printException(exc);
 		}
 		return encryptedByteArray;
@@ -48,7 +49,7 @@ public final class EncryptionUtils {
 			}
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to decrypt!");
+			Logger.printError("failed to decrypt");
 			Logger.printException(exc);
 		}
 		return decryptedByteArray;
@@ -70,7 +71,8 @@ public final class EncryptionUtils {
 			final IvParameterSpec ivParameterSpec = new IvParameterSpec(IV);
 
 			final SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-			final KeySpec spec = new PBEKeySpec(SECRET_KEY.toCharArray(), SALT.getBytes(), 65_536, 256);
+			final KeySpec spec = new PBEKeySpec(SECRET_KEY.toCharArray(),
+					SALT.getBytes(StandardCharsets.UTF_8), 65_536, 256);
 			final SecretKey tmp = factory.generateSecret(spec);
 			final SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");
 
@@ -78,7 +80,7 @@ public final class EncryptionUtils {
 			cipher.init(encryptMode, secretKey, ivParameterSpec);
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to create cipher!");
+			Logger.printError("failed to create cipher");
 			Logger.printException(exc);
 		}
 		return cipher;

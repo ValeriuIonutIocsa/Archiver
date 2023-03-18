@@ -1,42 +1,41 @@
 package com.personal.archiver.gui.workers;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 import com.personal.archiver.gui.data.FileToArchive;
-import com.utils.gui_utils.workers.ComponentDisabler;
+import com.utils.gui.workers.ControlDisabler;
 import com.utils.io.PathUtils;
 
 import javafx.scene.Scene;
 
 public class GuiWorkerCreateArchiveCli extends AbstractGuiWorkerCreateArchive {
 
-	private final Path folderPath;
+	private final String folderPathString;
 
 	public GuiWorkerCreateArchiveCli(
 			final Scene scene,
-			final ComponentDisabler componentDisabler,
-			final Path workingDirPath,
-			final Path outputPath,
-			final Path folderPath) {
+			final ControlDisabler controlDisabler,
+			final String workingDirPathString,
+			final String outputPathString,
+			final String folderPathString) {
 
-		super(scene, componentDisabler, workingDirPath, outputPath);
+		super(scene, controlDisabler, workingDirPathString, outputPathString);
 
-		this.folderPath = folderPath;
+		this.folderPathString = folderPathString;
 	}
 
 	@Override
 	FileToArchive createFileToArchiveRoot() {
 
-		final String folderName = PathUtils.computeFileName(folderPath);
+		final String folderName = PathUtils.computeFileName(folderPathString);
 		final FileToArchive fileToArchive =
-				new FileToArchive(folderName, folderPath, true);
+				new FileToArchive(folderName, folderPathString, true);
 		fileToArchive.setSelected(true);
 
-		final Path parentFolderPath = folderPath.getParent();
-		final String parentFolderName = PathUtils.computeFileName(parentFolderPath);
+		final String parentFolderPathString = PathUtils.computeParentPath(folderPathString);
+		final String parentFolderName = PathUtils.computeFileName(parentFolderPathString);
 		final FileToArchive fileToArchiveRoot =
-				new FileToArchive(parentFolderName, parentFolderPath, true);
+				new FileToArchive(parentFolderName, parentFolderPathString, true);
 		fileToArchiveRoot.setSelected(true);
 		fileToArchiveRoot.setChildrenList(new ArrayList<>());
 		fileToArchiveRoot.getChildrenList().add(fileToArchive);

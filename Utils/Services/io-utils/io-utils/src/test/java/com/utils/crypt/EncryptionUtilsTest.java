@@ -1,25 +1,20 @@
 package com.utils.crypt;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
+import com.utils.io.ReaderUtils;
+import com.utils.io.StreamUtils;
 import com.utils.log.Logger;
 
 class EncryptionUtilsTest {
@@ -29,24 +24,25 @@ class EncryptionUtilsTest {
 
 		final String originalString = "how to do in java.com";
 
-		final Path encryptedFilePath = Paths.get(PathUtils.ROOT_PATH, "tmp", "test.encrypted");
+		final String encryptedFilePathString =
+				PathUtils.computePath(PathUtils.createRootPath(), "tmp", "test.encrypted");
 		Logger.printProgress("generating encrypted file:");
-		Logger.printLine(encryptedFilePath);
+		Logger.printLine(encryptedFilePathString);
 
 		final Cipher encryptCipher = EncryptionUtils.createEncryptCipher();
 		try (OutputStream outputStream = new CipherOutputStream(
-				new BufferedOutputStream(Files.newOutputStream(encryptedFilePath)), encryptCipher)) {
+				StreamUtils.openBufferedOutputStream(encryptedFilePathString), encryptCipher)) {
 			outputStream.write(originalString.getBytes(StandardCharsets.UTF_8));
 		}
 
 		final String decryptedString;
 		final Cipher decryptCipher = EncryptionUtils.createDecryptCipher();
 		try (InputStream inputStream = new CipherInputStream(
-				new BufferedInputStream(Files.newInputStream(encryptedFilePath)), decryptCipher)) {
-			decryptedString = IoUtils.inputStreamToString(inputStream, StandardCharsets.UTF_8.name());
+				StreamUtils.openBufferedInputStream(encryptedFilePathString), decryptCipher)) {
+			decryptedString = ReaderUtils.inputStreamToString(inputStream, StandardCharsets.UTF_8.name());
 		}
 
-		assertEquals(originalString, decryptedString);
+		Assertions.assertEquals(originalString, decryptedString);
 	}
 
 	@Test
@@ -57,24 +53,25 @@ class EncryptionUtilsTest {
 		final String value = "value111";
 		properties.put(key, value);
 
-		final Path encryptedFilePath = Paths.get(PathUtils.ROOT_PATH, "tmp", "test_properties.encrypted");
+		final String encryptedFilePathString =
+				PathUtils.computePath(PathUtils.createRootPath(), "tmp", "test_properties.encrypted");
 		Logger.printProgress("generating encrypted file:");
-		Logger.printLine(encryptedFilePath);
+		Logger.printLine(encryptedFilePathString);
 
 		final Cipher encryptCipher = EncryptionUtils.createEncryptCipher();
 		try (OutputStream outputStream = new CipherOutputStream(
-				new BufferedOutputStream(Files.newOutputStream(encryptedFilePath)), encryptCipher)) {
+				StreamUtils.openOutputStream(encryptedFilePathString), encryptCipher)) {
 			properties.store(outputStream, "test properties file for encryption");
 		}
 
 		final Properties decryptedProperties = new Properties();
 		final Cipher decryptCipher = EncryptionUtils.createDecryptCipher();
 		try (InputStream inputStream = new CipherInputStream(
-				new BufferedInputStream(Files.newInputStream(encryptedFilePath)), decryptCipher)) {
+				StreamUtils.openInputStream(encryptedFilePathString), decryptCipher)) {
 			decryptedProperties.load(inputStream);
 		}
 
 		final String decryptedValue = decryptedProperties.getProperty(key);
-		assertEquals(value, decryptedValue);
+		Assertions.assertEquals(value, decryptedValue);
 	}
 }

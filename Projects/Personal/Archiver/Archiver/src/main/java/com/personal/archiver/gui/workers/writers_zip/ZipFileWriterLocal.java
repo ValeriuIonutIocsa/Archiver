@@ -3,52 +3,55 @@ package com.personal.archiver.gui.workers.writers_zip;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.personal.archiver.gui.data.FileToArchive;
-import com.utils.gui_utils.alerts.CustomAlertError;
-import com.utils.gui_utils.alerts.CustomAlertException;
+import com.utils.gui.alerts.CustomAlertError;
+import com.utils.gui.alerts.CustomAlertException;
+import com.utils.io.PathUtils;
 import com.utils.io.file_deleters.FactoryFileDeleter;
 import com.utils.log.Logger;
 import com.utils.string.StrUtils;
 
 public class ZipFileWriterLocal implements ZipFileWriter {
 
-	private final Path workingDirPath;
+	private final String workingDirPathString;
 	private final FileSystem zipFileSystem;
-	private final Path zipFilePath;
+	private final String zipFilePathString;
 
-	private final List<Path> failedToCopyFilePathList;
+	private final List<String> failedToCopyFilePathStringList;
 
 	ZipFileWriterLocal(
-			final Path workingDirPath,
+			final String workingDirPathString,
 			final FileSystem zipFileSystem,
-			final Path zipFilePath) {
+			final String zipFilePathString) {
 
-		this.workingDirPath = workingDirPath;
+		this.workingDirPathString = workingDirPathString;
 		this.zipFileSystem = zipFileSystem;
-		this.zipFilePath = zipFilePath;
+		this.zipFilePathString = zipFilePathString;
 
-		failedToCopyFilePathList = new ArrayList<>();
+		failedToCopyFilePathStringList = new ArrayList<>();
 	}
 
 	@Override
 	public void copyFileToZip(
 			final FileToArchive fileToArchive) {
 
-		final Path filePath = fileToArchive.getFilePath();
+		final String filePathString = fileToArchive.getFilePathString();
 		try {
-			final String relativePathString = workingDirPath.relativize(filePath).toString();
+			final String relativePathString =
+					PathUtils.computeRelativePath(workingDirPathString, filePathString);
 			final Path zipPath = zipFileSystem.getPath("/", relativePathString);
-			Files.copy(filePath, zipPath, StandardCopyOption.REPLACE_EXISTING,
+			Files.copy(Paths.get(filePathString), zipPath, StandardCopyOption.REPLACE_EXISTING,
 					StandardCopyOption.COPY_ATTRIBUTES);
 
 		} catch (final Exception exc) {
-			failedToCopyFilePathList.add(filePath);
+			failedToCopyFilePathStringList.add(filePathString);
 			Logger.printError("failed to copy file to the archive:" +
-					System.lineSeparator() + fileToArchive.getFilePath());
+					System.lineSeparator() + filePathString);
 			Logger.printException(exc);
 		}
 	}
@@ -57,16 +60,17 @@ public class ZipFileWriterLocal implements ZipFileWriter {
 	public void copyFolderToZip(
 			final FileToArchive fileToArchive) {
 
-		final Path filePath = fileToArchive.getFilePath();
+		final String filePathString = fileToArchive.getFilePathString();
 		try {
-			final String relativePathString = workingDirPath.relativize(filePath).toString();
+			final String relativePathString =
+					PathUtils.computeRelativePath(workingDirPathString, filePathString);
 			final Path zipPath = zipFileSystem.getPath("/", relativePathString);
 			Files.createDirectory(zipPath);
 
 		} catch (final Exception exc) {
-			failedToCopyFilePathList.add(filePath);
+			failedToCopyFilePathStringList.add(filePathString);
 			Logger.printError("failed to copy folder to the archive:" +
-					System.lineSeparator() + fileToArchive.getFilePath());
+					System.lineSeparator() + filePathString);
 			Logger.printException(exc);
 		}
 	}
@@ -87,18 +91,19 @@ public class ZipFileWriterLocal implements ZipFileWriter {
 	@Override
 	public void printErrors() {
 
-		if (!failedToCopyFilePathList.isEmpty()) {
+		if (!failedToCopyFilePathStringList.isEmpty()) {
 
 			final String message = "archive created but:" +
 					System.lineSeparator() + "failed to copy " +
-					failedToCopyFilePathList.size() + " files!";
+					failedToCopyFilePathStringList.size() + " files!";
 			new CustomAlertError("error!", message).showAndWait();
 		}
 	}
 
 	@Override
 	public void deleteFiles() {
-		FactoryFileDeleter.getInstance().deleteFile(zipFilePath, false);
+
+		FactoryFileDeleter.getInstance().deleteFile(zipFilePathString, false);
 	}
 
 	@Override
@@ -106,7 +111,7 @@ public class ZipFileWriterLocal implements ZipFileWriter {
 		return StrUtils.reflectionToString(this);
 	}
 
-	Path getZipFilePath() {
-		return zipFilePath;
+	String getZipFilePathString() {
+		return zipFilePathString;
 	}
 }

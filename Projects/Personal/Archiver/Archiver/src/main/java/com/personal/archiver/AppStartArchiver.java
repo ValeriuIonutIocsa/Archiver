@@ -1,7 +1,6 @@
 package com.personal.archiver;
 
-import com.personal.archiver.gui.WindowMainArchiver;
-import com.utils.app_info.FactoryAppInfo;
+import com.personal.archiver.gui.ApplicationArchiver;
 import com.utils.log.Logger;
 
 import javafx.application.Application;
@@ -16,8 +15,6 @@ final class AppStartArchiver {
 
 		Logger.setDebugMode(true);
 
-		FactoryAppInfo.initialize("Archiver", "2.0.0");
-
-		Application.launch(WindowMainArchiver.class, args);
+		Application.launch(ApplicationArchiver.class, args);
 	}
 }
