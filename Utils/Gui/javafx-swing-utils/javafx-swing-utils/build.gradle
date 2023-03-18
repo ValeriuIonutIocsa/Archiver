@@ -1,0 +1,13 @@
+ext {
+    subProjectNames = [':gui-utils']
+    compileClassPaths = [
+            'org.openjfx:javafx-swing:11.0.2:win'
+    ]
+    compileJarFilePaths = []
+    testCompileClassPaths = [
+            'org.testfx:testfx-junit5:4.0.16-alpha'
+    ]
+    testCompileJarFilePaths = []
+}
+
+apply from: gradle.ext.rootDirPath + '/common_build.gradle'

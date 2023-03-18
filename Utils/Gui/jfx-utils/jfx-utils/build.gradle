@@ -1,0 +1,13 @@
+ext {
+    subProjectNames = [':gui-utils']
+    compileClassPaths = [
+            'com.jfoenix:jfoenix:9.0.10'
+    ]
+    compileJarFilePaths = []
+    testCompileClassPaths = [
+            'org.testfx:testfx-junit5:4.0.16-alpha'
+    ]
+    testCompileJarFilePaths = []
+}
+
+apply from: gradle.ext.rootDirPath + '/common_build.gradle'
