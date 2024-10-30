@@ -5,7 +5,7 @@ import com.utils.gui.factories.BasicControlsFactories;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.StackPane;
 
-public abstract class CustomTableCellSelectText<
+public class CustomTableCellSelectText<
 		RowDataT,
 		CellDataT>
 		extends CustomTableCell<RowDataT, CellDataT> {

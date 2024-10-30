@@ -44,7 +44,7 @@ public interface BasicControlsFactory {
 
 	@ApiMethod
 	TextField createNumberOnlyTextField(
-			int value);
+			double value);
 
 	@ApiMethod
 	TextField createReadOnlyTextField(

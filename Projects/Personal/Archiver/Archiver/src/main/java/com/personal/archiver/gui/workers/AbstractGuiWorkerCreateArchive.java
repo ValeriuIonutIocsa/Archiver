@@ -22,6 +22,7 @@ public abstract class AbstractGuiWorkerCreateArchive
 		extends AbstractGuiWorker implements CloseableGuiWorker {
 
 	private final String workingDirPathString;
+	private final boolean cacheInRam;
 	private final String outputPathString;
 
 	private ZipFileWriter zipFileWriter;
@@ -31,11 +32,13 @@ public abstract class AbstractGuiWorkerCreateArchive
 			final Scene scene,
 			final ControlDisabler controlDisabler,
 			final String workingDirPathString,
+			final boolean cacheInRam,
 			final String outputPathString) {
 
 		super(scene, controlDisabler);
 
 		this.workingDirPathString = workingDirPathString;
+		this.cacheInRam = cacheInRam;
 		this.outputPathString = outputPathString;
 	}
 
@@ -46,13 +49,15 @@ public abstract class AbstractGuiWorkerCreateArchive
 		Logger.printProgress("creating archive...");
 
 		try {
-			zipFileWriter = FactoryZipFileWriter.newInstance(workingDirPathString, outputPathString);
+			zipFileWriter = FactoryZipFileWriter
+					.newInstance(workingDirPathString, cacheInRam, outputPathString);
 			if (zipFileWriter != null) {
 
 				final AtomicInteger itemsToCopyCount = new AtomicInteger();
 				final FileToArchive fileToArchiveRoot = createFileToArchiveRoot();
 				final List<FileToArchive> childrenList = fileToArchiveRoot.getChildrenList();
 				if (childrenList != null) {
+
 					for (final FileToArchive fileToArchive : childrenList) {
 						computeSelectedItemCountRec(fileToArchive, itemsToCopyCount);
 					}
@@ -62,7 +67,9 @@ public abstract class AbstractGuiWorkerCreateArchive
 				final LinkedBlockingQueue<Runnable> linkedBlockingQueue = new LinkedBlockingQueue<>();
 
 				if (childrenList != null) {
+
 					for (final FileToArchive fileToArchive : childrenList) {
+
 						linkedBlockingQueue.add(() -> copyFileToZipRunnable(
 								fileToArchive, linkedBlockingQueue, itemsToCopyCount));
 					}
@@ -104,6 +111,7 @@ public abstract class AbstractGuiWorkerCreateArchive
 
 		} finally {
 			if (zipFileWriter != null) {
+
 				zipFileWriter.closeZipFileSystem();
 				zipFileWriter.printErrors();
 			}
@@ -132,6 +140,7 @@ public abstract class AbstractGuiWorkerCreateArchive
 				childrenList = fileToArchive.getChildrenList();
 			}
 			if (childrenList != null) {
+
 				for (final FileToArchive fileToArchiveChild : childrenList) {
 					selectedItemCount += computeSelectedItemCountRec(fileToArchiveChild, itemsToCopyCount);
 				}
@@ -161,7 +170,9 @@ public abstract class AbstractGuiWorkerCreateArchive
 
 				final List<FileToArchive> childrenList = fileToArchive.getChildrenList();
 				if (childrenList != null) {
+
 					for (final FileToArchive fileToArchiveChild : childrenList) {
+
 						linkedBlockingQueue.add(() -> copyFileToZipRunnable(
 								fileToArchiveChild, linkedBlockingQueue, itemsToCopyCount));
 					}

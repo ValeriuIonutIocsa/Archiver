@@ -80,9 +80,8 @@ public final class VersionDependentMethods {
 
 		ListView<?> comboBoxListView = null;
 		final Skin<?> skin = comboBox.getSkin();
-		if (skin instanceof ComboBoxListViewSkin<?>) {
+		if (skin instanceof final ComboBoxListViewSkin<?> comboBoxListViewSkin) {
 
-			final ComboBoxListViewSkin<?> comboBoxListViewSkin = (ComboBoxListViewSkin<?>) skin;
 			final Node popupContent = comboBoxListViewSkin.getPopupContent();
 			if (popupContent instanceof ListView<?>) {
 				comboBoxListView = (ListView<?>) popupContent;
@@ -91,21 +90,12 @@ public final class VersionDependentMethods {
 		return comboBoxListView;
 	}
 
-	public static int computeTreeTableCellLeftPadding(
+	public static int computeOtherTreeTableCellLeftPadding(
 			final TreeTableCell<?, ?> treeTableCell) {
 
-		final int leftPadding;
-		final int columnIndex = treeTableCell.getTreeTableView().getColumns()
-				.indexOf(treeTableCell.getTableColumn());
-		if (columnIndex == 0) {
-
-			final TreeItem<?> treeItem = treeTableCell.getTreeTableRow().getTreeItem();
-			final int depthInTreeView = treeTableCell.getTreeTableView().getTreeItemLevel(treeItem);
-			leftPadding = 8 + 10 * depthInTreeView;
-
-		} else {
-			leftPadding = 0;
-		}
-		return leftPadding;
+		final TreeItem<?> treeItem = treeTableCell.getTableRow().getTreeItem();
+		final int depthInTreeView = treeTableCell.getTreeTableView().getTreeItemLevel(treeItem);
+		final int leftPaddingLevel = Math.max(0, depthInTreeView - 1);
+		return 10 * leftPaddingLevel;
 	}
 }

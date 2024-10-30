@@ -32,7 +32,7 @@ class ZipFileWriterNetwork extends ZipFileWriterLocal {
 
 		final String zipFilePathString = getZipFilePathString();
 		copyFileUsingChannel(zipFilePathString, outputPathString);
-		FactoryFileDeleter.getInstance().deleteFile(zipFilePathString, false);
+		FactoryFileDeleter.getInstance().deleteFile(zipFilePathString, false, false);
 	}
 
 	private static void copyFileUsingChannel(
@@ -75,6 +75,6 @@ class ZipFileWriterNetwork extends ZipFileWriterLocal {
 
 		super.deleteFiles();
 
-		FactoryFileDeleter.getInstance().deleteFile(outputPathString, false);
+		FactoryFileDeleter.getInstance().deleteFile(outputPathString, false, false);
 	}
 }

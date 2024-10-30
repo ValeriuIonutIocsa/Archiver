@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import com.utils.concurrency.ThreadUtils;
 import com.utils.gui.AbstractCustomApplicationTest;
+import com.utils.string.StrUtils;
 
 class ClipboardUtilsTest extends AbstractCustomApplicationTest {
 
@@ -11,7 +12,7 @@ class ClipboardUtilsTest extends AbstractCustomApplicationTest {
 	void testPutStringInClipBoard() {
 
 		final String string;
-		final int input = Integer.parseInt("101");
+		final int input = StrUtils.tryParsePositiveInt("101");
 		if (input == 1) {
 			string = "Single line string.";
 		} else if (input == 2) {

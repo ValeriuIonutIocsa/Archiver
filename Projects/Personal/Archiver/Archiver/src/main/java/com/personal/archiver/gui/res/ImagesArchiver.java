@@ -10,6 +10,7 @@ public final class ImagesArchiver {
 	}
 
 	public static Image createImageApp() {
+
 		return GuiUtils.createImageFromResourceFile("com/personal/archiver/gui/res/icon_app.png");
 	}
 }

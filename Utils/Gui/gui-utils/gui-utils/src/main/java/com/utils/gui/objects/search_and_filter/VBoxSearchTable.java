@@ -97,7 +97,7 @@ public class VBoxSearchTable extends AbstractCustomControl<VBox> {
 			if (customPatterns.checkEmptyPatterns()) {
 				new CustomAlertWarning("empty search patterns",
 						"All the search patterns above are empty." +
-								" It is redundant to perform a search.");
+								" It is redundant to perform a search.").showAndWait();
 
 			} else {
 				searchAndFilterTable.searchTable(searchColumnIndex, customPatterns);

@@ -206,11 +206,11 @@ public class TreeNode {
 	}
 
 	public int getNoOfNodes() {
-		return (int) flattened().map(TreeNode::getData).count();
+		return (int) flattened().count();
 	}
 
 	public int getNoOfLeafNodes() {
-		return (int) flattened().filter(TreeNode::isLeaf).map(TreeNode::getData).count();
+		return (int) flattened().filter(TreeNode::isLeaf).count();
 	}
 
 	public boolean contains(

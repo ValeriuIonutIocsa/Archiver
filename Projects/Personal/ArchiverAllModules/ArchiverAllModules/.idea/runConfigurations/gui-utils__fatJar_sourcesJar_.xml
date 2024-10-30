@@ -2,7 +2,7 @@
     <configuration default="false" factoryName="Gradle" folderName="gui-utils" name="gui-utils [fatJar sourcesJar]" type="GradleRunConfiguration">
         <ExternalSystemSettings>
             <option name="executionName"/>
-            <option name="externalProjectPath" value="$PROJECT_DIR$/../../gui-utils/gui-utils"/>
+            <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Utils/Gui/gui-utils/gui-utils"/>
             <option name="externalSystemIdString" value="GRADLE"/>
             <option name="scriptParameters" value=""/>
             <option name="taskDescriptions">

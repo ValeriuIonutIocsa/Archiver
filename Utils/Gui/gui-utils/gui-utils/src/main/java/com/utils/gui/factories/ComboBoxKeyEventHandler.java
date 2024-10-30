@@ -36,7 +36,8 @@ class ComboBoxKeyEventHandler<
 			clearText();
 
 		} else if (keyCode == KeyCode.BACK_SPACE) {
-			if (typedString.length() > 0) {
+
+			if (!typedString.isEmpty()) {
 				typedString = typedString.substring(0, typedString.length() - 1);
 			}
 
@@ -44,7 +45,7 @@ class ComboBoxKeyEventHandler<
 			typedString += event.getText();
 		}
 
-		if (typedString.length() == 0) {
+		if (typedString.isEmpty()) {
 			comboBox.getSelectionModel().selectFirst();
 
 		} else {

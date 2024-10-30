@@ -3,9 +3,9 @@ package com.utils.gui.objects.tables.tree_table;
 import com.utils.annotations.ApiMethod;
 import com.utils.data_types.data_items.DataItem;
 import com.utils.gui.GuiUtils;
+import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.objects.tables.CustomCell;
-import com.utils.gui.version.VersionDependentMethods;
 import com.utils.log.Logger;
 
 import javafx.geometry.Insets;
@@ -14,12 +14,13 @@ import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.layout.StackPane;
 
-public abstract class CustomTreeTableCell<
+public class CustomTreeTableCell<
 		RowDataT,
 		CellDataT>
 		extends TreeTableCell<RowDataT, CellDataT> implements CustomCell<CellDataT> {
@@ -31,11 +32,10 @@ public abstract class CustomTreeTableCell<
 
 		super.updateItem(item, empty);
 
-		final double leftPadding = VersionDependentMethods.computeTreeTableCellLeftPadding(this);
-		setPadding(new Insets(0, 0, 0, leftPadding));
+		setPadding(new Insets(2, 0, 0, 0));
 		setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 
-		final StackPane stackPane = LayoutControlsFactories.getInstance().createStackPane(Pos.CENTER_LEFT);
+		final StackPane stackPane = LayoutControlsFactories.getInstance().createStackPane(Pos.TOP_LEFT);
 		setGraphic(stackPane);
 
 		if (empty || item == null) {
@@ -76,7 +76,11 @@ public abstract class CustomTreeTableCell<
 			final StackPane stackPane,
 			final CellDataT item) {
 
-		final Label label = new Label(item.toString());
+		final String text = item.toString();
+		final Label label = new Label(text);
+
+		final Tooltip tooltip = BasicControlsFactories.getInstance().createTooltip(text);
+		setTooltip(tooltip);
 
 		final String[] labelStyleClassElements = getLabelStyleClassElements();
 		if (labelStyleClassElements != null) {
@@ -110,7 +114,7 @@ public abstract class CustomTreeTableCell<
 
 	@Override
 	public Pos getTextAlignmentValue() {
-		return Pos.CENTER_LEFT;
+		return Pos.TOP_LEFT;
 	}
 
 	@Override
@@ -123,7 +127,7 @@ public abstract class CustomTreeTableCell<
 	protected RowDataT getRowData() {
 
 		RowDataT rowData = null;
-		final TreeTableRow<RowDataT> treeTableRow = getTreeTableRow();
+		final TreeTableRow<RowDataT> treeTableRow = getTableRow();
 		if (treeTableRow != null) {
 			rowData = treeTableRow.getItem();
 		}
@@ -137,9 +141,8 @@ public abstract class CustomTreeTableCell<
 
 		CellValue cellData = null;
 		final CellDataT item = getItem();
-		if (item instanceof DataItem<?>) {
+		if (item instanceof final DataItem<?> dataItem) {
 
-			final DataItem<?> dataItem = (DataItem<?>) item;
 			final Object value = dataItem.getValue();
 			if (cellValueClass.isInstance(value)) {
 				cellData = cellValueClass.cast(value);
@@ -151,7 +154,7 @@ public abstract class CustomTreeTableCell<
 	@ApiMethod
 	protected void collapseTreeViewToLevel() {
 
-		final TreeItem<RowDataT> treeItem = getTreeTableRow().getTreeItem();
+		final TreeItem<RowDataT> treeItem = getTableRow().getTreeItem();
 		final int depthInTreeView = getTreeTableView().getTreeItemLevel(treeItem);
 		collapseTreeViewToLevel(depthInTreeView);
 	}
@@ -177,5 +180,25 @@ public abstract class CustomTreeTableCell<
 		for (final TreeItem<RowDataT> treeItemChild : treeItem.getChildren()) {
 			collapseTreeViewToLevelRec(collapseDepth, treeItemChild, childDepth);
 		}
+	}
+
+	@ApiMethod
+	protected int computeDepthInTreeTable() {
+
+		final TreeItem<RowDataT> treeItem = getTableRow().getTreeItem();
+		return computeDepthInTreeTableRec(treeItem);
+	}
+
+	private int computeDepthInTreeTableRec(
+			final TreeItem<RowDataT> treeItem) {
+
+		final int depth;
+		final TreeItem<RowDataT> parentTreeItem = treeItem.getParent();
+		if (parentTreeItem == null) {
+			depth = 0;
+		} else {
+			depth = computeDepthInTreeTableRec(parentTreeItem) + 1;
+		}
+		return depth;
 	}
 }

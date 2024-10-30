@@ -37,6 +37,7 @@ public final class TreeViewFactory {
 		treeView.setShowRoot(showRoot);
 
 		treeView.setOnKeyPressed(keyEvent -> {
+
 			if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 				TreeViewFactory.copyTreeViewSelectionToClipboard(treeView);
 			}

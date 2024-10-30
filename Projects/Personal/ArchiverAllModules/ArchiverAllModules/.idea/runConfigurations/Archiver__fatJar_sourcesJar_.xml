@@ -2,7 +2,7 @@
     <configuration default="false" factoryName="Gradle" folderName="Archiver" name="Archiver [fatJar sourcesJar]" type="GradleRunConfiguration">
         <ExternalSystemSettings>
             <option name="executionName"/>
-            <option name="externalProjectPath" value="$PROJECT_DIR$/../../Archiver/Archiver"/>
+            <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Projects/Personal/Archiver/Archiver"/>
             <option name="externalSystemIdString" value="GRADLE"/>
             <option name="scriptParameters" value=""/>
             <option name="taskDescriptions">

@@ -35,7 +35,7 @@ public class FileSystemFileWriterImpl implements FileSystemFileWriter {
 			final String pathString) {
 
 		final boolean success = FactoryFolderCreator.getInstance()
-				.createDirectoryNoChecks(pathString, false);
+				.createDirectoryNoChecks(pathString, false, false);
 		if (!success) {
 			failedToCreateDirectoryPathList.add(pathString);
 		}
@@ -57,10 +57,10 @@ public class FileSystemFileWriterImpl implements FileSystemFileWriter {
 			final boolean keepGoing;
 			if (dstFileExists) {
 				keepGoing = FactoryReadOnlyFlagClearer.getInstance()
-						.clearReadOnlyFlagFileNoChecks(fileSystemPathString, true);
+						.clearReadOnlyFlagFileNoChecks(fileSystemPathString, false, true);
 			} else {
 				keepGoing = FactoryFolderCreator.getInstance()
-						.createParentDirectories(fileSystemPathString, true);
+						.createParentDirectories(fileSystemPathString, false, true);
 			}
 			if (keepGoing) {
 
@@ -88,7 +88,7 @@ public class FileSystemFileWriterImpl implements FileSystemFileWriter {
 			final String pathString) {
 
 		final boolean success = FactoryFolderDeleter.getInstance()
-				.deleteFolderNoChecks(pathString, false);
+				.deleteFolderNoChecks(pathString, false, false);
 		if (!success) {
 			failedToDeleteDirectoryPathList.add(pathString);
 		}
@@ -99,7 +99,7 @@ public class FileSystemFileWriterImpl implements FileSystemFileWriter {
 			final String pathString) {
 
 		final boolean success = FactoryFileDeleter.getInstance()
-				.deleteFileNoChecks(pathString, false);
+				.deleteFileNoChecks(pathString, false, false);
 		if (!success) {
 			failedToDeleteFilePathList.add(pathString);
 		}

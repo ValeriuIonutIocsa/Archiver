@@ -20,9 +20,21 @@ public final class PathUtils {
 
 		final String rootPath;
 		if (SystemUtils.IS_OS_WINDOWS) {
-			rootPath = "D:\\";
+
+			final String dDrivePathString = "D:\\";
+			if (IoUtils.directoryExists(dDrivePathString)) {
+				rootPath = dDrivePathString;
+			} else {
+				rootPath = "C:\\";
+			}
+
 		} else {
-			rootPath = "/mnt/d";
+			final String dDrivePathString = "/mnt/d";
+			if (IoUtils.directoryExists(dDrivePathString)) {
+				rootPath = dDrivePathString;
+			} else {
+				rootPath = "/mnt";
+			}
 		}
 		return rootPath;
 	}
@@ -98,6 +110,17 @@ public final class PathUtils {
 				pathString = FilenameUtils.normalize(pathString);
 			}
 
+			while (true) {
+
+				final int lastCharIndex = pathString.length() - 1;
+				if (!(pathString.charAt(lastCharIndex) == '\\' ||
+						pathString.charAt(lastCharIndex) == '/')) {
+
+					break;
+				}
+				pathString = pathString.substring(0, lastCharIndex);
+			}
+
 		} catch (final Exception exc) {
 
 			if (verbose) {
@@ -118,21 +141,71 @@ public final class PathUtils {
 		return pathString;
 	}
 
+	/**
+	 * Gets the name minus the path from a full fileName.
+	 * <p>
+	 * This method will handle a file in either Unix or Windows format. The text after the last forward or backslash is
+	 * returned.
+	 * </p>
+	 *
+	 * <pre>
+	 * a/b/c.txt --&gt; c.txt
+	 * a.txt     --&gt; a.txt
+	 * a/b/c     --&gt; c
+	 * a/b/c/    --&gt; c
+	 * </pre>
+	 *
+	 * @param path
+	 *            the input path
+	 * @return the name of the file without the path
+	 */
 	@ApiMethod
 	public static String computeFileName(
 			final Path path) {
 
-		final String pathString = String.valueOf(path);
-		return computeFileName(pathString);
+		String fileName = null;
+		if (path != null) {
+
+			final Path fileNamePath = path.getFileName();
+			if (fileNamePath != null) {
+				fileName = fileNamePath.toString();
+			}
+		}
+		return fileName;
 	}
 
+	/**
+	 * Gets the name minus the path from a full fileName.
+	 * <p>
+	 * This method will handle a file in either Unix or Windows format. The text after the last forward or backslash is
+	 * returned.
+	 * </p>
+	 *
+	 * <pre>
+	 * a/b/c.txt --&gt; c.txt
+	 * a.txt     --&gt; a.txt
+	 * a/b/c     --&gt; c
+	 * a/b/c/    --&gt; c
+	 * </pre>
+	 *
+	 * @param pathString
+	 *            the input path string
+	 * @return the name of the file without the path
+	 */
 	@ApiMethod
 	public static String computeFileName(
 			final String pathString) {
 
-		final Path path = Paths.get(pathString);
-		final Path fileName = path.getFileName();
-		return fileName.toString();
+		String fileName = null;
+		if (pathString != null) {
+
+			final Path path = Paths.get(pathString);
+			final Path fileNamePath = path.getFileName();
+			if (fileNamePath != null) {
+				fileName = fileNamePath.toString();
+			}
+		}
+		return fileName;
 	}
 
 	@ApiMethod
@@ -149,21 +222,25 @@ public final class PathUtils {
 
 		String folderPathString = null;
 		try {
-			Path parentPath = Paths.get(pathString);
-			for (int i = 0; i < levelsToGoUp; i++) {
+			if (pathString != null) {
 
-				if (parentPath != null) {
-					parentPath = parentPath.getParent();
-				} else {
-					break;
+				Path parentPath = Paths.get(pathString);
+				for (int i = 0; i < levelsToGoUp; i++) {
+
+					if (parentPath != null) {
+						parentPath = parentPath.getParent();
+					} else {
+						break;
+					}
 				}
-			}
-			if (parentPath != null) {
-				folderPathString = parentPath.toString();
+				if (parentPath != null) {
+					folderPathString = parentPath.toString();
+				}
 			}
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to compute parent path string");
+			Logger.printError("failed to compute parent path, levels to go up: " + levelsToGoUp +
+					", from:" + System.lineSeparator() + pathString);
 			Logger.printException(exc);
 		}
 		return folderPathString;
@@ -254,9 +331,48 @@ public final class PathUtils {
 			relativePathString = relativePath.toString();
 
 		} catch (final Exception exc) {
-			Logger.printError("failed to compute relative path string");
+			Logger.printError("failed to compute relative path string from:" +
+					System.lineSeparator() + fromPathString + System.lineSeparator() +
+					"to:" + System.lineSeparator() + toPathString);
 			Logger.printException(exc);
 		}
 		return relativePathString;
+	}
+
+	@ApiMethod
+	public static String tryComputeRelativePath(
+			final String fromPathString,
+			final String toPathString) {
+
+		String relativePathString = toPathString;
+		try {
+			final Path fromPath = Paths.get(fromPathString);
+			final Path toPath = Paths.get(toPathString);
+			final Path relativePath = fromPath.relativize(toPath);
+			relativePathString = relativePath.toString();
+
+		} catch (final Exception ignored) {
+		}
+		return relativePathString;
+	}
+
+	@ApiMethod
+	public static boolean checkAbsolutePath(
+			final String pathString) {
+
+		boolean absolutePath = false;
+		try {
+			if (StringUtils.isNotBlank(pathString)) {
+
+				final Path path = Paths.get(pathString);
+				absolutePath = path.isAbsolute();
+			}
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to check absolute path for:" +
+					System.lineSeparator() + pathString);
+			Logger.printException(exc);
+		}
+		return absolutePath;
 	}
 }

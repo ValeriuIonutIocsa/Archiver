@@ -63,8 +63,10 @@ public class ParserOutputFolderPaths {
 			}
 		}
 
-		FactoryFolderCreator.getInstance().createParentDirectories(CACHED_DATA_FOLDER_PATH_STRING, false);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(CACHED_DATA_FOLDER_PATH_STRING, false);
+		FactoryFolderCreator.getInstance()
+				.createParentDirectories(CACHED_DATA_FOLDER_PATH_STRING, false, true);
+		FactoryReadOnlyFlagClearer.getInstance()
+				.clearReadOnlyFlagFile(CACHED_DATA_FOLDER_PATH_STRING, false, true);
 		try (PrintStream printStream = StreamUtils.openPrintStream(CACHED_DATA_FOLDER_PATH_STRING)) {
 
 			for (final String outputFolderPathString : outputFolderPathStrings) {

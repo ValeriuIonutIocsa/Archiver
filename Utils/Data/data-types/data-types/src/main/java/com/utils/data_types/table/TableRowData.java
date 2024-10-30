@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.utils.data_types.data_items.DataItem;
+import com.utils.json.JsonUtils;
 import com.utils.xml.stax.XmlStAXWriter;
 
 public interface TableRowData extends Serializable {
@@ -102,12 +103,8 @@ public interface TableRowData extends Serializable {
 
 	default void writeToJson(
 			final TableColumnData[] columnsData,
-			final boolean childHasMoreEntries,
+			final int indentCount,
 			final PrintStream printStream) {
-
-		printStream.print("    ".repeat(4));
-		printStream.print('{');
-		printStream.println();
 
 		final Map<TableColumnData, DataItem<?>> notBlankColumnDataMap = new LinkedHashMap<>();
 		final DataItem<?>[] dataItemArray = getDataItemArray();
@@ -128,30 +125,15 @@ public interface TableRowData extends Serializable {
 			final TableColumnData tableColumnData = mapEntry.getKey();
 			final DataItem<?> dataItem = mapEntry.getValue();
 
-			printStream.print("    ".repeat(5));
-			printStream.print('"');
 			final String columnName = tableColumnData.getSerializeName();
-			printStream.print(columnName);
-			printStream.print("\": ");
-
+			final boolean notLastAttribute = i < notBlankColumnDataMap.size() - 1;
 			if (dataItem != null) {
-				dataItem.writeToJson(printStream);
+				dataItem.writeToJson(columnName, notLastAttribute, indentCount, printStream);
 			} else {
-				printStream.print("\"\"");
+				JsonUtils.writeStringAttribute(columnName, "", notLastAttribute,
+						indentCount, printStream);
 			}
-
-			if (i < notBlankColumnDataMap.size() - 1) {
-				printStream.print(',');
-			}
-			printStream.println();
 			i++;
 		}
-
-		printStream.print("    ".repeat(4));
-		printStream.print('}');
-		if (childHasMoreEntries) {
-			printStream.print(',');
-		}
-		printStream.println();
 	}
 }

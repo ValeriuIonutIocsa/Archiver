@@ -60,7 +60,7 @@ class XmlStAXWriterTest {
 		new AbstractXmlStAXReader(tempXmlFilePathString) {
 
 			@Override
-			protected void parseXmlEvent(
+			protected ParseXmlEventResult parseXmlEvent(
 					final Stack<String> pathInXml,
 					final XMLEvent xmlEvent) {
 
@@ -75,9 +75,10 @@ class XmlStAXWriterTest {
 						Logger.printLine("attribute value: " + attributeValue);
 					}
 				}
+				return ParseXmlEventResult.CONTINUE_READING;
 			}
 		}.readXml();
 
-		FactoryFileDeleter.getInstance().deleteFile(tempXmlFilePathString, true);
+		FactoryFileDeleter.getInstance().deleteFile(tempXmlFilePathString, false, true);
 	}
 }

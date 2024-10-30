@@ -4,6 +4,7 @@ import com.utils.gui.AbstractCustomControl;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
+import com.utils.log.progress.ProgressIndicator;
 import com.utils.string.StrUtils;
 
 import javafx.geometry.Pos;
@@ -11,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.StackPane;
 
-public class ProgressIndicatorBar extends AbstractCustomControl<StackPane> {
+public class ProgressIndicatorBar extends AbstractCustomControl<StackPane> implements ProgressIndicator {
 
 	private final ProgressBar progressBar;
 	private final Label progressBarLabel;
@@ -45,7 +46,8 @@ public class ProgressIndicatorBar extends AbstractCustomControl<StackPane> {
 		return stackPane;
 	}
 
-	public void updateValue(
+	@Override
+	public void update(
 			final double value) {
 
 		GuiUtils.run(() -> {

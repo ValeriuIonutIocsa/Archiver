@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.utils.data_types.table.TableRowDataMergedCells;
 import com.utils.gui.GuiUtils;
+import com.utils.gui.factories.BasicControlsFactories;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -16,7 +18,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
-public abstract class CustomTableCellMergedCells<
+public class CustomTableCellMergedCells<
 		TableRowDataMergedCellsT extends TableRowDataMergedCells<TableRowDataMergedCellsT>>
 		extends CustomTableCell<TableRowDataMergedCellsT, Object> {
 
@@ -60,6 +62,10 @@ public abstract class CustomTableCellMergedCells<
 			}
 			final String text = createText(item, firstCell);
 			final Label label = new Label(text);
+
+			final Tooltip tooltip = BasicControlsFactories.getInstance().createTooltip(text);
+			setTooltip(tooltip);
+
 			label.setGraphic(createLabelGraphic(item));
 			final Pos textAlignment = getTextAlignmentValue();
 			GuiUtils.addToStackPane(stackPane, label, textAlignment, 1, 1, 1, 1);

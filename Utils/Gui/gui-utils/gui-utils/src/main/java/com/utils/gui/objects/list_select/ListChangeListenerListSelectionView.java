@@ -7,10 +7,10 @@ class ListChangeListenerListSelectionView<
 		TablePositionT extends TablePosition<?, ?>>
 		implements ListChangeListener<TablePositionT> {
 
-	private final CustomListSelectionView<?, ?> customListSelectionView;
+	private final AbstractCustomListSelectionView<?, ?> customListSelectionView;
 
 	ListChangeListenerListSelectionView(
-			final CustomListSelectionView<?, ?> customListSelectionView) {
+			final AbstractCustomListSelectionView<?, ?> customListSelectionView) {
 
 		this.customListSelectionView = customListSelectionView;
 	}

@@ -69,11 +69,8 @@ public final class TableUtils {
 			final StringBuilder sbClipboardText) {
 
 		final String cellText;
-		if (cellData instanceof DataItem<?>) {
-
-			final DataItem<?> dataItem = (DataItem<?>) cellData;
+		if (cellData instanceof final DataItem<?> dataItem) {
 			cellText = dataItem.createCopyString();
-
 		} else {
 			cellText = Objects.toString(cellData, "");
 		}

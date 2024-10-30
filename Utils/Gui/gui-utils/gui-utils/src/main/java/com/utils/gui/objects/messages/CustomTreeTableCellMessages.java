@@ -1,11 +1,11 @@
 package com.utils.gui.objects.messages;
 
+import com.utils.data_types.table.messages.TableRowDataMessage;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.help.StackPaneHelp;
 import com.utils.gui.icons.ImagesGuiUtils;
-import com.utils.gui.objects.messages.data.TableRowDataMessage;
 import com.utils.gui.objects.tables.tree_table.CustomTreeTableCell;
 import com.utils.log.messages.MessageType;
 
@@ -97,7 +97,7 @@ class CustomTreeTableCellMessages extends CustomTreeTableCell<TableRowDataMessag
 			}
 
 		} else {
-			final Label label = new Label(item.toString());
+			final Label label = new Label(text);
 			final Rectangle statusRectangle = createStatusRectangle(tableRowDataMessage);
 			label.setGraphic(statusRectangle);
 			final Pos textAlignment = getTextAlignmentValue();

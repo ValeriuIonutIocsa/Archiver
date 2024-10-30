@@ -8,7 +8,9 @@ import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
 import com.utils.gui.icons.FileSystemIconRetriever;
 import com.utils.gui.objects.tables.tree_table.CustomTreeTableCell;
+import com.utils.gui.version.VersionDependentMethods;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -69,10 +71,13 @@ class CustomTreeTableCellFileToArchive extends CustomTreeTableCell<FileToArchive
 			final Node labelGraphic = createLabelGraphic(item);
 			label.setGraphic(labelGraphic);
 			GuiUtils.addToHBox(hBox, label,
-					Pos.CENTER_LEFT, Priority.ALWAYS, 0, 0, 0, 0);
+					Pos.CENTER_LEFT, Priority.ALWAYS, 0, 0, 0, 5);
 
 			final Pos textAlignment = getTextAlignmentValue();
 			GuiUtils.addToStackPane(stackPane, hBox, textAlignment, 1, 1, 1, 1);
+
+			final int leftPadding = VersionDependentMethods.computeOtherTreeTableCellLeftPadding(this);
+			setPadding(new Insets(0, 0, 0, leftPadding));
 		}
 	}
 

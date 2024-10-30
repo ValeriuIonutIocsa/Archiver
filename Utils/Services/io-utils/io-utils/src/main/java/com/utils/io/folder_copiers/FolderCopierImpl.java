@@ -15,34 +15,52 @@ class FolderCopierImpl implements FolderCopier {
 
 	@ApiMethod
 	@Override
-	public void copyFolder(
+	public boolean copyFolder(
 			final String srcFolderPathString,
 			final String dstFolderPathString,
-			final boolean verbose) {
+			final boolean deleteDstDirectoryBeforeCopying,
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
+		boolean success = false;
 		try {
-			Logger.printProgress("copying folder:");
-			Logger.printLine(srcFolderPathString);
-			Logger.printLine("to:");
-			Logger.printLine(dstFolderPathString);
+			final boolean keepGoing;
+			if (deleteDstDirectoryBeforeCopying) {
+				keepGoing = FactoryFolderDeleter.getInstance()
+						.deleteFolder(dstFolderPathString, verboseProgress, verboseError);
+			} else {
+				keepGoing = true;
+			}
+			if (keepGoing) {
 
-			final boolean deleteFolderSuccess = FactoryFolderDeleter.getInstance()
-					.deleteFolder(dstFolderPathString, true);
-			if (deleteFolderSuccess) {
+				if (verboseProgress) {
+
+					Logger.printProgress("copying folder:");
+					Logger.printLine(srcFolderPathString);
+					Logger.printLine("to:");
+					Logger.printLine(dstFolderPathString);
+				}
 
 				final File srcFolder = new File(srcFolderPathString);
 				final File dstFolder = new File(dstFolderPathString);
 				FileUtils.copyDirectory(srcFolder, dstFolder);
+
+				success = true;
 			}
 
 		} catch (final Exception exc) {
-			if (verbose) {
+			Logger.printException(exc);
+		}
+
+		if (!success) {
+			if (verboseError) {
 				Logger.printError("failed to copy folder " +
 						System.lineSeparator() + srcFolderPathString +
 						System.lineSeparator() + "to:" +
 						System.lineSeparator() + dstFolderPathString);
 			}
-			Logger.printException(exc);
 		}
+
+		return success;
 	}
 }

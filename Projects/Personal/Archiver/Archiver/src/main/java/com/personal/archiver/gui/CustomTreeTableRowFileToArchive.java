@@ -29,21 +29,11 @@ class CustomTreeTableRowFileToArchive extends TreeTableRow<FileToArchive> {
 
 							List<FileToArchive> childrenList = fileToArchive.getChildrenList();
 							if (childrenList == null) {
+
 								fileToArchive.fillChildrenList();
 								childrenList = fileToArchive.getChildrenList();
+								customTreeTableView.addChildren(treeItem, childrenList, false);
 							}
-							for (final FileToArchive fileToArchiveChild : childrenList) {
-
-								final TreeItem<FileToArchive> treeItemChild =
-										new TreeItem<>(fileToArchiveChild);
-								treeItemChild.setExpanded(true);
-								treeItem.expandedProperty().addListener((
-										observable,
-										oldValue,
-										newValue) -> customTreeTableView.fillTreeItemList());
-								treeItem.getChildren().add(treeItemChild);
-							}
-							customTreeTableView.fillTreeItemList();
 						}
 					}
 				}

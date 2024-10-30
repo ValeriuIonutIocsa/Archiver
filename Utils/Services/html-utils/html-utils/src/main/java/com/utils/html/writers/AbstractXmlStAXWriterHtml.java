@@ -12,9 +12,17 @@ public abstract class AbstractXmlStAXWriterHtml
 		extends AbstractXmlStAXWriter implements XmlStAXWriterHtml {
 
 	protected AbstractXmlStAXWriterHtml(
-			final OutputStream outputStream) {
+			final String xmlFilePathString,
+			final String indentString) {
 
-		super(outputStream, "");
+		super(xmlFilePathString, indentString);
+	}
+
+	protected AbstractXmlStAXWriterHtml(
+			final OutputStream outputStream,
+			final String indentString) {
+
+		super(outputStream, indentString);
 	}
 
 	@Override
@@ -52,7 +60,6 @@ public abstract class AbstractXmlStAXWriterHtml
 
 			final String styleTagName = "style";
 			xmlStAXWriter.writeStartElement(styleTagName);
-			xmlStAXWriter.writeAttribute("type", "text/css");
 			xmlStAXWriter.writeAttribute("xml:space", "preserve");
 			new HtmlSectionPlainText(cssString).write(xmlStAXWriter);
 

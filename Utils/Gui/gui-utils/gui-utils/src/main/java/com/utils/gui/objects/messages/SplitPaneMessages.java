@@ -1,18 +1,17 @@
 package com.utils.gui.objects.messages;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.utils.data_types.table.TableColumnData;
+import com.utils.data_types.table.messages.MessagesTreeTableUtils;
+import com.utils.data_types.table.messages.TableRowDataMessage;
 import com.utils.gui.AbstractCustomControl;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.BasicControlsFactories;
 import com.utils.gui.factories.LayoutControlsFactories;
-import com.utils.gui.objects.messages.data.TableRowDataMessage;
 import com.utils.gui.objects.split_pane.CustomSplitPane;
 import com.utils.gui.objects.tables.tree_table.CustomTreeTableView;
 import com.utils.gui.objects.tables.tree_table.UnfilteredTreeItem;
-import com.utils.log.messages.Message;
 import com.utils.log.messages.MessageType;
 import com.utils.log.messages.Messages;
 
@@ -54,19 +53,19 @@ public class SplitPaneMessages extends AbstractCustomControl<SplitPane> {
 			final Parent topControl) {
 
 		final SplitPane splitPaneRoot = getRoot();
-		splitPaneRoot.getItems().remove(0);
-		splitPaneRoot.getItems().add(0, topControl);
+		splitPaneRoot.getItems().removeFirst();
+		splitPaneRoot.getItems().addFirst(topControl);
 		splitPaneRoot.setDividerPositions(0.7);
 	}
 
 	private CustomTreeTableView<TableRowDataMessage> createCustomTreeTableView() {
 
-		final TableColumnData[] tableColumnDataArray = TableRowDataMessage.COLUMNS;
 		final CustomTreeTableView<TableRowDataMessage> customTreeTableView =
-				new CustomTreeTableView<>(tableColumnDataArray, true, true, true, true, 0);
+				new CustomTreeTableView<>(TableRowDataMessage.DATA_INFO.columnsTable(),
+						true, true, true, true, 0);
 		customTreeTableView.setId("tree-table-view-messages");
 
-		customTreeTableView.getColumnList().get(0)
+		customTreeTableView.getColumnByName(TableRowDataMessage.MESSAGES_COLUMN_NAME)
 				.setCellFactory(param -> new CustomTreeTableCellMessages(userActionRequiredHelper));
 
 		return customTreeTableView;
@@ -154,39 +153,26 @@ public class SplitPaneMessages extends AbstractCustomControl<SplitPane> {
 				customTreeTableView.getUnfilteredTreeItemRoot();
 		unfilteredTreeItemRoot.getChildrenList().clear();
 
-		final List<Message> messageList = messages.createDisplayMessageList();
-		messageList.sort(Comparator.naturalOrder());
-
-		fillTreeItems(unfilteredTreeItemRoot, messageList);
+		final List<TableRowDataMessage> tableRowDataMessageList = new ArrayList<>();
+		MessagesTreeTableUtils.fillTableRowDataMessageList(messages, tableRowDataMessageList);
+		fillTreeItemsRec(unfilteredTreeItemRoot, tableRowDataMessageList);
 
 		customTreeTableView.setFilteredItems();
 	}
 
-	private static void fillTreeItems(
-			final UnfilteredTreeItem<TableRowDataMessage> unfilteredTreeItemRoot,
-			final List<Message> messageList) {
+	private static void fillTreeItemsRec(
+			final UnfilteredTreeItem<TableRowDataMessage> parentUnfilteredTreeItem,
+			final List<TableRowDataMessage> tableRowDataMessageList) {
 
-		String lastMessageCategory = null;
-		UnfilteredTreeItem<TableRowDataMessage> unfilteredTreeItemCategory = null;
-		for (final Message message : messageList) {
+		for (final TableRowDataMessage tableRowDataMessage : tableRowDataMessageList) {
 
-			final MessageType messageType = message.getMessageType();
-			final String messageCategory = message.getMessageCategory();
-			if (!messageCategory.equals(lastMessageCategory)) {
-
-				final TableRowDataMessage tableRowDataMessageCategory =
-						new TableRowDataMessage(true, messageType, messageCategory);
-				unfilteredTreeItemCategory = new UnfilteredTreeItem<>(tableRowDataMessageCategory, true);
-				unfilteredTreeItemRoot.getChildrenList().add(unfilteredTreeItemCategory);
-				lastMessageCategory = messageCategory;
-			}
-
-			final String messageString = message.getMessageString();
-			final TableRowDataMessage tableRowDataMessage =
-					new TableRowDataMessage(false, messageType, messageString);
-			final UnfilteredTreeItem<TableRowDataMessage> unfilteredTreeItemMessage =
+			final UnfilteredTreeItem<TableRowDataMessage> unfilteredTreeItem =
 					new UnfilteredTreeItem<>(tableRowDataMessage, true);
-			unfilteredTreeItemCategory.getChildrenList().add(unfilteredTreeItemMessage);
+			parentUnfilteredTreeItem.getChildrenList().add(unfilteredTreeItem);
+
+			final List<TableRowDataMessage> childTableRowDataMessageList =
+					tableRowDataMessage.getChildTableRowDataMessageList();
+			fillTreeItemsRec(unfilteredTreeItem, childTableRowDataMessageList);
 		}
 	}
 

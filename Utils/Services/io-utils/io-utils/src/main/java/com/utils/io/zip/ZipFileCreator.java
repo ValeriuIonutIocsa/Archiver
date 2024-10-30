@@ -72,6 +72,7 @@ public class ZipFileCreator {
 		} else {
 			if (IoUtils.fileExists(srcFilePathString)) {
 				keepGoing = true;
+
 			} else {
 				Logger.printWarning("the source file does not exist:" +
 						System.lineSeparator() + srcFilePathString);
@@ -81,10 +82,10 @@ public class ZipFileCreator {
 		if (keepGoing) {
 
 			if (deleteExisting && IoUtils.fileExists(zipArchiveFilePathString)) {
-				FactoryFileDeleter.getInstance().deleteFile(zipArchiveFilePathString, true);
+				FactoryFileDeleter.getInstance().deleteFile(zipArchiveFilePathString, false, true);
 			}
 
-			FactoryFolderCreator.getInstance().createParentDirectories(zipArchiveFilePathString, true);
+			FactoryFolderCreator.getInstance().createParentDirectories(zipArchiveFilePathString, false, true);
 
 			try (FileSystem zipFileSystem =
 					ZipUtils.createNewZipFileSystem(zipArchiveFilePathString, useTempFile)) {
@@ -147,7 +148,7 @@ public class ZipFileCreator {
 						final Path zipFilePath = zipFileSystem.getPath(srcFileName);
 						final String zipFilePathString = zipFilePath.toString();
 						FactoryFileCopier.getInstance().copyFile(
-								srcFilePathString, zipFilePathString, true, false);
+								srcFilePathString, zipFilePathString, true, true, false);
 						if (updateFileTimes) {
 							Files.setLastModifiedTime(zipFilePath, FileTime.from(Instant.now()));
 						}

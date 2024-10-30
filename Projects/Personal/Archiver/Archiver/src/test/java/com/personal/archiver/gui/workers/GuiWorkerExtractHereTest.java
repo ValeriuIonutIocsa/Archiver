@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import com.personal.archiver.gui.data.FileToArchive;
 import com.utils.gui.GuiUtils;
+import com.utils.test.TestInputUtils;
 
 class GuiWorkerExtractHereTest {
 
@@ -11,7 +12,7 @@ class GuiWorkerExtractHereTest {
 	void testWork() throws Exception {
 
 		final String zipFilePathString;
-		final int input = Integer.parseInt("1");
+		final int input = TestInputUtils.parseTestInputNumber("1");
 		if (input == 1) {
 			zipFilePathString = "D:\\p\\bm\\g12\\905\\BMG12_0U0_905.zip";
 		} else if (input == 2) {
@@ -26,7 +27,7 @@ class GuiWorkerExtractHereTest {
 
 		GuiUtils.startPlatform();
 		final GuiWorkerExtractHere guiWorkerExtractHere =
-				new GuiWorkerExtractHere(null, null, fileToArchive, null);
+				new GuiWorkerExtractHere(null, null, fileToArchive, false);
 		guiWorkerExtractHere.start();
 
 		guiWorkerExtractHere.join();

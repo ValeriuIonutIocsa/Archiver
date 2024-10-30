@@ -9,6 +9,7 @@ public class DataItemObjectComparable<
 	DataItemObjectComparable(
 			final ObjectT value,
 			final int maxLength) {
+
 		super(value, maxLength);
 	}
 
@@ -19,23 +20,5 @@ public class DataItemObjectComparable<
 		return new CompareToBuilder()
 				.append(value, other.value)
 				.toComparison();
-	}
-
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-
-	@Override
-	public boolean equals(
-			final Object obj) {
-
-		final boolean result;
-		if (getClass().isInstance(obj)) {
-			result = compareTo(getClass().cast(obj)) == 0;
-		} else {
-			result = false;
-		}
-		return result;
 	}
 }

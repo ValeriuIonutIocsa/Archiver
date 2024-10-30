@@ -1,32 +1,16 @@
 package com.utils.gui.charts.division.data;
 
+import com.utils.string.StrUtils;
+
 import javafx.scene.paint.Color;
 
-public class PercentageDivisionElement {
+public record PercentageDivisionElement(
+		String name,
+		double percentage,
+		Color color) {
 
-	private final String name;
-	private final double percentage;
-	private final Color color;
-
-	public PercentageDivisionElement(
-			final String name,
-			final double percentage,
-			final Color color) {
-
-		this.name = name;
-		this.percentage = percentage;
-		this.color = color;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public double getPercentage() {
-		return percentage;
-	}
-
-	public Color getColor() {
-		return color;
+	@Override
+	public String toString() {
+		return StrUtils.reflectionToString(this);
 	}
 }

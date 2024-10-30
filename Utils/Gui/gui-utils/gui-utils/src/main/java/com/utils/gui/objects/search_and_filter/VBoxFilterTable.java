@@ -111,7 +111,7 @@ public class VBoxFilterTable extends AbstractCustomControl<VBox> {
 			if (customPatterns.checkEmptyPatterns()) {
 				new CustomAlertWarning("empty filter patterns",
 						"All the search patterns above are empty." +
-								" It is redundant to perform a search.");
+								" It is redundant to perform a search.").showAndWait();
 
 			} else {
 				final FilterType filterType = comboBoxFilterType.getSelectionModel().getSelectedItem();

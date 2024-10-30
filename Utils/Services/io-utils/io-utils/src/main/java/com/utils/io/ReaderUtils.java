@@ -8,6 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
@@ -51,6 +53,39 @@ public final class ReaderUtils {
 	}
 
 	@ApiMethod
+	public static String tryFileToString(
+			final String filePathString) {
+
+		String str = null;
+		try {
+			str = fileToString(filePathString);
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to read contents of file:" +
+					System.lineSeparator() + filePathString);
+			Logger.printException(exc);
+		}
+		return str;
+	}
+
+	@ApiMethod
+	public static String tryFileToString(
+			final String filePathString,
+			final Charset charset) {
+
+		String str = null;
+		try {
+			str = fileToString(filePathString, charset);
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to read contents of file:" +
+					System.lineSeparator() + filePathString);
+			Logger.printException(exc);
+		}
+		return str;
+	}
+
+	@ApiMethod
 	public static String fileToString(
 			final String filePathString) throws Exception {
 
@@ -80,5 +115,26 @@ public final class ReaderUtils {
 			final String encoding) throws IOException {
 
 		return IOUtils.toString(inputStream, encoding);
+	}
+
+	@ApiMethod
+	public static List<String> tryFileToLineList(
+			final String filePathString,
+			final Charset charset) {
+
+		final List<String> lineList = new ArrayList<>();
+		try (BufferedReader bufferedReader = ReaderUtils.openBufferedReader(filePathString, charset)) {
+
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				lineList.add(line);
+			}
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to read contents of file:" +
+					System.lineSeparator() + filePathString);
+			Logger.printException(exc);
+		}
+		return lineList;
 	}
 }

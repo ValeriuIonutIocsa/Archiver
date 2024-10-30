@@ -10,6 +10,10 @@ import javafx.scene.layout.HBox;
 
 interface BrowsePath {
 
+	/**
+	 * @param hBoxRoot
+	 *            hBoxRoot
+	 */
 	default void createInputTypeControls(
 			final HBox hBoxRoot) {
 	}

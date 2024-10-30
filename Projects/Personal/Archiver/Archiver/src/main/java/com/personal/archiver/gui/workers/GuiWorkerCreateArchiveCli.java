@@ -16,10 +16,11 @@ public class GuiWorkerCreateArchiveCli extends AbstractGuiWorkerCreateArchive {
 			final Scene scene,
 			final ControlDisabler controlDisabler,
 			final String workingDirPathString,
+			final boolean cacheInRam,
 			final String outputPathString,
 			final String folderPathString) {
 
-		super(scene, controlDisabler, workingDirPathString, outputPathString);
+		super(scene, controlDisabler, workingDirPathString, cacheInRam, outputPathString);
 
 		this.folderPathString = folderPathString;
 	}

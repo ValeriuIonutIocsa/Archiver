@@ -1,6 +1,6 @@
 package com.utils.html.sections.scripts;
 
-public class HtmlSectionScriptText extends HtmlSectionScript {
+public class HtmlSectionScriptText extends AbstractHtmlSectionScript {
 
 	private final String jsScriptContent;
 

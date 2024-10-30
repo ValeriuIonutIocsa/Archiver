@@ -79,14 +79,24 @@ public abstract class AbstractXmlStAXReader implements XmlStAXReader {
 						final StartElement startElement = xmlEvent.asStartElement();
 						final String localPart = startElement.getName().getLocalPart();
 						pathInXml.push(localPart);
-						parseXmlEvent(pathInXml, startElement);
+						final ParseXmlEventResult parseXmlEventResult = parseXmlEvent(pathInXml, startElement);
+						if (parseXmlEventResult != ParseXmlEventResult.CONTINUE_READING) {
+							break;
+						}
 
 					} else if (xmlEvent.isEndElement()) {
-						parseXmlEvent(pathInXml, xmlEvent);
+
+						final ParseXmlEventResult parseXmlEventResult = parseXmlEvent(pathInXml, xmlEvent);
+						if (parseXmlEventResult != ParseXmlEventResult.CONTINUE_READING) {
+							break;
+						}
 						pathInXml.pop();
 
 					} else {
-						parseXmlEvent(pathInXml, xmlEvent);
+						final ParseXmlEventResult parseXmlEventResult = parseXmlEvent(pathInXml, xmlEvent);
+						if (parseXmlEventResult != ParseXmlEventResult.CONTINUE_READING) {
+							break;
+						}
 					}
 				}
 				success = true;
@@ -103,7 +113,7 @@ public abstract class AbstractXmlStAXReader implements XmlStAXReader {
 		return success;
 	}
 
-	protected abstract void parseXmlEvent(
+	protected abstract ParseXmlEventResult parseXmlEvent(
 			Stack<String> pathInXml,
 			XMLEvent xmlEvent) throws SilentException;
 

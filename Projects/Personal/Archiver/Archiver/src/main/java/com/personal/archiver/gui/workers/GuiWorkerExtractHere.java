@@ -28,7 +28,6 @@ import com.utils.log.Logger;
 import com.utils.log.progress.ProgressIndicators;
 
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 
 public class GuiWorkerExtractHere
 		extends AbstractGuiWorker implements CloseableGuiWorker {
@@ -38,13 +37,13 @@ public class GuiWorkerExtractHere
 	private final AtomicInteger runnableCount;
 	private final FileSystemFileWriter fileSystemFileWriter;
 
-	private final CheckBox checkBoxCloseOnCompletion;
+	private final boolean closeOnCompletion;
 
 	public GuiWorkerExtractHere(
 			final Scene scene,
 			final ControlDisabler controlDisabler,
 			final FileToArchive fileToArchive,
-			final CheckBox checkBoxCloseOnCompletion) {
+			final boolean closeOnCompletion) {
 
 		super(scene, controlDisabler);
 
@@ -53,7 +52,7 @@ public class GuiWorkerExtractHere
 		runnableCount = new AtomicInteger();
 		fileSystemFileWriter = new FileSystemFileWriterImpl();
 
-		this.checkBoxCloseOnCompletion = checkBoxCloseOnCompletion;
+		this.closeOnCompletion = closeOnCompletion;
 	}
 
 	@Override
@@ -97,18 +96,21 @@ public class GuiWorkerExtractHere
 		final Map<String, String> fileSystemFileMap = new HashMap<>();
 		if (fileSystemParentFolderPathString != null) {
 
-			final List<String> fileSystemPathStringList =
-					ListFileUtils.listFiles(fileSystemParentFolderPathString);
-			for (final String fileSystemPathString : fileSystemPathStringList) {
+			ListFileUtils.visitFiles(fileSystemParentFolderPathString,
+					dirPath -> {
 
-				final String fileSystemRelativePathString =
-						PathUtils.computeRelativePath(fileSystemRootPathString, fileSystemPathString);
-				if (IoUtils.directoryExists(fileSystemPathString)) {
-					fileSystemFolderMap.put(fileSystemRelativePathString, fileSystemPathString);
-				} else {
-					fileSystemFileMap.put(fileSystemRelativePathString, fileSystemPathString);
-				}
-			}
+						final String fileSystemPathString = dirPath.toString();
+						final String fileSystemRelativePathString =
+								PathUtils.computeRelativePath(fileSystemRootPathString, fileSystemPathString);
+						fileSystemFolderMap.put(fileSystemRelativePathString, fileSystemPathString);
+					},
+					filePath -> {
+
+						final String fileSystemPathString = filePath.toString();
+						final String fileSystemRelativePathString =
+								PathUtils.computeRelativePath(fileSystemRootPathString, fileSystemPathString);
+						fileSystemFileMap.put(fileSystemRelativePathString, fileSystemPathString);
+					});
 		}
 
 		final List<Path> zipPathList = new ArrayList<>();
@@ -211,11 +213,8 @@ public class GuiWorkerExtractHere
 
 		ProgressIndicators.getInstance().update(0);
 
-		if (checkBoxCloseOnCompletion != null) {
-			final boolean closeOnCompletion = checkBoxCloseOnCompletion.isSelected();
-			if (closeOnCompletion) {
-				getScene().getWindow().hide();
-			}
+		if (closeOnCompletion) {
+			getScene().getWindow().hide();
 		}
 	}
 

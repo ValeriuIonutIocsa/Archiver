@@ -137,19 +137,4 @@ public final class DataTypes {
 		Arrays.fill(array, 0.0);
 		return array;
 	}
-
-	@ApiMethod
-	public static int signExtendTo32(
-			final int n,
-			final int bitLength) {
-
-		final int result;
-		final int firstBitValue = n >> (bitLength - 1);
-		if (firstBitValue == 0) {
-			result = n;
-		} else {
-			result = (-1 << bitLength) + n;
-		}
-		return result;
-	}
 }

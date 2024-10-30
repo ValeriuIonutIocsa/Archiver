@@ -62,6 +62,40 @@ public final class CollectionUtils {
 	}
 
 	@ApiMethod
+	public static void appendJoined(
+			final Collection<?> collection,
+			final String separator,
+			final StringBuilder stringBuilder) {
+
+		int index = 0;
+		for (final Object element : collection) {
+
+			stringBuilder.append(element);
+			if (index < collection.size() - 1) {
+				stringBuilder.append(separator);
+			}
+			index++;
+		}
+	}
+
+	@ApiMethod
+	public static void appendJoined(
+			final Collection<?> collection,
+			final char separator,
+			final StringBuilder stringBuilder) {
+
+		int index = 0;
+		for (final Object element : collection) {
+
+			stringBuilder.append(element);
+			if (index < collection.size() - 1) {
+				stringBuilder.append(separator);
+			}
+			index++;
+		}
+	}
+
+	@ApiMethod
 	public static void printJoined(
 			final Collection<?> collection,
 			final String separator,

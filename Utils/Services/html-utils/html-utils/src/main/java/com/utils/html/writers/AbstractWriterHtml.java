@@ -23,8 +23,8 @@ public abstract class AbstractWriterHtml implements WriterHtml {
 	public void writeToFile(
 			final String outputPathString) {
 
-		FactoryFolderCreator.getInstance().createParentDirectories(outputPathString, true);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, true);
+		FactoryFolderCreator.getInstance().createParentDirectories(outputPathString, false, true);
+		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, false, true);
 
 		try (OutputStream outputStream = StreamUtils.openBufferedOutputStream(outputPathString)) {
 			write(outputStream);
@@ -56,7 +56,7 @@ public abstract class AbstractWriterHtml implements WriterHtml {
 	private void write(
 			final OutputStream outputStream) {
 
-		new AbstractXmlStAXWriterHtml(outputStream) {
+		new AbstractXmlStAXWriterHtml(outputStream, "") {
 
 			@Override
 			public String createCssString() {

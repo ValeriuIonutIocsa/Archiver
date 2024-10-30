@@ -70,8 +70,8 @@ public abstract class AbstractXmlStAXWriter implements XmlStAXWriter {
 		XMLEventWriter xmlEventWriter = null;
 
 		try {
-			FactoryFolderCreator.getInstance().createParentDirectories(xmlFilePathString, true);
-			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(xmlFilePathString, true);
+			FactoryFolderCreator.getInstance().createParentDirectories(xmlFilePathString, false, true);
+			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(xmlFilePathString, false, true);
 
 			bufferedOutputStream = new BufferedOutputStream(StreamUtils.openOutputStream(xmlFilePathString));
 
@@ -115,9 +115,28 @@ public abstract class AbstractXmlStAXWriter implements XmlStAXWriter {
 		return success;
 	}
 
+	@Override
+	public boolean writeXmlWithoutClosing() {
+
+		boolean success = false;
+		if (xmlEventWriter != null) {
+
+			try {
+				write();
+				success = true;
+
+			} catch (final Exception exc) {
+				Logger.printError("failed to write XML file");
+				Logger.printException(exc);
+			}
+		}
+		return success;
+	}
+
 	protected abstract void write();
 
-	private void closeStreams() {
+	@Override
+	public void closeStreams() {
 
 		try {
 			xmlEventWriter.close();
@@ -250,6 +269,18 @@ public abstract class AbstractXmlStAXWriter implements XmlStAXWriter {
 				Logger.printError("failed to write plain text to the XML file");
 				Logger.printException(exc);
 			}
+		}
+	}
+
+	@Override
+	public void flush() {
+
+		try {
+			bufferedOutputStream.flush();
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to flush XML output stream");
+			Logger.printException(exc);
 		}
 	}
 }

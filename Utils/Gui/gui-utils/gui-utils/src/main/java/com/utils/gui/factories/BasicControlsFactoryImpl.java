@@ -11,6 +11,7 @@ import com.utils.annotations.ApiMethod;
 import com.utils.gui.clipboard.ClipboardUtils;
 import com.utils.gui.version.VersionDependentMethods;
 import com.utils.io.PathUtils;
+import com.utils.string.StrUtils;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -78,14 +79,24 @@ public class BasicControlsFactoryImpl implements BasicControlsFactory {
 	@Override
 	@ApiMethod
 	public TextField createNumberOnlyTextField(
-			final int value) {
+			final double value) {
 
-		final TextField textField = createTextField(String.valueOf(value));
-		textField.setOnKeyTyped(event -> {
-			final String typedCharacter = event.getCharacter();
-			if (!"0123456789".contains(typedCharacter)) {
-				event.consume();
+		final TextField textField = createTextField(StrUtils.doubleToString(value, 0, 2, false));
+		textField.textProperty().addListener((
+				observable,
+				oldValue,
+				newValue) -> {
+
+			final StringBuilder sb = new StringBuilder();
+			final String text = textField.getText();
+			for (int i = 0; i < text.length(); i++) {
+
+				final char ch = text.charAt(i);
+				if (Character.isDigit(ch) || ch == '-' || ch == '.') {
+					sb.append(ch);
+				}
 			}
+			textField.setText(sb.toString());
 		});
 		return textField;
 	}
@@ -132,15 +143,15 @@ public class BasicControlsFactoryImpl implements BasicControlsFactory {
 		if (styleClassElements != null) {
 			textField.getStyleClass().addAll(styleClassElements);
 		}
-		textField.setOnKeyPressed(event -> {
+		textField.setOnKeyPressed(keyEvent -> {
 
-			if (event.isControlDown() && event.getCode() == KeyCode.C) {
+			if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 
 				final String selectedText = textField.getSelectedText();
 				if (StringUtils.isNotBlank(selectedText)) {
 					ClipboardUtils.putStringInClipBoard(selectedText);
 				}
-				event.consume();
+				keyEvent.consume();
 			}
 		});
 		return textField;
@@ -156,15 +167,15 @@ public class BasicControlsFactoryImpl implements BasicControlsFactory {
 		if (styleClassElements != null) {
 			textArea.getStyleClass().addAll(styleClassElements);
 		}
-		textArea.setOnKeyPressed(event -> {
+		textArea.setOnKeyPressed(keyEvent -> {
 
-			if (event.isControlDown() && event.getCode() == KeyCode.C) {
+			if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 
 				final String selectedText = textArea.getSelectedText();
 				if (StringUtils.isNotBlank(selectedText)) {
 					ClipboardUtils.putStringInClipBoard(selectedText);
 				}
-				event.consume();
+				keyEvent.consume();
 			}
 		});
 		return textArea;

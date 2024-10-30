@@ -42,8 +42,7 @@ class BrowsePathFile implements BrowsePath {
 
 			fileChooser.getExtensionFilters().addAll(extensionFilterList);
 
-			final FileChooser.ExtensionFilter lastExtensionFilter =
-					extensionFilterList.get(extensionFilterList.size() - 1);
+			final FileChooser.ExtensionFilter lastExtensionFilter = extensionFilterList.getLast();
 			fileChooser.setSelectedExtensionFilter(lastExtensionFilter);
 		}
 

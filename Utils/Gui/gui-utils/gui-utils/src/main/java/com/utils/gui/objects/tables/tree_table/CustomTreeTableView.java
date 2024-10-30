@@ -125,9 +125,8 @@ public class CustomTreeTableView<
 			final Set<Node> scrollBarSet = lookupAll(".scroll-bar");
 			for (final Node node : scrollBarSet) {
 
-				if (node instanceof ScrollBar) {
+				if (node instanceof final ScrollBar scrollBar) {
 
-					final ScrollBar scrollBar = (ScrollBar) node;
 					final Orientation orientation = scrollBar.getOrientation();
 					if (orientation == Orientation.VERTICAL) {
 						verticalScrollBar = scrollBar;
@@ -161,13 +160,25 @@ public class CustomTreeTableView<
 			final KeyEvent keyEvent,
 			final int defaultSearchAndFilterColumnIndex) {
 
-		if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.F) {
+		if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.MINUS ||
+				keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.SUBTRACT) {
+			deselectAllKeyCombinationPressed();
+
+		} else if (keyEvent.isControlDown() && !keyEvent.isShiftDown() && keyEvent.getCode() == KeyCode.F) {
 			searchKeyCombinationPressed(defaultSearchAndFilterColumnIndex);
+		} else if (keyEvent.isControlDown() && keyEvent.isShiftDown() && keyEvent.getCode() == KeyCode.F) {
+			filterKeyCombinationPressed(defaultSearchAndFilterColumnIndex);
+
 		} else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 			copyKeyCombinationPressed();
 		} else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.V) {
 			pasteKeyCombinationPressed();
 		}
+	}
+
+	private void deselectAllKeyCombinationPressed() {
+
+		getSelectionModel().clearSelection();
 	}
 
 	private void searchKeyCombinationPressed(
@@ -179,6 +190,17 @@ public class CustomTreeTableView<
 			columnIndex = focusedCell.getColumn();
 		}
 		search(columnIndex);
+	}
+
+	private void filterKeyCombinationPressed(
+			final int defaultSearchAndFilterColumnIndex) {
+
+		int columnIndex = defaultSearchAndFilterColumnIndex;
+		final TreeTablePosition<TableRowDataT, ?> focusedCell = getFocusModel().getFocusedCell();
+		if (focusedCell != null) {
+			columnIndex = focusedCell.getColumn();
+		}
+		filter(columnIndex);
 	}
 
 	protected void copyKeyCombinationPressed() {
@@ -246,10 +268,11 @@ public class CustomTreeTableView<
 		}
 	}
 
-	protected void pasteKeyCombinationPressed() {
+	@Override
+	public void pasteKeyCombinationPressed() {
 	}
 
-	private void createTreeTableColumns(
+	public void createTreeTableColumns(
 			final TableColumnData[] tableColumnDataArray,
 			final boolean filter) {
 
@@ -280,6 +303,8 @@ public class CustomTreeTableView<
 			final ContextMenu contextMenuTableColumn =
 					createContextMenuTreeTableColumn(columnIndex, filter);
 			treeTableColumn.setContextMenu(contextMenuTableColumn);
+
+			treeTableColumn.setCellFactory(param -> new CustomTreeTableCell<>());
 
 			treeTableColumn.setCellValueFactory(cellDataFeatures -> {
 
@@ -773,6 +798,24 @@ public class CustomTreeTableView<
 			final String columnName) {
 
 		return columnsByNameMap.get(columnName);
+	}
+
+	@Override
+	public int computeTotalItemCount() {
+
+		return computeTotalItemCountRec(unfilteredTreeItemRoot);
+	}
+
+	private int computeTotalItemCountRec(
+			final UnfilteredTreeItem<TableRowDataT> unfilteredTreeItem) {
+
+		final List<UnfilteredTreeItem<TableRowDataT>> childrenList =
+				unfilteredTreeItem.getChildrenList();
+		int itemCount = childrenList.size();
+		for (final UnfilteredTreeItem<TableRowDataT> childUnfilteredTreeItem : childrenList) {
+			itemCount += computeTotalItemCountRec(childUnfilteredTreeItem);
+		}
+		return itemCount;
 	}
 
 	@ApiMethod

@@ -1,6 +1,7 @@
 package com.personal.archiver.gui.data;
 
 import java.io.File;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import com.utils.string.StrUtils;
 
 public class FileToArchive implements TableRowData, Comparable<FileToArchive> {
 
+	@Serial
 	private static final long serialVersionUID = -5500243744471361500L;
 
 	public static final TableColumnData[] COLUMNS = {

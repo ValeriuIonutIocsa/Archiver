@@ -106,14 +106,14 @@ public class VBoxPercentageDivision extends AbstractCustomControl<VBox> {
 		for (int i = 0; i < elementCount; i++) {
 
 			final PercentageDivisionElement element = elements.get(i);
-			final double percentage = element.getPercentage();
+			final double percentage = element.percentage();
 			final ColumnConstraints percentageConstraints =
 					LayoutControlsFactories.getInstance().createPercentageColumnConstraints(percentage);
 			gridPaneColors.getColumnConstraints().add(percentageConstraints);
 
 			final Region region = new Region();
 			region.setMinHeight(25);
-			final Color color = element.getColor();
+			final Color color = element.color();
 			region.setBackground(new Background(new BackgroundFill(color, null, null)));
 			GuiUtils.addToGridPane(gridPaneColors, region, i, 0, 1, 1,
 					Pos.CENTER_LEFT, Priority.NEVER, Priority.ALWAYS, 0, 0, 0, 0);
@@ -130,8 +130,8 @@ public class VBoxPercentageDivision extends AbstractCustomControl<VBox> {
 
 		for (final PercentageDivisionElement element : elements) {
 
-			final String name = element.getName();
-			final double percentage = element.getPercentage();
+			final String name = element.name();
+			final double percentage = element.percentage();
 			final String text = name + System.lineSeparator() +
 					StrUtils.doubleToPercentageString(percentage, 2);
 			final Label labelDescription = BasicControlsFactories.getInstance().createLabel(text, "fontSize10");

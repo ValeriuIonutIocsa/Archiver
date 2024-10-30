@@ -59,6 +59,10 @@ public abstract class AbstractCustomDialog<
 
 	protected abstract String getContentText();
 
+	/**
+	 * @param dialog
+	 *            dialog
+	 */
 	protected void configureDialog(
 			final DialogT dialog) {
 	}

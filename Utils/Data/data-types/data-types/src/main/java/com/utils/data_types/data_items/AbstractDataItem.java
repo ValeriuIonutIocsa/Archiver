@@ -2,14 +2,21 @@ package com.utils.data_types.data_items;
 
 import java.io.PrintStream;
 
+import com.utils.json.JsonUtils;
 import com.utils.xml.stax.XmlStAXWriter;
 
 public abstract class AbstractDataItem<
 		ObjectT> implements DataItem<ObjectT> {
 
+	private short indent;
+
 	@Override
 	public String createCsvString() {
-		return createCopyString();
+
+		String copyString = createCopyString();
+		copyString = copyString.replace("\r", "\\r");
+		copyString = copyString.replace("\n", "\\n");
+		return copyString;
 	}
 
 	@Override
@@ -19,12 +26,13 @@ public abstract class AbstractDataItem<
 
 	@Override
 	public void writeToJson(
-            final PrintStream printStream) {
+			final String columnName,
+			final boolean notLastAttribute,
+			final int indentCount,
+			final PrintStream printStream) {
 
-        printStream.print('"');
-		final String csvString = createCsvString();
-		printStream.print(csvString);
-        printStream.print('"');
+		final String copyString = createCopyString();
+		JsonUtils.writeStringAttribute(columnName, copyString, notLastAttribute, indentCount, printStream);
 	}
 
 	@Override
@@ -32,12 +40,23 @@ public abstract class AbstractDataItem<
 			final XmlStAXWriter xmlStAXWriter,
 			final String columnTitleName) {
 
-		final String string = createCopyString();
-		xmlStAXWriter.writeAttribute(columnTitleName, string);
+		final String csvString = createCsvString();
+		xmlStAXWriter.writeAttribute(columnTitleName, csvString);
 	}
 
 	@Override
 	public ObjectT createXlsxValue() {
 		return getValue();
+	}
+
+	@Override
+	public void setIndent(
+			final short indent) {
+		this.indent = indent;
+	}
+
+	@Override
+	public short getIndent() {
+		return indent;
 	}
 }

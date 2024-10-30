@@ -8,6 +8,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.personal.archiver.gui.data.FileToArchive;
 import com.utils.gui.alerts.CustomAlertError;
 import com.utils.gui.alerts.CustomAlertException;
@@ -64,8 +66,11 @@ public class ZipFileWriterLocal implements ZipFileWriter {
 		try {
 			final String relativePathString =
 					PathUtils.computeRelativePath(workingDirPathString, filePathString);
-			final Path zipPath = zipFileSystem.getPath("/", relativePathString);
-			Files.createDirectory(zipPath);
+			if (StringUtils.isNotBlank(relativePathString)) {
+
+				final Path zipPath = zipFileSystem.getPath("/", relativePathString);
+				Files.createDirectory(zipPath);
+			}
 
 		} catch (final Exception exc) {
 			failedToCopyFilePathStringList.add(filePathString);
@@ -103,7 +108,7 @@ public class ZipFileWriterLocal implements ZipFileWriter {
 	@Override
 	public void deleteFiles() {
 
-		FactoryFileDeleter.getInstance().deleteFile(zipFilePathString, false);
+		FactoryFileDeleter.getInstance().deleteFile(zipFilePathString, false, false);
 	}
 
 	@Override

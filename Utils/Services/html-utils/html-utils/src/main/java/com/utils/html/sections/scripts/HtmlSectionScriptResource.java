@@ -2,7 +2,7 @@ package com.utils.html.sections.scripts;
 
 import com.utils.io.ResourceFileUtils;
 
-public class HtmlSectionScriptResource extends HtmlSectionScript {
+public class HtmlSectionScriptResource extends AbstractHtmlSectionScript {
 
 	private final String resourceFilePathString;
 

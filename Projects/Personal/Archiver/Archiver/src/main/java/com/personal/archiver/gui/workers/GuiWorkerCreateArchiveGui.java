@@ -5,13 +5,12 @@ import com.utils.gui.objects.tables.tree_table.CustomTreeTableView;
 import com.utils.gui.workers.ControlDisabler;
 
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TreeItem;
 
 public class GuiWorkerCreateArchiveGui extends AbstractGuiWorkerCreateArchive {
 
 	private final CustomTreeTableView<FileToArchive> customTreeTableView;
-	private final CheckBox checkBoxCloseOnCompletion;
+	private final boolean closeOnCompletion;
 
 	public GuiWorkerCreateArchiveGui(
 			final Scene scene,
@@ -19,12 +18,13 @@ public class GuiWorkerCreateArchiveGui extends AbstractGuiWorkerCreateArchive {
 			final String workingDirPathString,
 			final String outputPathString,
 			final CustomTreeTableView<FileToArchive> customTreeTableView,
-			final CheckBox checkBoxCloseOnCompletion) {
+			final boolean cacheInRam,
+			final boolean closeOnCompletion) {
 
-		super(scene, controlDisabler, workingDirPathString, outputPathString);
+		super(scene, controlDisabler, workingDirPathString, cacheInRam, outputPathString);
 
 		this.customTreeTableView = customTreeTableView;
-		this.checkBoxCloseOnCompletion = checkBoxCloseOnCompletion;
+		this.closeOnCompletion = closeOnCompletion;
 	}
 
 	@Override
@@ -41,7 +41,6 @@ public class GuiWorkerCreateArchiveGui extends AbstractGuiWorkerCreateArchive {
 
 		customTreeTableView.getScene().getRoot().requestFocus();
 
-		final boolean closeOnCompletion = checkBoxCloseOnCompletion.isSelected();
 		if (closeOnCompletion) {
 			getScene().getWindow().hide();
 		}

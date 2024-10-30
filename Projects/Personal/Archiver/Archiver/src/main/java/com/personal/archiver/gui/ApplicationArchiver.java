@@ -8,7 +8,7 @@ import com.utils.app_info.FactoryAppInfo;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.alerts.CustomAlertConfirm;
 import com.utils.gui.stages.StageUtils;
-import com.utils.gui.styles.vitesco.VitescoStyleUtils;
+import com.utils.gui.styles.StyleUtils;
 import com.utils.io.PathUtils;
 import com.utils.log.Logger;
 
@@ -24,7 +24,7 @@ public class ApplicationArchiver extends Application {
 	public void start(
 			final Stage primaryStage) {
 
-		final AppInfo appInfo = FactoryAppInfo.computeInstance("Archiver", "2.0.0");
+		final AppInfo appInfo = FactoryAppInfo.computeInstance("Archiver", "3.0.0");
 		final String appTitleAndVersion = appInfo.getAppTitleAndVersion();
 		final String title;
 		if (Logger.isDebugMode()) {
@@ -33,8 +33,8 @@ public class ApplicationArchiver extends Application {
 			title = appTitleAndVersion;
 		}
 		primaryStage.setTitle(title);
-		primaryStage.setWidth(700);
-		primaryStage.setHeight(500);
+		primaryStage.setWidth(1_000);
+		primaryStage.setHeight(700);
 		primaryStage.setMinWidth(500);
 		primaryStage.setMinHeight(300);
 		StageUtils.centerOnScreen(primaryStage);
@@ -42,8 +42,8 @@ public class ApplicationArchiver extends Application {
 
 		final VBoxArchiver vBoxArchiver = new VBoxArchiver();
 		final Scene scene = new Scene(vBoxArchiver.getRoot());
-		VitescoStyleUtils.configureVitescoStyle(
-				scene, "com/personal/archiver/gui/style_archiver.css");
+		StyleUtils.configureStyle(
+				scene, "com/personal/archiver/gui/style_archiver.css", null);
 		primaryStage.setScene(scene);
 
 		primaryStage.setOnShown(event -> shown(scene, vBoxArchiver));
@@ -61,9 +61,9 @@ public class ApplicationArchiver extends Application {
 		final Parameters parameters = getParameters();
 		final List<String> parameterList = parameters.getRaw();
 		String folderPathString;
-		if (parameterList.size() >= 1) {
+		if (!parameterList.isEmpty()) {
 
-			folderPathString = parameterList.get(0);
+			folderPathString = parameterList.getFirst();
 			folderPathString = PathUtils.computeNormalizedPath("folder path", folderPathString);
 			vBoxArchiver.configureFolderPathString(folderPathString);
 
@@ -76,10 +76,18 @@ public class ApplicationArchiver extends Application {
 			if (folderPathString != null) {
 
 				String outputPathString = parameterList.get(1);
+
+				boolean cacheInRam = true;
+				if (parameterList.size() >= 3) {
+
+					final String cacheInRamString = parameterList.get(2);
+					cacheInRam = Boolean.parseBoolean(cacheInRamString);
+				}
+
 				outputPathString = PathUtils.computeNormalizedPath("output path", outputPathString);
 				if (outputPathString != null) {
 
-					vBoxArchiver.createArchive(folderPathString, outputPathString);
+					vBoxArchiver.createArchive(folderPathString, cacheInRam, outputPathString);
 				}
 			}
 		}

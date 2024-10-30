@@ -1,9 +1,11 @@
 package com.utils.data_types.table;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class TableColumnData implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1248266274147407246L;
 
 	private final String name;

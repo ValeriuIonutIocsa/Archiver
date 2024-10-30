@@ -20,6 +20,9 @@ public interface DataItem<
 	String createCopyString();
 
 	void writeToJson(
+			String columnName,
+			boolean notLastAttribute,
+			int indentCount,
 			PrintStream printStream);
 
 	void writeToXml(
@@ -27,4 +30,9 @@ public interface DataItem<
 			String columnTitleName);
 
 	ObjectT createXlsxValue();
+
+	void setIndent(
+			short indent);
+
+	short getIndent();
 }

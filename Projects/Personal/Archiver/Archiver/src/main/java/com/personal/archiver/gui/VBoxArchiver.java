@@ -46,6 +46,7 @@ class VBoxArchiver extends AbstractCustomControl<VBox> {
 	private GuiWorkerExtractHere guiWorkerExtractHere;
 
 	private final CheckBox checkBoxCloseOnCompletion;
+	private final CheckBox checkBoxCacheInRam;
 	private final TextField textFieldWorkingDirPath;
 	private final CustomTreeTableView<FileToArchive> customTreeTableView;
 	private final ComboBox<String> comboBoxOutputFolderPath;
@@ -60,6 +61,10 @@ class VBoxArchiver extends AbstractCustomControl<VBox> {
 		checkBoxCloseOnCompletion =
 				BasicControlsFactories.getInstance().createCheckBox("close on completion");
 		checkBoxCloseOnCompletion.setSelected(true);
+
+		checkBoxCacheInRam =
+				BasicControlsFactories.getInstance().createCheckBox("cache in RAM");
+		checkBoxCacheInRam.setSelected(true);
 
 		textFieldWorkingDirPath = new TextField(WORKING_DIR_PATH_STRING);
 		textFieldWorkingDirPath.setOnAction(event -> updateRootPath());
@@ -90,7 +95,7 @@ class VBoxArchiver extends AbstractCustomControl<VBox> {
 				new CustomTreeTableView<>(FileToArchive.COLUMNS, false, false, false, false, 0);
 		customTreeTableView.setRowFactory(
 				param -> new CustomTreeTableRowFileToArchive(customTreeTableView));
-		customTreeTableView.getColumnList().get(0)
+		customTreeTableView.getColumnList().getFirst()
 				.setCellFactory(param -> new CustomTreeTableCellFileToArchive(this));
 		return customTreeTableView;
 	}
@@ -130,6 +135,9 @@ class VBoxArchiver extends AbstractCustomControl<VBox> {
 				BasicControlsFactories.getInstance().createButton("Update");
 		buttonUpdateRootPath.setOnAction(event -> updateRootPath());
 		GuiUtils.addToHBox(hBoxTop, buttonUpdateRootPath,
+				Pos.CENTER_LEFT, Priority.NEVER, 0, 7, 0, 0);
+
+		GuiUtils.addToHBox(hBoxTop, checkBoxCacheInRam,
 				Pos.CENTER_LEFT, Priority.NEVER, 0, 7, 0, 0);
 
 		GuiUtils.addToHBox(hBoxTop, checkBoxCloseOnCompletion,
@@ -257,9 +265,13 @@ class VBoxArchiver extends AbstractCustomControl<VBox> {
 				parserOutputFolderPaths.save(outputFolderPathString);
 				setOutputFolderPaths();
 
+				final boolean cacheInRam = checkBoxCacheInRam.isSelected();
+				final boolean closeOnCompletion = checkBoxCloseOnCompletion.isSelected();
+
 				abstractGuiWorkerCreateArchive = new GuiWorkerCreateArchiveGui(
 						getRoot().getScene(), this::setComponentsDisabled,
-						workingDirPathString, outputPathString, customTreeTableView, checkBoxCloseOnCompletion);
+						workingDirPathString, outputPathString, customTreeTableView,
+						cacheInRam, closeOnCompletion);
 				abstractGuiWorkerCreateArchive.start();
 			}
 		}
@@ -267,13 +279,21 @@ class VBoxArchiver extends AbstractCustomControl<VBox> {
 
 	public void createArchive(
 			final String folderPathString,
+			final boolean cacheInRam,
 			final String outputPathString) {
 
 		final String workingDirPathString = PathUtils.computePath(folderPathString);
 
-		abstractGuiWorkerCreateArchive = new GuiWorkerCreateArchiveCli(
-				getRoot().getScene(), this::setComponentsDisabled,
-				workingDirPathString, outputPathString, folderPathString);
+		comboBoxOutputFolderPath.getItems().clear();
+		comboBoxOutputFolderPath.getItems().add(outputPathString);
+		comboBoxOutputFolderPath.getSelectionModel().selectFirst();
+
+		final String outputFileName = PathUtils.computeFileName(outputPathString);
+		textFieldOutputFileName.setText(outputFileName);
+
+		abstractGuiWorkerCreateArchive =
+				new GuiWorkerCreateArchiveCli(getRoot().getScene(), this::setComponentsDisabled,
+						workingDirPathString, cacheInRam, outputPathString, folderPathString);
 		abstractGuiWorkerCreateArchive.start();
 	}
 
@@ -287,9 +307,10 @@ class VBoxArchiver extends AbstractCustomControl<VBox> {
 	void extractHere(
 			final FileToArchive fileToArchive) {
 
-		guiWorkerExtractHere = new GuiWorkerExtractHere(
-				getRoot().getScene(), this::setComponentsDisabled,
-				fileToArchive, checkBoxCloseOnCompletion);
+		final boolean closeOnCompletion = checkBoxCloseOnCompletion.isSelected();
+
+		guiWorkerExtractHere = new GuiWorkerExtractHere(getRoot().getScene(),
+				this::setComponentsDisabled, fileToArchive, closeOnCompletion);
 		guiWorkerExtractHere.start();
 	}
 

@@ -5,10 +5,10 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.jfoenix.controls.JFXProgressBar;
 import com.utils.gui.AbstractCustomControl;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.factories.LayoutControlsFactories;
+import com.utils.io.IoUtils;
 import com.utils.io.ResourceFileUtils;
 import com.utils.io.WriterUtils;
 import com.utils.log.Logger;
@@ -61,10 +61,11 @@ public class LevelGauge extends AbstractCustomControl<StackPane> {
 		}
 		labelProgress.setStyle(style);
 
-		final ProgressBar progressBar = new JFXProgressBar();
+		final ProgressBar progressBar = new ProgressBar();
 		createCustomStyle(tempFolderPathString, progressBar, fullSpaceColor, emptySpaceColor);
 		progressBar.setProgress(level);
 		progressBar.setMinHeight(20);
+		progressBar.setMinWidth(150);
 
 		stackPaneRoot.getChildren().setAll(progressBar, labelProgress);
 
@@ -77,38 +78,51 @@ public class LevelGauge extends AbstractCustomControl<StackPane> {
 			final Color fullSpaceColor,
 			final Color emptySpaceColor) {
 
-		final String styleClass = "level-gauge-" + fullSpaceColor + "-" + emptySpaceColor;
-		progressBar.getStyleClass().remove(2, progressBar.getStyleClass().size());
-		progressBar.getStyleClass().add(styleClass);
-
 		try {
-			final String styleCssFileContentTemplate = ResourceFileUtils.resourceFileToString(
-					"com/utils/gui/objects/style_level_gauge_template.txt");
-			if (StringUtils.isBlank(styleCssFileContentTemplate)) {
-				throw new Exception();
-			}
-
-			final StringReplacements stringReplacements = new StringReplacementsRegular();
-			stringReplacements.addReplacement("@@style_class@@", styleClass);
-			stringReplacements.addReplacement("@@full_color@@",
-					GuiUtils.getFxBackgroundColorString(fullSpaceColor));
-			stringReplacements.addReplacement("@@empty_color@@",
-					GuiUtils.getFxBackgroundColorString(emptySpaceColor));
-			final String styleCssFileContent =
-					stringReplacements.performReplacements(styleCssFileContentTemplate);
+			final String styleClass = "level-gauge-" + fullSpaceColor + "-" + emptySpaceColor;
+			progressBar.getStyleClass().add(styleClass);
 
 			final File styleCssFile = new File(tempFolderPathString, styleClass + ".css");
 			final String styleCssFilePathString = styleCssFile.getAbsolutePath();
-			WriterUtils.stringToFile(styleCssFileContent, StandardCharsets.UTF_8, styleCssFilePathString);
+			if (!IoUtils.fileExists(styleCssFilePathString)) {
+
+				writeStyleCssFile(styleClass, fullSpaceColor, emptySpaceColor,
+						styleCssFilePathString, styleCssFile);
+			}
 
 			progressBar.getStylesheets().clear();
 			progressBar.getStylesheets().add(styleCssFile.toURI().toURL().toExternalForm());
-
-			styleCssFile.deleteOnExit();
 
 		} catch (final Exception exc) {
 			Logger.printError("failed to create custom style");
 			Logger.printException(exc);
 		}
+	}
+
+	private static void writeStyleCssFile(
+			final String styleClass,
+			final Color fullSpaceColor,
+			final Color emptySpaceColor,
+			final String styleCssFilePathString,
+			final File styleCssFile) throws Exception {
+
+		final String styleCssFileContentTemplate = ResourceFileUtils.resourceFileToString(
+				"com/utils/gui/objects/style_level_gauge_template.txt");
+		if (StringUtils.isBlank(styleCssFileContentTemplate)) {
+			throw new Exception();
+		}
+
+		final StringReplacements stringReplacements = new StringReplacementsRegular();
+		stringReplacements.addReplacement("@@style_class@@", styleClass);
+		stringReplacements.addReplacement("@@full_color@@",
+				GuiUtils.getFxBackgroundColorString(fullSpaceColor));
+		stringReplacements.addReplacement("@@empty_color@@",
+				GuiUtils.getFxBackgroundColorString(emptySpaceColor));
+		final String styleCssFileContent =
+				stringReplacements.performReplacements(styleCssFileContentTemplate);
+
+		WriterUtils.stringToFile(styleCssFileContent, StandardCharsets.UTF_8, styleCssFilePathString);
+
+		styleCssFile.deleteOnExit();
 	}
 }

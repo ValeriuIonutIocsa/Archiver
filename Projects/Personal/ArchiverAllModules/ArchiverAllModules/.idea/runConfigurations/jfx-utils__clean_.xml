@@ -2,7 +2,7 @@
     <configuration default="false" factoryName="Gradle" folderName="jfx-utils" name="jfx-utils [clean]" type="GradleRunConfiguration">
         <ExternalSystemSettings>
             <option name="executionName"/>
-            <option name="externalProjectPath" value="$PROJECT_DIR$/../../jfx-utils/jfx-utils"/>
+            <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Utils/Gui/jfx-utils/jfx-utils"/>
             <option name="externalSystemIdString" value="GRADLE"/>
             <option name="scriptParameters" value=""/>
             <option name="taskDescriptions">

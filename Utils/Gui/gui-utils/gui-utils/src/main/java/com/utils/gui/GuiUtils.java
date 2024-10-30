@@ -394,9 +394,7 @@ public final class GuiUtils {
 		for (final Node node : childrenUnmodifiable) {
 
 			nodes.add(node);
-			if (node instanceof Parent) {
-
-				final Parent childParent = (Parent) node;
+			if (node instanceof final Parent childParent) {
 				addAllDescendants(childParent, nodes);
 			}
 		}

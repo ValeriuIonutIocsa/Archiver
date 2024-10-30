@@ -36,7 +36,7 @@ public final class ScreenUtils {
 		final List<Screen> screenList = Screen.getScreensForRectangle(
 				x + width / 2, y + height / 2, 1, 1);
 		if (!screenList.isEmpty()) {
-			screen = screenList.get(0);
+			screen = screenList.getFirst();
 		} else {
 			screen = computeWidestScreen();
 		}

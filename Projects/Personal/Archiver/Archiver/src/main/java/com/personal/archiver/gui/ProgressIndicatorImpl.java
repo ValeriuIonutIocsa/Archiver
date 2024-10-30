@@ -1,9 +1,9 @@
 package com.personal.archiver.gui;
 
 import com.utils.gui.objects.ProgressIndicatorBar;
-import com.utils.log.progress.AbstractProgressIndicator;
+import com.utils.log.progress.ProgressIndicator;
 
-final class ProgressIndicatorImpl extends AbstractProgressIndicator {
+final class ProgressIndicatorImpl implements ProgressIndicator {
 
 	private final ProgressIndicatorBar progressIndicatorBar;
 
@@ -16,6 +16,7 @@ final class ProgressIndicatorImpl extends AbstractProgressIndicator {
 	@Override
 	public void update(
 			final double value) {
-		progressIndicatorBar.updateValue(value);
+
+		progressIndicatorBar.update(value);
 	}
 }

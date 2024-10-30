@@ -120,8 +120,8 @@ public final class JFXUtil {
 
 		final ObservableList<Node> children = parent.getChildren();
 		final int originalIndex = children.indexOf(original);
-		if (parent instanceof BorderPane) {
-			final BorderPane borderPane = (BorderPane) parent;
+		if (parent instanceof BorderPane borderPane) {
+
 			if (borderPane.getTop() == original) {
 				children.remove(original);
 				borderPane.setTop(replacement);
@@ -142,6 +142,7 @@ public final class JFXUtil {
 				children.remove(original);
 				borderPane.setBottom(replacement);
 			}
+
 		} else {
 			// Hope that preserving the properties and position in the list is sufficient
 			children.set(originalIndex, replacement);

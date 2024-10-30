@@ -16,9 +16,13 @@ public final class ClipboardUtils {
 	public static void putStringInClipBoard(
 			final String string) {
 
-		final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		final StringSelection stringSelection = new StringSelection(string);
-		clipboard.setContents(stringSelection, stringSelection);
+		try {
+			final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			final StringSelection stringSelection = new StringSelection(string);
+			clipboard.setContents(stringSelection, stringSelection);
+
+		} catch (final Exception ignored) {
+		}
 	}
 
 	@ApiMethod

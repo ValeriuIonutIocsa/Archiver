@@ -2,6 +2,7 @@ package com.utils.gui.objects.tables.table_view;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,6 +60,7 @@ public class CustomTableView<
 	private final List<ColumnHeader> columnHeaderList;
 	private final Map<String, TableColumn<TableRowDataT, Object>> columnsByNameMap;
 	private final ObservableList<TableRowDataT> unfilteredItemList;
+	private final FilteredList<TableRowDataT> filteredItemList;
 
 	private ScrollBar verticalScrollBar;
 	private boolean hideVerticalScrollBar;
@@ -97,6 +99,14 @@ public class CustomTableView<
 
 		createTableColumns(tableColumnDataArray, sort, filter);
 
+		filteredItemList = new FilteredList<>(unfilteredItemList);
+		filteredItemList.setPredicate(filterPredicate);
+
+		final SortedList<TableRowDataT> sortedItemList = new SortedList<>(filteredItemList);
+		sortedItemList.comparatorProperty().bind(comparatorProperty());
+
+		setItems(sortedItemList);
+
 		setOnKeyPressed(event -> keyPressed(event, defaultSearchAndFilterColumnIndex));
 	}
 
@@ -125,9 +135,8 @@ public class CustomTableView<
 			final Set<Node> scrollBars = lookupAll(".scroll-bar");
 			for (final Node node : scrollBars) {
 
-				if (node instanceof ScrollBar) {
+				if (node instanceof final ScrollBar scrollBar) {
 
-					final ScrollBar scrollBar = (ScrollBar) node;
 					final Orientation orientation = scrollBar.getOrientation();
 					if (orientation == Orientation.VERTICAL) {
 						verticalScrollBar = scrollBar;
@@ -161,13 +170,25 @@ public class CustomTableView<
 			final KeyEvent keyEvent,
 			final int defaultSearchAndFilterColumnIndex) {
 
-		if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.F) {
+		if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.MINUS ||
+				keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.SUBTRACT) {
+			deselectAllKeyCombinationPressed();
+
+		} else if (keyEvent.isControlDown() && !keyEvent.isShiftDown() && keyEvent.getCode() == KeyCode.F) {
 			searchKeyCombinationPressed(defaultSearchAndFilterColumnIndex);
+		} else if (keyEvent.isControlDown() && keyEvent.isShiftDown() && keyEvent.getCode() == KeyCode.F) {
+			filterKeyCombinationPressed(defaultSearchAndFilterColumnIndex);
+
 		} else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 			copyKeyCombinationPressed();
 		} else if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.V) {
 			pasteKeyCombinationPressed();
 		}
+	}
+
+	private void deselectAllKeyCombinationPressed() {
+
+		getSelectionModel().clearSelection();
 	}
 
 	private void searchKeyCombinationPressed(
@@ -179,6 +200,17 @@ public class CustomTableView<
 			columnIndex = focusedCell.getColumn();
 		}
 		search(columnIndex);
+	}
+
+	private void filterKeyCombinationPressed(
+			final int defaultSearchAndFilterColumnIndex) {
+
+		int columnIndex = defaultSearchAndFilterColumnIndex;
+		final TablePosition<?, ?> focusedCell = getFocusModel().getFocusedCell();
+		if (focusedCell != null) {
+			columnIndex = focusedCell.getColumn();
+		}
+		filter(columnIndex);
 	}
 
 	protected void copyKeyCombinationPressed() {
@@ -237,7 +269,8 @@ public class CustomTableView<
 		}
 	}
 
-	protected void pasteKeyCombinationPressed() {
+	@Override
+	public void pasteKeyCombinationPressed() {
 	}
 
 	public void createTableColumns(
@@ -275,6 +308,8 @@ public class CustomTableView<
 			final ContextMenu contextMenuTableColumn =
 					createContextMenuTableColumn(columnIndex, sort, filter);
 			tableColumn.setContextMenu(contextMenuTableColumn);
+
+			tableColumn.setCellFactory(param -> new CustomTableCell<>());
 
 			tableColumn.setCellValueFactory(cellDataFeatures -> {
 
@@ -540,7 +575,7 @@ public class CustomTableView<
 
 			sortColumn.setSortable(true);
 			sortColumn.setSortType(TableColumn.SortType.ASCENDING);
-			getSortOrder().add(0, sortColumn);
+			getSortOrder().addFirst(sortColumn);
 			refresh();
 			sortColumn.setSortable(false);
 		}
@@ -554,7 +589,7 @@ public class CustomTableView<
 
 			sortColumn.setSortable(true);
 			sortColumn.setSortType(TableColumn.SortType.DESCENDING);
-			getSortOrder().add(0, sortColumn);
+			getSortOrder().addFirst(sortColumn);
 			refresh();
 			sortColumn.setSortable(false);
 		}
@@ -569,7 +604,8 @@ public class CustomTableView<
 	@ApiMethod
 	public void moveSelectedItem(
 			final int offset,
-			final TableItemIndexUpdater<TableRowDataT> tableItemIndexUpdater) {
+			final TableItemIndexUpdater<TableRowDataT> tableItemIndexUpdater,
+			final Comparator<TableRowDataT> comparator) {
 
 		final boolean filteredTable = getItems().size() != unfilteredItemList.size();
 		if (filteredTable && tableItemIndexUpdater == null) {
@@ -590,7 +626,7 @@ public class CustomTableView<
 							System.lineSeparator() + "there are multiple items selected");
 
 				} else {
-					final int selectedIndex = selectedIndices.get(0);
+					final int selectedIndex = selectedIndices.getFirst();
 					final int newIndex = selectedIndex + offset;
 					if (newIndex < 0) {
 						Logger.printNewLine();
@@ -615,7 +651,7 @@ public class CustomTableView<
 									final TableRowDataT item = copyItemList.get(i);
 									tableItemIndexUpdater.updateIndex(item, i);
 								}
-								unfilteredItemList.sort(null);
+								unfilteredItemList.sort(comparator);
 
 							} else {
 								removeItem(selectedItem);
@@ -640,13 +676,7 @@ public class CustomTableView<
 	@ApiMethod
 	public boolean removeSelectedItems(
 			final String itemDisplayName,
-			final boolean askForConfirmation) {
-		return removeSelectedItems(itemDisplayName, askForConfirmation, null);
-	}
-
-	@ApiMethod
-	public boolean removeSelectedItems(
-			final String itemDisplayName,
+			final String itemDisplayNamePlural,
 			final boolean askForConfirmation,
 			final Function<List<TableRowDataT>, Boolean> itemRemover) {
 
@@ -663,18 +693,8 @@ public class CustomTableView<
 			final int itemCount = selectedItemList.size();
 			if (askForConfirmation) {
 
-				final String itemCountString;
-				if (itemCount == 1) {
-					itemCountString = itemDisplayName;
-				} else {
-					itemCountString = itemCount + " " + itemDisplayName + " elements";
-				}
-				final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
-						"Are you sure you wish to remove the selected " + itemCountString + " from the list?",
-						ButtonType.NO, ButtonType.YES);
-				customAlertConfirm.showAndWait();
-
-				final ButtonType result = customAlertConfirm.getResult();
+				final ButtonType result = checkConfirmRemoveSelectedItems(
+						itemDisplayName, itemDisplayNamePlural, itemCount);
 				if (result == ButtonType.NO) {
 					keepGoing = false;
 				}
@@ -711,12 +731,23 @@ public class CustomTableView<
 		return itemsRemoved;
 	}
 
-	@ApiMethod
-	public boolean removeSelectedItem(
+	private static ButtonType checkConfirmRemoveSelectedItems(
 			final String itemDisplayName,
-			final boolean askForConfirmation) {
+			final String itemDisplayNamePlural,
+			final int itemCount) {
 
-		return removeSelectedItem(itemDisplayName, askForConfirmation, null);
+		final String itemCountString;
+		if (itemCount == 1) {
+			itemCountString = itemDisplayName;
+		} else {
+			itemCountString = itemCount + " " + itemDisplayNamePlural;
+		}
+		final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
+				"Are you sure you wish to remove the selected " + itemCountString + " from the list?",
+				ButtonType.NO, ButtonType.YES);
+		customAlertConfirm.showAndWait();
+
+		return customAlertConfirm.getResult();
 	}
 
 	@ApiMethod
@@ -736,12 +767,8 @@ public class CustomTableView<
 			boolean keepGoing = true;
 			if (askForConfirmation) {
 
-				final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
-						"Are you sure you wish to remove the selected " + itemDisplayName + " from the list?",
-						ButtonType.NO, ButtonType.YES);
-				customAlertConfirm.showAndWait();
-				final ButtonType buttonType = customAlertConfirm.getResult();
-				if (buttonType == ButtonType.NO) {
+				final ButtonType result = checkConfirmRemoveSelectedItem(itemDisplayName);
+				if (result == ButtonType.NO) {
 					keepGoing = false;
 				}
 			}
@@ -770,6 +797,17 @@ public class CustomTableView<
 		return itemRemoved;
 	}
 
+	private static ButtonType checkConfirmRemoveSelectedItem(
+			final String itemDisplayName) {
+
+		final CustomAlertConfirm customAlertConfirm = new CustomAlertConfirm("Removing " + itemDisplayName,
+				"Are you sure you wish to remove the selected " + itemDisplayName + " from the list?",
+				ButtonType.NO, ButtonType.YES);
+		customAlertConfirm.showAndWait();
+
+		return customAlertConfirm.getResult();
+	}
+
 	@ApiMethod
 	public void setItems(
 			final Collection<TableRowDataT> itemsList) {
@@ -784,6 +822,7 @@ public class CustomTableView<
 	@ApiMethod
 	public void addItem(
 			final TableRowDataT item) {
+
 		addItem(item, unfilteredItemList.size());
 	}
 
@@ -849,13 +888,7 @@ public class CustomTableView<
 
 	private void setSortedAndFilteredItems() {
 
-		final FilteredList<TableRowDataT> filteredData = new FilteredList<>(unfilteredItemList);
-		filteredData.setPredicate(filterPredicate);
-
-		final SortedList<TableRowDataT> sortedData = new SortedList<>(filteredData);
-		sortedData.comparatorProperty().bind(comparatorProperty());
-
-		setItems(sortedData);
+		filteredItemList.setPredicate(filterPredicate);
 		refresh();
 	}
 
@@ -875,6 +908,12 @@ public class CustomTableView<
 			final String columnName) {
 
 		return columnsByNameMap.get(columnName);
+	}
+
+	@Override
+	public int computeTotalItemCount() {
+
+		return unfilteredItemList.size();
 	}
 
 	@ApiMethod

@@ -469,7 +469,7 @@ public class ChartZoomManager {
 		return balance;
 	}
 
-	private class MouseWheelZoomHandler implements EventHandler<ScrollEvent> {
+	private final class MouseWheelZoomHandler implements EventHandler<ScrollEvent> {
 
 		private boolean ignoring;
 

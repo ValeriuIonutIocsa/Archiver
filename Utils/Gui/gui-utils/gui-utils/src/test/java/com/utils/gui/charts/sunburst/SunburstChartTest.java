@@ -7,6 +7,7 @@ import com.utils.gui.AbstractCustomApplicationTest;
 import com.utils.gui.GuiUtils;
 import com.utils.gui.charts.sunburst.tree.TreeNode;
 import com.utils.gui.factories.BasicControlsFactories;
+import com.utils.string.StrUtils;
 
 import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
@@ -39,7 +40,7 @@ class SunburstChartTest extends AbstractCustomApplicationTest {
 	void testLayout() {
 
 		final TreeNode treeNodeRoot;
-		final int input = Integer.parseInt("0");
+		final int input = StrUtils.tryParsePositiveInt("0");
 		if (input == 1) {
 			treeNodeRoot = createTreeNode1();
 		} else {
@@ -134,7 +135,7 @@ class SunburstChartTest extends AbstractCustomApplicationTest {
 
 		final TreeNode treeNodeRoot = sunburstChart.getRoot();
 
-		final TreeNode treeNodeFirstChild = treeNodeRoot.getChildren().get(0);
+		final TreeNode treeNodeFirstChild = treeNodeRoot.getChildren().getFirst();
 		final Path path = treeNodeFirstChild.getPath();
 		final FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.25), path);
 		fadeTransition.setFromValue(1.0);

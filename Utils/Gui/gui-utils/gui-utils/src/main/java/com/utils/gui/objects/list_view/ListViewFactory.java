@@ -34,6 +34,7 @@ public final class ListViewFactory {
 		listView.getSelectionModel().setSelectionMode(selectionMode);
 
 		listView.setOnKeyPressed(keyEvent -> {
+
 			if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.C) {
 				ListViewFactory.copyListViewSelectionToClipboard(listView);
 			}

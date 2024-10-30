@@ -33,7 +33,7 @@ public class ColumnHeader {
 		tableColumn.setGraphic(stackPaneColumnHeader);
 	}
 
-	private Label createLabelColumnHeader(
+	private static Label createLabelColumnHeader(
 			final TableColumnBase<?, ?> tableColumn) {
 
 		final String columnName = tableColumn.getText();

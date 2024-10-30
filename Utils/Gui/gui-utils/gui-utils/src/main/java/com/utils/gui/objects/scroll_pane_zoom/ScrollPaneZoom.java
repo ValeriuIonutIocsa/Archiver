@@ -84,8 +84,10 @@ public class ScrollPaneZoom extends AbstractCustomControl<ScrollPane> {
 
 		final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<>();
 		content.setOnMousePressed(mouseEvent -> {
+
 			lastMouseCoordinates.set(new Point2D(mouseEvent.getX(), mouseEvent.getY()));
 			if (GuiUtils.isDoubleClick(mouseEvent)) {
+
 				resetZoom();
 				for (final ScrollPaneZoom linkedScrollPaneZoom : linkedScrollPaneZoomList) {
 					linkedScrollPaneZoom.resetZoom();

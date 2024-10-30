@@ -5,14 +5,14 @@ import java.util.List;
 
 import com.utils.data_types.table.TableColumnData;
 
-class CustomListSelectionViewTestImpl extends CustomListSelectionViewOneToOne<Text, TextWithLength> {
+class CustomListSelectionViewTestImpl extends AbstractCustomListSelectionViewOneToOne<Text, TextWithLength> {
 
 	CustomListSelectionViewTestImpl(
 			final List<Text> leftTableRowDataList,
 			final List<TextWithLength> rightTableRowDataList) {
 		super(0.45, leftTableRowDataList, rightTableRowDataList,
-				Comparator.comparing(Text::getText),
-				Comparator.comparing(textWithLength -> textWithLength.getText().length()));
+				Comparator.comparing(Text::text),
+				Comparator.comparing(textWithLength -> textWithLength.text().length()));
 	}
 
 	@Override
@@ -28,12 +28,12 @@ class CustomListSelectionViewTestImpl extends CustomListSelectionViewOneToOne<Te
 	@Override
 	protected TextWithLength convertLeftToRight(
 			final Text leftItem) {
-		return new TextWithLength(leftItem.getText());
+		return new TextWithLength(leftItem.text());
 	}
 
 	@Override
 	protected Text convertRightToLeft(
 			final TextWithLength rightItem) {
-		return new Text(rightItem.getText());
+		return new Text(rightItem.text());
 	}
 }

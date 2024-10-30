@@ -1,6 +1,6 @@
 ext {
     mainClass = 'com.personal.archiver.AppStartArchiver'
-    projectVersion = '2.0.0'
+    projectVersion = '3.0.0'
     jarFolderPath = 'C:\\IVI\\Apps\\Scripts\\General\\Archiver'
 
     subProjectNames = [

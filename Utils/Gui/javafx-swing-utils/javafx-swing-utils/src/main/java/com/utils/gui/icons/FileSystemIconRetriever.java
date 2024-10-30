@@ -30,10 +30,9 @@ public class FileSystemIconRetriever {
 		Image image = null;
 		final File file = new File(filePathString);
 		final Icon icon = FileSystemView.getFileSystemView().getSystemIcon(file);
-		if (icon instanceof ImageIcon) {
+		if (icon instanceof final ImageIcon imageIcon) {
 
 			final BufferedImage bufferedImage;
-			final ImageIcon imageIcon = (ImageIcon) icon;
 			final java.awt.Image awtImage = imageIcon.getImage();
 			if (awtImage instanceof BufferedImage) {
 				bufferedImage = (BufferedImage) awtImage;

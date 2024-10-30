@@ -7,7 +7,7 @@ import com.utils.html.sections.HtmlSectionPlainText;
 import com.utils.html.sections.HtmlSectionUpArrow;
 import com.utils.html.sections.parents.HtmlSectionH3;
 
-public class HtmlSectionEndUpArrow extends HtmlSectionContainer {
+public class HtmlSectionEndUpArrow extends AbstractHtmlSectionContainer {
 
 	@Override
 	protected void fillHtmlSectionList(

@@ -33,12 +33,12 @@ public class DataItemObject<
 	private String createSerializedDataBaseString(
 			final int index) {
 
-		final String valueString = value.toString();
+		String valueString = value.toString();
 		if (valueString.length() > maxLength) {
 
-			Logger.printError("value exceeds max length of the database column " + index + ":" +
+			Logger.printWarning("value exceeds max length of the database column " + index + ":" +
 					System.lineSeparator() + valueString);
-			throw new RuntimeException();
+			valueString = valueString.substring(0, maxLength);
 		}
 		return valueString;
 	}
@@ -54,7 +54,8 @@ public class DataItemObject<
 
 	@Override
 	public int hashCode() {
-		return 0;
+
+		return value.hashCode();
 	}
 
 	@Override

@@ -6,7 +6,6 @@
       <GradleProjectSettings>
         <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
@@ -20,6 +19,7 @@
             <option value="$PROJECT_DIR$/../../../../Utils/Services/concurrency-utils/concurrency-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/html-utils/html-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/json-utils/json-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/logger/logger" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/test-utils/test-utils" />
             <option value="$PROJECT_DIR$/../../../../Utils/Services/xml-stax-utils/xml-stax-utils" />
